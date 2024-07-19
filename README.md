@@ -24,8 +24,8 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+-   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+-   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
@@ -35,4 +35,34 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-# danum-next
+# danum
+
+### 🗂️ Folder Architecture
+
+-   GPT 기반으로 한 폴더 아키텍쳐 (이후 달라질 수 있음.)
+
+```
+my-next-app/
+│
+├── public/
+│   └── assets/          # 정적 자산 (이미지, 폰트 등)
+│
+├── src/
+│   ├── components/      # 재사용 가능한 React 컴포넌트
+│   ├── pages/           # Next.js 페이지 컴포넌트
+│   │   ├── api/         # API 라우트 (서버리스 함수)
+│   │   ├── _app.js      # 앱 초기화 (전역 설정)
+│   │   ├── _document.js # HTML 문서 구조 정의
+│   │   └── index.js     # 홈 페이지
+│   ├── styles/          # 전역 스타일, CSS 모듈
+│   ├── utils/           # 유틸리티 함수 및 헬퍼
+│   ├── hooks/           # 커스텀 훅
+│   ├── contexts/        # React 컨텍스트 (전역 상태 관리)
+│   └── types/           # TypeScript 타입 정의 (TS 사용 시)
+│
+├── .gitignore           # Git 무시 파일
+├── package.json         # 패키지 관리
+├── next.config.js       # Next.js 설정 파일
+├── tsconfig.json        # TypeScript 설정 파일 (TS 사용 시)
+└── README.md            # 프로젝트 설명서
+```
