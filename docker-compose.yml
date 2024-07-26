@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+    web:
+        build: .
+        ports:
+            - '80:80'
+            - '443:443'
+        volumes:
+            - type: bind
+              source: ./certificate.crt
+              target: /etc/ssl/certificates/certificate.crt
+            - type: bind
+              source: ./private.key
+              target: /etc/ssl/certificates/private.key
+        environment:
+            - NODE_ENV=production
