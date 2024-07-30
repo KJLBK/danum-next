@@ -53,8 +53,8 @@ jobs:
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-          docker load < /home/${{ secrets.USER }}/danum-next/nextjs-app.tar
-          docker stop nextjs-app || true
-          docker rm nextjs-app || true
-          docker run -d --name nextjs-app -p 3000:3000 nextjs-app
-          docker image prune -f
+          sudo docker load < /home/${{ secrets.USER }}/danum-next/nextjs-app.tar
+          sudo docker stop nextjs-app || true
+          sudo docker rm nextjs-app || true
+          sudo docker run -d --name nextjs-app -p 3000:3000 nextjs-app
+          sudo docker image prune -f
