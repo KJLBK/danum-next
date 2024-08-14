@@ -1,12 +1,4 @@
-type Props = {
-    params: {
-        qId: string;
-    };
-};
-
-export default function QuestionsViewPage({
-    params,
-}: Props) {
+export default function QuestionsViewPage({ params }) {
     const viewId = params.qId;
     console.log(viewId);
     return (
