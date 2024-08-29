@@ -1,10 +1,4 @@
-type Props = {
-    params: {
-        roomId: string;
-    };
-};
-
-export default function ChatPage({ params }: Props) {
+export default function ChatPage({ params }) {
     const name = params.roomId;
     return (
         <>
