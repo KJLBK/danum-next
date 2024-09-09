@@ -2,7 +2,7 @@
 
 import { jwtDecode } from 'jwt-decode';
 import { NextResponse } from 'next/server';
-import useAuthStore from '../../../store/authStore';
+import useAuthStore from '../../../../store/authStore';
 import { useRouter } from 'next/router';
 
 export async function POST(req) {
