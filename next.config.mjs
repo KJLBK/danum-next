@@ -4,7 +4,7 @@ const nextConfig = {
             {
                 source: '/api/:slug*',
                 destination:
-                    'https://43.203.8.51:8080/:slug*',
+                    'http://43.203.8.51:8080/:slug*',
             },
         ];
     },
