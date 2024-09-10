@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import questionShow from "../../service/questionShow";
+import questionShow from "../../../service/question/questionShow";
 
 export default function QuestionShowForm() {
   const [data, setData] = useState([]);
