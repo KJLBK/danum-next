@@ -2,11 +2,15 @@ export default async function QuestionPage() {
   const token =
     "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU";
 
-  let data = await fetch("/api/board/question/show", {
-    method: "GET",
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  let posts = await data.json();
+  try {
+    let data = await fetch("/api/board/question/show", {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    let posts = await data.json();
+  } catch (error) {
+    console.error("Error fetching data", error);
+  }
   return (
     <>
       <h2>질문 이야기</h2>
