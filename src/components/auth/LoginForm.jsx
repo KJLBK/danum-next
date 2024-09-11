@@ -17,11 +17,9 @@ export default function LoginForm() {
         e.preventDefault();
 
         try {
-            const { token, user } = await login(
-                email,
-                password
-            );
-            setUser(user);
+            const { user } = await login(email, password);
+
+            setUser(user.sub);
             Router.push('/');
         } catch (err) {
             setError('로그인 실패 : ' + err.message);
