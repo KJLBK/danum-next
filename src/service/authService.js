@@ -1,8 +1,8 @@
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 
 export default async function login(email, password) {
-    try {
-        /* 
+  try {
+    /* 
             Endpoint : '/member/login'
             HTTP Method : POST
             Function : login
@@ -10,15 +10,15 @@ export default async function login(email, password) {
                 RequestBody: LoginDto(email: String, 
                     password: String)
         */
-        const res = await fetch('/api/member/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password }),
-        });
+    const res = await fetch("/api/member/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
-        if (!res.ok) {
-            throw new Error('Login failed');
-        }
+    if (!res.ok) {
+      throw new Error("Login failed");
+    }
 
         const token = await res.text();
 
@@ -30,4 +30,5 @@ export default async function login(email, password) {
     } catch (err) {
         throw new Error(err.message);
     }
+
 }
