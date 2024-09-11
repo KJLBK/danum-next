@@ -4,7 +4,8 @@ const nextConfig = {
             {
                 source: '/api/:slug*',
                 destination:
-                    'http://43.203.8.51:8080/:slug*',
+                    process.env.NEXT_PUBLIC_BASE_URL +
+                    ':slug*',
             },
         ];
     },
