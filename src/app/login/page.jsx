@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import LoginForm from '../../components/auth/LoginForm';
 import { useAuthStore } from '../../store/authStore';
 import {
@@ -23,8 +23,9 @@ export default function LoginPage() {
     return (
         <>
             <p>Login</p>
-
-            <LoginForm redirect={redirect} />
+            <Suspense>
+                <LoginForm redirect={redirect} />
+            </Suspense>
         </>
     );
 }
