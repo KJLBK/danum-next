@@ -23,9 +23,8 @@ export default function LoginPage() {
     return (
         <>
             <p>Login</p>
-            <Suspense>
-                <LoginForm redirect={redirect} />
-            </Suspense>
+
+            <LoginForm redirect={redirect} />
         </>
     );
 }

@@ -5,12 +5,14 @@ import Input from '../common/Input';
 import Button from '../common/Button';
 import login from '../../service/authService';
 import { useAuthStore } from '../../store/authStore';
+import { useRouter } from 'next/navigation';
 
-export default function LoginForm() {
+export default function LoginForm({ redirect }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const setUser = useAuthStore((state) => state.setUser);
+    const router = useRouter();
 
     // 로그인 로직 셋팅
     const handleSubmit = async (e) => {
@@ -18,9 +20,8 @@ export default function LoginForm() {
 
         try {
             const { user } = await login(email, password);
-
             setUser(user.sub);
-            Router.push('/');
+            router.push(redirect);
         } catch (err) {
             setError('로그인 실패 : ' + err.message);
         }
