@@ -3,8 +3,7 @@ const nextConfig = {
         return [
             {
                 source: '/api/:slug*',
-                destination:
-                    `${process.env.NEXT_PUBLIC_BASE_URL}:slug*`,
+                destination: 'http://43.203.8.51/:slug*',
             },
         ];
     },
