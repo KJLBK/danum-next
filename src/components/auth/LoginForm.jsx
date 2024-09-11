@@ -19,9 +19,13 @@ export default function LoginForm({ redirect }) {
         e.preventDefault();
 
         try {
-            const { user } = await login(email, password);
-            setUser(user.sub);
-            router.push(redirect);
+            const user = await login(email, password);
+            const date = new Date(
+                user.user.exp * 1000
+            ).toLocaleString();
+
+            setUser(user.user.sub);
+            router.push('/');
         } catch (err) {
             setError('로그인 실패 : ' + err.message);
         }
