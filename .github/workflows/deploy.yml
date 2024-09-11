@@ -1,60 +1,61 @@
 name: Deploy to EC2
 
 on:
-  push:
-    branches: [ main ]
+    push:
+        branches: [main]
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+    deploy:
+        runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v4
+        steps:
+            - uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '20'
 
-    - name: Cache dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: ${{ runner.OS }}-npm-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.OS }}-npm-
+            - name: Cache dependencies
+              uses: actions/cache@v3
+              with:
+                  path: ~/.npm
+                  key: ${{ runner.OS }}-npm-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.OS }}-npm-
 
-    - name: Install dependencies
-      run: npm ci
+            - name: Install dependencies
+              run: npm ci
 
-    - name: Run lint
-      run: npm run lint
+            - name: Run lint
+              run: npm run lint
 
-    - name: Build Docker image
-      run: docker build -t nextjs-app .
+            - name: Build Docker image
+              run: docker build -t nextjs-app .
 
-    - name: Save Docker image
-      run: docker save nextjs-app > nextjs-app.tar
+            - name: Save Docker image
+              run: docker save nextjs-app > nextjs-app.tar
 
-    - name: Copy Docker image to EC2
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USER }}
-        key: ${{ secrets.SSH_KEY }}
-        source: "nextjs-app.tar"
-        target: "/home/${{ secrets.USER }}/danum-next"
+            - name: Copy Docker image to EC2
+              uses: appleboy/scp-action@master
+              with:
+                  host: ${{ secrets.HOST }}
+                  username: ${{ secrets.USER }}
+                  key: ${{ secrets.SSH_KEY }}
+                  source: 'nextjs-app.tar'
+                  target: '/home/${{ secrets.USER }}/danum-next'
 
-
-    - name: Deploy to EC2
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USER }}
-        key: ${{ secrets.SSH_KEY }}
-        script: |
-          sudo docker load < /home/${{ secrets.USER }}/danum-next/nextjs-app.tar
-          sudo docker stop nextjs-app || true
-          sudo docker rm nextjs-app || true
-          sudo docker run -d --name nextjs-app -p 3000:3000 nextjs-app
-          sudo docker image prune -f
+            - name: Deploy to EC2
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.HOST }}
+                  username: ${{ secrets.USER }}
+                  key: ${{ secrets.SSH_KEY }}
+                  script: |
+                      sudo docker load < /home/${{ secrets.USER }}/danum-next/nextjs-app.tar
+                      sudo docker stop nextjs-app || true
+                      sudo docker rm nextjs-app || true
+                      sudo docker run -d --name nextjs-app -p 3000:3000 \
+                        -e NEXT_PUBLIC_BASE_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }} \
+                        nextjs-app
+                      sudo docker image prune -f
