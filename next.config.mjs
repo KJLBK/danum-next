@@ -4,8 +4,7 @@ const nextConfig = {
             {
                 source: '/api/:slug*',
                 destination:
-                    process.env.NEXT_PUBLIC_BASE_URL +
-                    ':slug*',
+                    `${process.env.NEXT_PUBLIC_BASE_URL}:slug*`,
             },
         ];
     },
