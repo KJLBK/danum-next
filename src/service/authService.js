@@ -20,16 +20,15 @@ export default async function login(email, password) {
       throw new Error("Login failed");
     }
 
-    const { token } = await res.json();
+        const token = await res.text();
 
-    // Access Token을 HttpOnly 쿠키에 저장 (클라이언트 측에서 접근 불가)
-    document.cookie = `accessToken=${token}; HttpOnly; Secure; SameSite=Strict; Path=/`;
+        // Access Token을 localStorage 저장
+        localStorage.setItem('accessToken', token);
+        // JWT에서 사용자 정보 추출
+        const user = jwtDecode(token);
+        return { user }; // JWT 토큰과 디코딩된 사용자 정보 반환
+    } catch (err) {
+        throw new Error(err.message);
+    }
 
-    // JWT에서 사용자 정보 추출
-    const user = jwtDecode(token);
-
-    return { token, user }; // JWT 토큰과 디코딩된 사용자 정보 반환
-  } catch (err) {
-    throw new Error(err.message);
-  }
 }
