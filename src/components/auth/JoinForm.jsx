@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Input from '../common/Input';
 import Button from '../common/Button';
 import join from '../../service/join';
+import KakaoMap from '../../app/map/page'; // KakaoMap 컴포넌트를 가져옴
 
 export default function JoinForm() {
   const [email, setEmail] = useState('');
@@ -11,11 +12,19 @@ export default function JoinForm() {
   const [passwordCheck, setPasswordCheck] = useState('');
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
+  const [location, setLocation] = useState({ latitude: null, longitude: null }); // 위도, 경도 저장
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await join(email, password, phone, name);
+      const response = await join(
+        email,
+        password,
+        phone,
+        name
+        // location.latitude,
+        // location.longitude
+      );
       console.log(response);
     } catch (err) {
       console.log('회원가입 실패');
@@ -60,6 +69,8 @@ export default function JoinForm() {
           placeholder='이름'
           required
         />
+        <KakaoMap onLocationChange={setLocation} />{' '}
+        {/* KakaoMap에서 위도/경도 받기 */}
         <Button type='submit'>회원가입</Button>
       </form>
     </>
