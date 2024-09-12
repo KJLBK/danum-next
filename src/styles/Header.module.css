@@ -1,0 +1,20 @@
+.header-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.header-ul {
+    display: flex;
+    font-size: 1rem;
+    gap: 1.5rem;
+}
+
+/* ~ 551 px  반응형으로 조져야함*/
+
+.text-primary-basic {
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+}
