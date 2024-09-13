@@ -4,6 +4,9 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import styles from '../../styles/Header.module.css';
 
+import AlarmIcon from '../../../public/bell.svg';
+import SearchIcon from '../../../public/search.svg';
+
 export default function Header() {
     const pathname = usePathname();
 
@@ -44,8 +47,9 @@ export default function Header() {
                     </li>
                 </ul>
                 <ul className={styles['header-ul']}>
-                    <li>찾기</li>
-                    <li>알림</li>
+                    {/* TO DO: 기능구현 */}
+                    <SearchIcon />
+                    <AlarmIcon />
                     <li>유저</li>
                 </ul>
             </div>
