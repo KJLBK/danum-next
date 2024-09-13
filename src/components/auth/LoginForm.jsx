@@ -7,7 +7,7 @@ import login from '../../service/authService';
 import { useAuthStore } from '../../store/authStore';
 import { useRouter } from 'next/navigation';
 
-export default function LoginForm({ redirect }) {
+export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
