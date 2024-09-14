@@ -12,23 +12,43 @@ export default function JoinForm() {
   const [passwordCheck, setPasswordCheck] = useState('');
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
-  const [location, setLocation] = useState({ latitude: null, longitude: null }); // 위도, 경도 저장
+  const [latitude, setLatitude] = useState(''); // 위도 저장
+  const [longitude, setLongitude] = useState(''); // 경도 저장
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const parsedLatitude = parseFloat(latitude);
+    const parsedLongitude = parseFloat(longitude);
+
+    console.log('제출한 데이터:', {
+      email,
+      password,
+      phone,
+      name,
+      latitude,
+      longitude,
+    });
+
     try {
       const response = await join(
         email,
         password,
         phone,
-        name
-        // location.latitude,
-        // location.longitude
+        name,
+        parsedLatitude, // double 타입으로 변환된 위도
+        parsedLongitude // double 타입으로 변환된 경도
       );
       console.log(response);
     } catch (err) {
       console.log('회원가입 실패');
     }
+  };
+
+  // KakaoMap에서 위치 변경 시 위도와 경도를 각각 업데이트
+  const handleLocationChange = (location) => {
+    setLatitude(location.latitude);
+    setLongitude(location.longitude);
   };
 
   return (
@@ -69,9 +89,11 @@ export default function JoinForm() {
           placeholder='이름'
           required
         />
-        <KakaoMap onLocationChange={setLocation} />{' '}
+        <KakaoMap onLocationChange={handleLocationChange} />{' '}
         {/* KakaoMap에서 위도/경도 받기 */}
-        <Button type='submit'>회원가입</Button>
+        <Button type='submit' disabled={!latitude || !longitude}>
+          회원가입
+        </Button>
       </form>
     </>
   );
