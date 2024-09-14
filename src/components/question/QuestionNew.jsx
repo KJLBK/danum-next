@@ -1,13 +1,13 @@
-"use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import questionNew from "../../../service/question/questionNew";
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import questionNew from '../../service/question/questionNew';
 export default function QuestionNew() {
   const [formData, setFormData] = useState({
-    email: "",
-    title: "",
-    content: "",
-    createId: "",
+    email: '',
+    title: '',
+    content: '',
+    createId: '',
   });
 
   const router = useRouter();
@@ -25,12 +25,12 @@ export default function QuestionNew() {
     try {
       const response = await questionNew(formData);
       setFormData({
-        email: "",
-        title: "",
-        content: "",
-        createId: "",
+        email: '',
+        title: '',
+        content: '',
+        createId: '',
       });
-      router.push("/");
+      router.push('/');
     } catch (err) {
       console.log(err);
     }
@@ -41,38 +41,38 @@ export default function QuestionNew() {
       <h2>글쓰기 페이지</h2>
       <form onSubmit={onSubmit}>
         <div>
-          <label className="email">이메일</label>
+          <label className='email'>이메일</label>
           <input
-            type="email"
-            id="email"
-            name="email"
+            type='email'
+            id='email'
+            name='email'
             value={formData.email}
             onChange={onChangeData}
             required
           />
         </div>
         <div>
-          <label className="title">제목</label>
+          <label className='title'>제목</label>
           <input
-            type="text"
-            id="title"
-            name="title"
+            type='text'
+            id='title'
+            name='title'
             value={formData.title}
             onChange={onChangeData}
             required
           />
         </div>
         <div>
-          <label className="content">내용</label>
+          <label className='content'>내용</label>
           <textarea
-            id="content"
-            name="content"
+            id='content'
+            name='content'
             value={formData.content}
             onChange={onChangeData}
             required
           />
         </div>
-        <button type="submit">작성</button>
+        <button type='submit'>작성</button>
       </form>
     </div>
   );

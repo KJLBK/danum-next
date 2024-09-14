@@ -1,4 +1,4 @@
-import QuestionShowForm from "../../components/auth/question/QuestionShowForm";
+import QuestionShowForm from '../../components/question/QuestionShowForm';
 
 export default function QuestionPage() {
   return (

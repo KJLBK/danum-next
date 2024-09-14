@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import questionShow from "../../../service/question/questionShow";
+import { useEffect, useState } from 'react';
+import questionShow from '../../service/question/questionShow';
 
 export default function QuestionShowForm() {
   const [data, setData] = useState([]);
@@ -12,7 +12,7 @@ export default function QuestionShowForm() {
         setData(response); // 가져온 데이터 상태 업데이트
         console.log(data);
       } catch (err) {
-        console.error("Error:", err);
+        console.error('Error:', err);
       }
     };
     fetchData();
