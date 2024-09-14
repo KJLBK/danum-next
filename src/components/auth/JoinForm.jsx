@@ -21,15 +21,6 @@ export default function JoinForm() {
     const parsedLatitude = parseFloat(latitude);
     const parsedLongitude = parseFloat(longitude);
 
-    console.log('제출한 데이터:', {
-      email,
-      password,
-      phone,
-      name,
-      latitude,
-      longitude,
-    });
-
     try {
       const response = await join(
         email,

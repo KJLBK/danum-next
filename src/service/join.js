@@ -8,9 +8,6 @@ export default async function join(
 ) {
   let res;
 
-  console.log('Latitude:', latitude);
-  console.log('Longitude:', longitude);
-
   try {
     res = await fetch('/api/member/join', {
       method: 'POST',
