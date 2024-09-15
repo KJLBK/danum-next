@@ -5,25 +5,36 @@ import Input from '../common/Input';
 import Button from '../common/Button';
 import login from '../../service/authService';
 import { useAuthStore } from '../../store/authStore';
+import { useRouter } from 'next/navigation';
 
 export default function LoginForm() {
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const setUser = useAuthStore((state) => state.setUser);
+  const { setAuth } = useAuthStore();
+  const router = useRouter();
+
 
   // 로그인 로직 셋팅
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const { token, user } = await login(email, password);
-      setUser(user);
-      Router.push('/');
-    } catch (err) {
-      setError('로그인 실패 : ' + err.message);
-    }
+
+      try {
+          const { user } = await login(email, password);
+
+          const date = new Date(
+              user.exp * 1000
+          ).toLocaleString();
+
+          setAuth(user.sub, user.role[0].authority, date);
+          router.push('/');
+      } catch (err) {
+          setError('로그인 실패 : ' + err.message);
+      }
   };
+
 
   return (
     <>

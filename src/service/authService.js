@@ -20,16 +20,34 @@ export default async function login(email, password) {
             throw new Error('Login failed');
         }
 
-        const { token } = await res.json();
-
-        // Access Token을 HttpOnly 쿠키에 저장 (클라이언트 측에서 접근 불가)
-        document.cookie = `accessToken=${token}; HttpOnly; Secure; SameSite=Strict; Path=/`;
+        // Access Token을 localStorage 저장
+        const token = await res.text();
+        localStorage.setItem('accessToken', token);
 
         // JWT에서 사용자 정보 추출
         const user = jwtDecode(token);
-
-        return { token, user }; // JWT 토큰과 디코딩된 사용자 정보 반환
+        return { user }; // JWT 토큰과 디코딩된 사용자 정보 반환
     } catch (err) {
         throw new Error(err.message);
+    }
+}
+
+// 로그아웃 로직
+
+// Test 로직
+export async function checkAuth(RefreshToken) {
+    try {
+        const res = await fetch('/api/auth/refresh', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${RefreshToken}`,
+            },
+        });
+        const accessToken = await res.text();
+        localStorage.setItem('accessToken', accessToken);
+        console.log(jwtDecode(accessToken));
+    } catch (error) {
+        throw new Error(error.message);
     }
 }
