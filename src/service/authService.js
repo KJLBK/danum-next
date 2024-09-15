@@ -1,6 +1,7 @@
 import { jwtDecode } from 'jwt-decode';
+import { useAuthStore } from '../store/authStore';
 
-export default async function login(email, password) {
+export async function login(email, password) {
     try {
         /* 
             Endpoint : '/member/login'
@@ -33,6 +34,18 @@ export default async function login(email, password) {
 }
 
 // 로그아웃 로직
+
+export async function logout(clearAuth) {
+    try {
+        await fetch('/api/logout', {
+            method: 'GET',
+        });
+        localStorage.removeItem('accessToken');
+        clearAuth();
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
 
 // Test 로직
 export async function checkAuth(RefreshToken) {
