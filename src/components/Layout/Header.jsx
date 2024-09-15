@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { useAuthStore } from '../../store/authStore';
 import Link from 'next/link';
 import styles from '../../styles/Header.module.css';
 
@@ -8,6 +9,8 @@ import AlarmIcon from '../../../public/bell.svg';
 import SearchIcon from '../../../public/search.svg';
 
 export default function Header() {
+    const { user, isLoggedIn } = useAuthStore();
+    console.log(user, isLoggedIn);
     const pathname = usePathname();
 
     const isActive = (path) => {
@@ -24,7 +27,7 @@ export default function Header() {
             <div className={styles['header-div']}>
                 <ul className={styles['header-ul']}>
                     <li>
-                        <Link href="/">danum</Link>
+                        <a href="/">danum</a>
                     </li>
                     <li className={isActive('/')}>
                         <Link href="/">홈</Link>
