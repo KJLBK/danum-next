@@ -1,5 +1,4 @@
 import { jwtDecode } from 'jwt-decode';
-import { useAuthStore } from '../store/authStore';
 
 export async function login(email, password) {
     try {
@@ -37,11 +36,17 @@ export async function login(email, password) {
 
 export async function logout(clearAuth) {
     try {
+        const RefreshToken =
+            localStorage.getItem('accessToken'); // RefreshToken을 localStorage에서 가져옴
+        clearAuth();
+        localStorage.removeItem('accessToken');
         await fetch('/api/logout', {
             method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${RefreshToken}`,
+            },
         });
-        localStorage.removeItem('accessToken');
-        clearAuth();
     } catch (err) {
         throw new Error(err.message);
     }

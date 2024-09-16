@@ -3,15 +3,23 @@
 import { usePathname } from 'next/navigation';
 import { useAuthStore } from '../../store/authStore';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import styles from '../../styles/Header.module.css';
 
 import AlarmIcon from '../../../public/bell.svg';
 import SearchIcon from '../../../public/search.svg';
+import LoginButton from './Header/LoginButton';
+import { LogoutButton } from './Header/LogoutButton';
 
 export default function Header() {
     const { user, isLoggedIn } = useAuthStore();
-    console.log(user, isLoggedIn);
     const pathname = usePathname();
+    const [hydrated, setHydrated] = useState(false); // Hydration 상태 관리
+
+    // 클라이언트에서만 상태를 업데이트
+    useEffect(() => {
+        setHydrated(true);
+    }, []);
 
     const isActive = (path) => {
         if (pathname === path) {
@@ -50,10 +58,14 @@ export default function Header() {
                     </li>
                 </ul>
                 <ul className={styles['header-ul']}>
-                    {/* TO DO: 기능구현 */}
                     <SearchIcon />
                     <AlarmIcon />
-                    <li>유저</li>
+                    {/* hydration이 완료된 후에만 상태 확인 */}
+                    {hydrated && !isLoggedIn ? (
+                        <LoginButton />
+                    ) : (
+                        hydrated && <LogoutButton />
+                    )}
                 </ul>
             </div>
         </header>
