@@ -1,6 +1,6 @@
 import { jwtDecode } from 'jwt-decode';
 
-export default async function login(email, password) {
+export async function login(email, password) {
     try {
         /* 
             Endpoint : '/member/login'
@@ -33,6 +33,24 @@ export default async function login(email, password) {
 }
 
 // 로그아웃 로직
+
+export async function logout(clearAuth) {
+    try {
+        const RefreshToken =
+            localStorage.getItem('accessToken'); // RefreshToken을 localStorage에서 가져옴
+        clearAuth();
+        localStorage.removeItem('accessToken');
+        await fetch('/api/logout', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${RefreshToken}`,
+            },
+        });
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
 
 // Test 로직
 export async function checkAuth(RefreshToken) {

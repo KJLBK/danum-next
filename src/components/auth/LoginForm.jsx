@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Input from '../common/Input';
 import Button from '../common/Button';
-import login from '../../service/authService';
+import { login } from '../../service/authService';
 import { useAuthStore } from '../../store/authStore';
 import { useRouter } from 'next/navigation';
 
