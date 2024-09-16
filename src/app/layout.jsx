@@ -2,8 +2,10 @@ import './globals.css';
 import Header from '../components/Layout/Header';
 
 export const metadata = {
-    title: '다눔',
-    description: '지식 커뮤니티 플랫폼, danum(다눔)',
+    title: '다눔: 지식 커뮤니티 플랫폼',
+    siteName: 'DANUM | 다눔',
+    description: '지식 커뮤니티 플랫폼, 다눔(danum)',
+    ogImage: '/public/danum-logo.png',
 };
 
 export default function RootLayout({ children }) {
