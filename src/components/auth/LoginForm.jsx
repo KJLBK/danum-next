@@ -21,7 +21,7 @@ export default function LoginForm() {
         try {
             const { user } = await login(email, password);
 
-            const expiration = new expiration(
+            const expiration = new Date(
                 user.exp * 1000
             ).toLocaleString();
 
