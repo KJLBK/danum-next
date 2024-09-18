@@ -6,15 +6,20 @@ export const useAuthStore = create(
         (set) => ({
             user: null,
             role: null,
-            date: null,
+            expiration: null,
             isLoggedIn: false,
-            setAuth: (user, role, date) =>
-                set({ user, role, date, isLoggedIn: true }),
+            setAuth: (user, role, expiration) =>
+                set({
+                    user,
+                    role,
+                    expiration,
+                    isLoggedIn: true,
+                }),
             clearAuth: () =>
                 set({
                     user: null,
                     role: null,
-                    date: null,
+                    expiration: null,
                     isLoggedIn: false,
                 }),
         }),
