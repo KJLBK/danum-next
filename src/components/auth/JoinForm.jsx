@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Input from '../common/Input';
 import Button from '../common/Button';
-import { join } from '../../service/join';
+import { join } from '../../service/authService';
 import KakaoMap from '../../app/map/page'; // KakaoMap 컴포넌트를 가져옴
 
 export default function JoinForm() {
