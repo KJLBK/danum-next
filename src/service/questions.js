@@ -63,3 +63,30 @@ export async function questionShow() {
         return [];
     }
 }
+
+//질문이야기 게시판 상세 조회 로직
+export async function questionDetail(questionId) {
+    const token =
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU';
+
+    try {
+        const response = await fetch(
+            `/api/board/question/show/${questionId}`,
+            {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching data', error);
+        return [];
+    }
+}
