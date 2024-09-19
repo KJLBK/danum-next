@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { questionShow } from '../../service/questions';
+import { questionShow } from '../../service/questionService';
 import QuestionItem from '../../components/question/QuestionItem';
 
 export default function QuestionPage() {

@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { questionNew } from '../../service/questions';
+import { questionNew } from '../../service/questionService';
 export default function QuestionNew() {
     const [formData, setFormData] = useState({
         email: '',

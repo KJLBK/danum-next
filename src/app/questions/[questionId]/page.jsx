@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { questionDetail } from '../../../service/questions';
+import {
+    questionDetail,
+    questionCommentShow,
+} from '../../../service/questionService';
 import QuestionCommentItem from '../../../components/question/QuestionCommentItem';
-import { questionCommentShow } from '../../../service/questionComments';
 
 export default function QuestionsViewPage() {
     const [data, setData] = useState([]);
