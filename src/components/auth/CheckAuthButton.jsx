@@ -1,6 +1,6 @@
 'use client';
 
-import { checkAuth } from '../../service/authService';
+import { checkAuth } from '../../service/account/authService';
 
 export default function CheckAuthButton({ RefreshToken }) {
     const handleAuthCheck = () => {
