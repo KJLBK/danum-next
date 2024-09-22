@@ -21,6 +21,7 @@ export default function LoginForm() {
         try {
             const { user } = await login(email, password);
 
+
             const expiration = new Date(
                 user.exp * 1000
             ).toLocaleString();
@@ -29,7 +30,7 @@ export default function LoginForm() {
                 user.sub,
                 user.role[0].authority,
                 expiration
-            );
+
             router.push('/');
         } catch (err) {
             setError('로그인 실패 : ' + err.message);
@@ -40,6 +41,7 @@ export default function LoginForm() {
         <>
             <form onSubmit={handleSubmit}>
                 <Input
+
                     type="text"
                     value={email}
                     onChange={(e) =>
