@@ -16,7 +16,10 @@ export default function ChatRoomPage() {
     const { user } = useAuthStore();
     const messageEndRef = useRef(null);
     const stompClient = useRef(null);
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken =
+        typeof window !== 'undefined'
+            ? localStorage.getItem('accessToken')
+            : null;
 
     useEffect(() => {
         loadRoomInfo();
@@ -24,7 +27,7 @@ export default function ChatRoomPage() {
         // 500 -> token error
         const socket = new SockJS(`/api/ws-stomp`);
         console.log('2');
-        const stompClient = new Client({
+        stompClient.current = new Client({
             webSocketFactory: () => socket,
             connectHeaders: {
                 Authorization: `Bearer ${accessToken}`,
@@ -35,7 +38,7 @@ export default function ChatRoomPage() {
                     str
                 ),
             onConnect: () => {
-                stompClient.subscribe(
+                stompClient.current.subscribe(
                     `/sub/chat/room/${roomId}`,
                     (message) => {
                         const receivedMessage = JSON.parse(
@@ -49,7 +52,7 @@ export default function ChatRoomPage() {
                 );
 
                 // Send ENTER message
-                stompClient.publish({
+                stompClient.current.publish({
                     destination: '/app/chat/message',
                     body: JSON.stringify({
                         type: 'ENTER',
@@ -61,10 +64,10 @@ export default function ChatRoomPage() {
             },
         });
 
-        stompClient.activate();
+        stompClient.current.activate();
 
         return () => {
-            stompClient.deactivate();
+            stompClient.current.deactivate();
         };
     }, [roomId]);
 
@@ -73,7 +76,7 @@ export default function ChatRoomPage() {
             const info = await fetchRoomInfo(roomId);
             console.log('[roomid]-page.jsx 68', info);
             setRoomInfo(info);
-            console.log('[roomid]-page.jsx 82', roomInfo);
+            console.log('[roomid]-page.jsx 79', roomInfo);
         } catch (error) {
             console.error(
                 'ERR(/app/chat/[roomId]/page.jsx:loadRoomInfo):' +
@@ -88,7 +91,7 @@ export default function ChatRoomPage() {
 
         if (stompClient.current) {
             stompClient.current.publish({
-                destination: '/app/chat/message',
+                destination: '/pub/chat/message',
                 body: JSON.stringify({
                     type: 'TALK',
                     roomId: roomId,

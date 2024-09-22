@@ -25,7 +25,9 @@ export async function createChatRoom(name) {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify(name),
+        body: {
+            name: `${name}`,
+        },
     });
 
     if (!res.ok) {
@@ -38,6 +40,7 @@ export async function createChatRoom(name) {
 export async function fetchRoomInfo(roomId) {
     const accessToken = localStorage.getItem('accessToken');
     const res = await fetch(`/api/chat/room/${roomId}`, {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`,

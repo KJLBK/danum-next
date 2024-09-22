@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { fetchChatRooms } from '../../service/chatService';
+import { createChatRoom } from '../../service/chatService';
 import ChatRoomList from '../../components/chat/ChatRoomList';
+import { useAuthStore } from '../../store/authStore';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 
@@ -10,10 +12,11 @@ import Button from '../../components/common/Button';
 export default function ChatPage() {
     const [rooms, setRooms] = useState([]);
     const [newRoomName, setNewRoomName] = useState('');
+    const { user } = useAuthStore();
 
     useEffect(() => {
         loadRooms();
-    });
+    }, []);
 
     // error
     const loadRooms = async () => {
@@ -33,8 +36,8 @@ export default function ChatPage() {
         e.preventDefault();
         if (!newRoomName.trim()) return;
         try {
-            const newRoom =
-                await createChatRoom(newRoomName);
+            const newRoom = await createChatRoom(user);
+            console.log(newRoom);
             setRooms([...rooms, newRoom]);
             setNewRoomName('');
         } catch (error) {
