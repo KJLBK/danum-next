@@ -21,11 +21,16 @@ export default function LoginForm() {
         try {
             const { user } = await login(email, password);
 
-            const date = new Date(
+
+            const expiration = new Date(
                 user.exp * 1000
             ).toLocaleString();
 
-            setAuth(user.sub, user.role[0].authority, date);
+            setAuth(
+                user.sub,
+                user.role[0].authority,
+                expiration
+
             router.push('/');
         } catch (err) {
             setError('로그인 실패 : ' + err.message);
@@ -36,24 +41,25 @@ export default function LoginForm() {
         <>
             <form onSubmit={handleSubmit}>
                 <Input
-                    type='text'
+
+                    type="text"
                     value={email}
                     onChange={(e) =>
                         setEmail(e.target.value)
                     }
-                    placeholder='이메일을 입력해 주세요'
+                    placeholder="이메일을 입력해 주세요"
                     required
                 />
                 <Input
-                    type='password'
+                    type="password"
                     value={password}
                     onChange={(e) =>
                         setPassword(e.target.value)
                     }
-                    placeholder='비밀번호를 입력해 주세요'
+                    placeholder="비밀번호를 입력해 주세요"
                     required
                 />
-                <Button type='submit'>로그인</Button>
+                <Button type="submit">로그인</Button>
             </form>
             {error && (
                 <p style={{ color: 'red' }}>{error}</p>
