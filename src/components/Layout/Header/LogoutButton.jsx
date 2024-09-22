@@ -1,4 +1,4 @@
-import { logout } from '../../../service/account/authService';
+import { logout } from '../../../service/authService';
 import { useAuthStore } from '../../../store/authStore';
 import Button from '../../common/Button';
 
