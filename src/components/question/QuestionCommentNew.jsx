@@ -1,25 +1,15 @@
 import { useState, useEffect } from 'react';
 import { questionCommentNew } from '../../service/questionService';
-import { jwtDecode } from 'jwt-decode';
 
-export default function QuestionCommentNew({ questionId }) {
+export default function QuestionCommentNew({
+    questionId,
+    email,
+}) {
     const [formData, setFormData] = useState({
         question_id: questionId, // 고정된 question_id
-        member_email: '', // 토큰에서 가져올 예정
+        member_email: email,
         content: '',
     });
-
-    useEffect(() => {
-        // 토큰에서 이메일을 추출하는 로직
-        const token = localStorage.getItem('accessToken'); // localStorage에 저장된 토큰 (예시)
-        if (token) {
-            const decodedToken = jwtDecode(token); // 토큰 디코딩
-            setFormData((prevData) => ({
-                ...prevData,
-                member_email: decodedToken.sub, // 토큰에서 이메일 가져오기
-            }));
-        }
-    }, []);
 
     const onChangeData = (e) => {
         const { name, value } = e.target;

@@ -154,3 +154,34 @@ export async function questionCommentNew({
         return [];
     }
 }
+
+// 질문이야기 댓글 삭제 로직
+export async function questionCommentDelete(comment_id) {
+    const token =
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU';
+
+    try {
+        const response = await fetch(
+            `/api/board/question/comment/${comment_id}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    comment_id,
+                }),
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        alert('삭제 완료');
+        return response;
+    } catch (error) {
+        console.error('Error fetching data', error);
+        return [];
+    }
+}
