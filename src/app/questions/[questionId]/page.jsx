@@ -7,12 +7,12 @@ import {
     questionCommentShow,
 } from '../../../service/questionService';
 import QuestionCommentItem from '../../../components/question/QuestionCommentItem';
+import QuestionCommentNew from '../../../components/question/QuestionCommentNew';
 
 export default function QuestionsViewPage() {
     const [data, setData] = useState([]);
     const [comment, setComment] = useState([]);
     const params = useParams();
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -47,6 +47,9 @@ export default function QuestionsViewPage() {
             <p>내용 : {data.content}</p>
             <hr />
             <h2>댓글</h2>
+            <QuestionCommentNew
+                questionId={params.questionId}
+            />
             {comment.map((item) => (
                 <QuestionCommentItem
                     key={item.comment_id}

@@ -117,3 +117,40 @@ export async function questionCommentShow(questionId) {
         return [];
     }
 }
+
+// 질문이야기 댓글 생성 로직
+export async function questionCommentNew({
+    question_id,
+    member_email,
+    content,
+}) {
+    const token =
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU';
+
+    try {
+        const response = await fetch(
+            '/api/board/question/comment/new',
+            {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    question_id,
+                    member_email,
+                    content,
+                }),
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        alert('생성 완료');
+        return response;
+    } catch (error) {
+        console.error('Error fetching data', error);
+        return [];
+    }
+}
