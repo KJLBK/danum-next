@@ -32,27 +32,33 @@ export default function QuestionNewPage() {
     useEffect(() => {
         const submitForm = async () => {
             if (isSubmitting) {
-                try {
-                    // Check if editorRef is defined
-                    if (editorRef.current) {
-                        const content =
-                            editorRef.current.getContent();
-                        await questionNew({
-                            ...formData,
-                            content,
-                        });
-                        setFormData({
-                            email: '',
-                            title: '',
-                            content: '',
-                            createId: '',
-                        });
-                        router.push('/questions');
+                // Check if the code is running in the browser
+                if (typeof window !== 'undefined') {
+                    try {
+                        // Check if editorRef is defined
+                        if (editorRef.current) {
+                            const content =
+                                editorRef.current.getContent();
+                            await questionNew({
+                                ...formData,
+                                content,
+                            });
+                            setFormData({
+                                email: '',
+                                title: '',
+                                content: '',
+                                createId: '',
+                            });
+                            router.push('/questions');
+                        }
+                    } catch (err) {
+                        console.error(
+                            'Submission error:',
+                            err
+                        );
+                    } finally {
+                        setIsSubmitting(false); // Reset the submitting state
                     }
-                } catch (err) {
-                    console.error('Submission error:', err);
-                } finally {
-                    setIsSubmitting(false); // Reset the submitting state
                 }
             }
         };
