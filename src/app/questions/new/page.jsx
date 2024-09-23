@@ -26,15 +26,19 @@ export default function QuestionNewPage() {
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
-            const content = editorRef.current.getContent();
-            await questionNew({ ...formData, content });
-            setFormData({
-                email: '',
-                title: '',
-                content: '',
-                createId: '',
-            });
-            router.push('/questions');
+            // editorRef가 정의되어 있는지 확인
+            if (editorRef.current) {
+                const content =
+                    editorRef.current.getContent();
+                await questionNew({ ...formData, content });
+                setFormData({
+                    email: '',
+                    title: '',
+                    content: '',
+                    createId: '',
+                });
+                router.push('/questions');
+            }
         } catch (err) {
             console.error('Submission error:', err);
         }
@@ -70,12 +74,7 @@ export default function QuestionNewPage() {
                     <label htmlFor='content'>내용</label>
                     <ToastEditor
                         ref={editorRef}
-                        setBody={(content) =>
-                            setFormData((prev) => ({
-                                ...prev,
-                                content,
-                            }))
-                        }
+                        initialContent={formData.content} // 초기 콘텐츠 설정
                     />
                 </div>
                 <button type='submit'>작성</button>

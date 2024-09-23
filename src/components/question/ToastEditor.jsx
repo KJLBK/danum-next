@@ -8,6 +8,7 @@ import '@toast-ui/editor/toastui-editor.css';
 
 const ToastEditor = forwardRef(
     ({ initialContent = '' }, ref) => {
+        // 기본값 설정
         const editorRef = useRef();
 
         useImperativeHandle(ref, () => ({
@@ -36,14 +37,11 @@ const ToastEditor = forwardRef(
                 height='500px'
                 initialEditType='wysiwyg'
                 previewStyle='vertical'
-                initialValue={initialContent}
+                initialValue={initialContent} // 초기값 설정
                 hideModeSwitch='true'
             />
         );
     }
 );
-
-// displayName 추가
-ToastEditor.displayName = 'ToastEditor';
 
 export default ToastEditor;
