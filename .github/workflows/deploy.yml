@@ -21,9 +21,9 @@ jobs:
               uses: actions/cache@v3
               with:
                   path: ~/.npm
-                  key: ${{ runner.OS }}-npm-${{ hashFiles('**/package-lock.json') }}
+                  key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
                   restore-keys: |
-                      ${{ runner.OS }}-npm-
+                      ${{ runner.os }}-npm-
 
             - name: Install dependencies
               run: npm ci
@@ -55,13 +55,13 @@ jobs:
                   username: ${{secrets.USER}}
                   key: ${{secrets.SSH_KEY}}
                   script: |
-                      sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-                      sudo docker pull ${{ secrets.DOCKER_USERNAME }}/nextjs-app:latest
+                      sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+                      sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/nextjs-app:latest
                       sudo docker stop nextjs-app || true
                       sudo docker rm nextjs-app || true
                       sudo docker run -d --name nextjs-app -p 3000:3000 \
                         --env-file /home/${{ secrets.USER }}/nextjs-app/.env \
-                        ${{ secrets.DOCKER_USERNAME }}/nextjs-app:latest
+                        ${{ secrets.DOCKERHUB_USERNAME }}/nextjs-app:latest
                       sudo docker image prune -f
 
             # - name: Build Docker image
