@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { questionNew } from '../../../service/questionService';
 import { useRouter } from 'next/navigation';
+import { jwtDecode } from 'jwt-decode'; // jwtDecode를 올바르게 import
+import styles from './page.module.css'; // CSS 파일 import
 
 export default function QuestionNewPage() {
     const [formData, setFormData] = useState({
@@ -22,6 +24,19 @@ export default function QuestionNewPage() {
             setToastEditor(() => module.default);
         });
     }, []);
+
+    // 로컬 스토리지에서 JWT 토큰을 가져와 디코딩하는 useEffect
+    useEffect(() => {
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+            const decoded = jwtDecode(token);
+            setFormData((prevData) => ({
+                ...prevData,
+                email: decoded.sub,
+            }));
+            console.log(decoded.sub);
+        }
+    }, []); // 컴포넌트가 로드될 때 한 번 실행
 
     const onChangeData = (e) => {
         const { name, value } = e.target;
@@ -52,20 +67,9 @@ export default function QuestionNewPage() {
     };
 
     return (
-        <div>
+        <div className={styles.container}>
             <h2>글쓰기 페이지</h2>
             <form onSubmit={onSubmit}>
-                <div>
-                    <label htmlFor='email'>이메일</label>
-                    <input
-                        type='email'
-                        id='email'
-                        name='email'
-                        value={formData.email}
-                        onChange={onChangeData}
-                        required
-                    />
-                </div>
                 <div>
                     <label htmlFor='title'>제목</label>
                     <input
@@ -78,7 +82,6 @@ export default function QuestionNewPage() {
                     />
                 </div>
                 <div>
-                    <label htmlFor='content'>내용</label>
                     {ToastEditor && (
                         <ToastEditor
                             ref={editorRef}
