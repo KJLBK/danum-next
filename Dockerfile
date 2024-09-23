@@ -4,7 +4,7 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 # 패키지 파일 복사
-COPY package.json package-lock.json ./
+COPY package*.json ./
 
 # 환경 변수 설정
 ENV HUSKY=0
@@ -28,7 +28,7 @@ ENV NODE_ENV=production
 ENV HUSKY=0
 
 # 패키지 파일 복사
-COPY package.json package-lock.json ./
+COPY package*.json ./
 
 # 프로덕션 의존성 설치
 RUN npm ci --only=production --ignore-scripts
