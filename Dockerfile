@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # 종속성 설치 (clean install)
-RUN npm ci --only=productionnp
+RUN npm ci --only=production
 
 # 소스 코드 복사
 COPY . .
