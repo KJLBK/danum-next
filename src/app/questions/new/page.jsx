@@ -1,6 +1,5 @@
 'use client';
 
-import ToastEditor from '../../../components/question/ToastEditor';
 import { useState, useRef, useEffect } from 'react';
 import { questionNew } from '../../../service/questionService';
 import { useRouter } from 'next/navigation';
@@ -12,9 +11,17 @@ export default function QuestionNewPage() {
         content: '',
         createId: '',
     });
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [ToastEditor, setToastEditor] = useState(null);
     const router = useRouter();
     const editorRef = useRef();
+
+    useEffect(() => {
+        import(
+            '../../../components/question/ToastEditor'
+        ).then((module) => {
+            setToastEditor(() => module.default);
+        });
+    }, []);
 
     const onChangeData = (e) => {
         const { name, value } = e.target;
@@ -24,54 +31,32 @@ export default function QuestionNewPage() {
         }));
     };
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitting(true);
-    };
-
-    useEffect(() => {
-        const submitForm = async () => {
-            if (isSubmitting) {
-                // Check if the code is running in the browser
-                if (typeof window !== 'undefined') {
-                    try {
-                        // Check if editorRef is defined
-                        if (editorRef.current) {
-                            const content =
-                                editorRef.current.getContent();
-                            await questionNew({
-                                ...formData,
-                                content,
-                            });
-                            setFormData({
-                                email: '',
-                                title: '',
-                                content: '',
-                                createId: '',
-                            });
-                            router.push('/questions');
-                        }
-                    } catch (err) {
-                        console.error(
-                            'Submission error:',
-                            err
-                        );
-                    } finally {
-                        setIsSubmitting(false); // Reset the submitting state
-                    }
-                }
+        try {
+            if (editorRef.current) {
+                const content =
+                    editorRef.current.getContent();
+                await questionNew({ ...formData, content });
+                setFormData({
+                    email: '',
+                    title: '',
+                    content: '',
+                    createId: '',
+                });
+                router.push('/questions');
             }
-        };
-
-        submitForm();
-    }, [isSubmitting, formData, router]); // Dependencies to trigger the effect
+        } catch (err) {
+            console.error('Submission error:', err);
+        }
+    };
 
     return (
         <div>
-            <h2>Create a New Question</h2>
+            <h2>글쓰기 페이지</h2>
             <form onSubmit={onSubmit}>
                 <div>
-                    <label htmlFor='email'>Email</label>
+                    <label htmlFor='email'>이메일</label>
                     <input
                         type='email'
                         id='email'
@@ -82,7 +67,7 @@ export default function QuestionNewPage() {
                     />
                 </div>
                 <div>
-                    <label htmlFor='title'>Title</label>
+                    <label htmlFor='title'>제목</label>
                     <input
                         type='text'
                         id='title'
@@ -93,13 +78,17 @@ export default function QuestionNewPage() {
                     />
                 </div>
                 <div>
-                    <label htmlFor='content'>Content</label>
-                    <ToastEditor
-                        ref={editorRef}
-                        initialContent={formData.content} // Set initial content
-                    />
+                    <label htmlFor='content'>내용</label>
+                    {ToastEditor && (
+                        <ToastEditor
+                            ref={editorRef}
+                            initialContent={
+                                formData.content
+                            }
+                        />
+                    )}
                 </div>
-                <button type='submit'>Submit</button>
+                <button type='submit'>작성</button>
             </form>
         </div>
     );
