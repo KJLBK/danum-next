@@ -26,7 +26,7 @@ export default function QuestionNewPage() {
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
-            // editorRef가 정의되어 있는지 확인
+            // Check if editorRef is defined
             if (editorRef.current) {
                 const content =
                     editorRef.current.getContent();
