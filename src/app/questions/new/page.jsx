@@ -1,7 +1,7 @@
 'use client';
 
 import ToastEditor from '../../../components/question/ToastEditor';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { questionNew } from '../../../service/questionService';
 import { useRouter } from 'next/navigation';
 
@@ -12,6 +12,7 @@ export default function QuestionNewPage() {
         content: '',
         createId: '',
     });
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
     const editorRef = useRef();
 
@@ -23,33 +24,48 @@ export default function QuestionNewPage() {
         }));
     };
 
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
-        try {
-            // Check if editorRef is defined
-            if (editorRef.current) {
-                const content =
-                    editorRef.current.getContent();
-                await questionNew({ ...formData, content });
-                setFormData({
-                    email: '',
-                    title: '',
-                    content: '',
-                    createId: '',
-                });
-                router.push('/questions');
-            }
-        } catch (err) {
-            console.error('Submission error:', err);
-        }
+        setIsSubmitting(true);
     };
+
+    useEffect(() => {
+        const submitForm = async () => {
+            if (isSubmitting) {
+                try {
+                    // Check if editorRef is defined
+                    if (editorRef.current) {
+                        const content =
+                            editorRef.current.getContent();
+                        await questionNew({
+                            ...formData,
+                            content,
+                        });
+                        setFormData({
+                            email: '',
+                            title: '',
+                            content: '',
+                            createId: '',
+                        });
+                        router.push('/questions');
+                    }
+                } catch (err) {
+                    console.error('Submission error:', err);
+                } finally {
+                    setIsSubmitting(false); // Reset the submitting state
+                }
+            }
+        };
+
+        submitForm();
+    }, [isSubmitting, formData, router]); // Dependencies to trigger the effect
 
     return (
         <div>
-            <h2>글쓰기 페이지</h2>
+            <h2>Create a New Question</h2>
             <form onSubmit={onSubmit}>
                 <div>
-                    <label htmlFor='email'>이메일</label>
+                    <label htmlFor='email'>Email</label>
                     <input
                         type='email'
                         id='email'
@@ -60,7 +76,7 @@ export default function QuestionNewPage() {
                     />
                 </div>
                 <div>
-                    <label htmlFor='title'>제목</label>
+                    <label htmlFor='title'>Title</label>
                     <input
                         type='text'
                         id='title'
@@ -71,13 +87,13 @@ export default function QuestionNewPage() {
                     />
                 </div>
                 <div>
-                    <label htmlFor='content'>내용</label>
+                    <label htmlFor='content'>Content</label>
                     <ToastEditor
                         ref={editorRef}
-                        initialContent={formData.content} // 초기 콘텐츠 설정
+                        initialContent={formData.content} // Set initial content
                     />
                 </div>
-                <button type='submit'>작성</button>
+                <button type='submit'>Submit</button>
             </form>
         </div>
     );
