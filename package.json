@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "@stomp/stompjs": "^7.0.0",
+        "@toast-ui/react-editor": "^3.2.3",
         "js-cookie": "^3.0.5",
         "jwt-decode": "^4.0.0",
         "next": "14.2.4",

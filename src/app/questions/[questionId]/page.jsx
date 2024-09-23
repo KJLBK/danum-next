@@ -9,6 +9,8 @@ import {
 } from '../../../service/questionService';
 import QuestionCommentItem from '../../../components/question/QuestionCommentItem';
 import QuestionCommentNew from '../../../components/question/QuestionCommentNew';
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+import { Viewer } from '@toast-ui/react-editor';
 
 export default function QuestionsViewPage() {
     const [data, setData] = useState([]);
@@ -64,7 +66,10 @@ export default function QuestionsViewPage() {
                 {data.email} | {data.created_at} |{' '}
                 {data.view_count}
             </p>
-            <p>내용 : {data.content}</p>
+            <Viewer
+                key={data.content}
+                initialValue={data.content}
+            />
             <hr />
             <h2>댓글</h2>
 
