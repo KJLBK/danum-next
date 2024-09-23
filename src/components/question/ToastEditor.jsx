@@ -43,4 +43,7 @@ const ToastEditor = forwardRef(
     }
 );
 
+// displayName 추가
+ToastEditor.displayName = 'ToastEditor';
+
 export default ToastEditor;
