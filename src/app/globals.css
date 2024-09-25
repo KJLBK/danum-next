@@ -46,3 +46,36 @@ a {
     color: inherit;
     text-decoration: inherit;
 }
+
+/* 데스크탑 우선 */
+@media (min-width: 1024px) {
+    body {
+        max-width: 960px;
+        margin: 0 auto;
+    }
+}
+
+/* 태블릿 및 작은 화면 */
+@media (max-width: 1024px) {
+    header,
+    footer {
+        font-size: 1.2em;
+    }
+
+    .content {
+        padding: 0.5em;
+    }
+}
+
+/* 모바일 우선 */
+@media (max-width: 768px) {
+    header,
+    footer {
+        font-size: 0.8rem;
+    }
+
+    body {
+        margin: 0;
+        padding: 0.5em;
+    }
+}
