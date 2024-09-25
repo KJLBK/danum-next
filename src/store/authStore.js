@@ -25,10 +25,21 @@ export const useAuthStore = create(
         }),
         {
             name: 'auth-storage',
-            storage:
-                typeof window !== 'undefined'
-                    ? localStorage
-                    : undefined, // SSR에서 localStorage가 없는 경우 처리
+            storage: {
+                getItem: (name) => {
+                    const item = localStorage.getItem(name);
+                    return item ? JSON.parse(item) : null;
+                },
+                setItem: (name, value) => {
+                    localStorage.setItem(
+                        name,
+                        JSON.stringify(value)
+                    );
+                },
+                removeItem: (name) => {
+                    localStorage.removeItem(name);
+                },
+            },
         }
     )
 );

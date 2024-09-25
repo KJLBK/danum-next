@@ -36,7 +36,7 @@ export async function login(email, password) {
 
 export async function logout(clearAuth) {
     try {
-        const RefreshToken =
+        const AccessToken =
             localStorage.getItem('accessToken'); // RefreshToken을 localStorage에서 가져옴
         clearAuth();
         localStorage.removeItem('accessToken');
@@ -44,7 +44,7 @@ export async function logout(clearAuth) {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${RefreshToken}`,
+                Authorization: `Bearer ${AccessToken}`,
             },
         });
     } catch (err) {
