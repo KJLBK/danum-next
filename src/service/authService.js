@@ -10,11 +10,16 @@ export async function login(email, password) {
                 RequestBody: LoginDto(email: String, 
                     password: String)
         */
-        const res = await fetch('/api/member/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password }),
-        });
+        const res = await fetch(
+            '/danum-backend/member/login',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            }
+        );
 
         if (!res.ok) {
             throw new Error('Login failed');
@@ -40,7 +45,7 @@ export async function logout(clearAuth) {
             localStorage.getItem('accessToken'); // RefreshToken을 localStorage에서 가져옴
         clearAuth();
         localStorage.removeItem('accessToken');
-        await fetch('/api/logout', {
+        await fetch('/danum-backend/logout', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -55,13 +60,16 @@ export async function logout(clearAuth) {
 // Test 로직
 export async function checkAuth(RefreshToken) {
     try {
-        const res = await fetch('/api/auth/refresh', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${RefreshToken}`,
-            },
-        });
+        const res = await fetch(
+            '/danum-backend/auth/refresh',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${RefreshToken}`,
+                },
+            }
+        );
         const accessToken = await res.text();
         localStorage.setItem('accessToken', accessToken);
         console.log(jwtDecode(accessToken));
@@ -82,7 +90,7 @@ export async function join(
     let res;
 
     try {
-        res = await fetch('/api/member/join', {
+        res = await fetch('/danum-backend/member/join', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

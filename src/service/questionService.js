@@ -10,7 +10,7 @@ export async function questionNew({
 
     try {
         const response = await fetch(
-            '/api/board/question/new',
+            '/danum-backend/board/question/new',
             {
                 method: 'POST',
                 headers: {
@@ -44,7 +44,7 @@ export async function questionShow() {
 
     try {
         const response = await fetch(
-            '/api/board/question/show',
+            '/danum-backend/board/question/show',
             {
                 method: 'GET',
                 headers: {
@@ -71,7 +71,7 @@ export async function questionDetail(questionId) {
 
     try {
         const response = await fetch(
-            `/api/board/question/show/${questionId}`,
+            `/danum-backend/board/question/show/${questionId}`,
             {
                 method: 'GET',
                 headers: {
@@ -98,7 +98,7 @@ export async function questionCommentShow(questionId) {
 
     try {
         const response = await fetch(
-            `/api/board/question/comment/show/${questionId}`,
+            `/danum-backend/board/question/comment/show/${questionId}`,
             {
                 method: 'GET',
                 headers: {
@@ -129,7 +129,7 @@ export async function questionCommentNew({
 
     try {
         const response = await fetch(
-            '/api/board/question/comment/new',
+            '/danum-backend/board/question/comment/new',
             {
                 method: 'POST',
                 headers: {
@@ -162,7 +162,7 @@ export async function questionCommentDelete(comment_id) {
 
     try {
         const response = await fetch(
-            `/api/board/question/comment/${comment_id}`,
+            `/danum-backend/board/question/comment/${comment_id}`,
             {
                 method: 'DELETE',
                 headers: {
@@ -193,7 +193,7 @@ export async function questionCommentUpdate(id, content) {
 
     try {
         const response = await fetch(
-            `/api/board/question/comment/update`,
+            `/danum-backend/board/question/comment/update`,
             {
                 method: 'PUT',
                 headers: {

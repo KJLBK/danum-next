@@ -5,7 +5,7 @@ export async function generateAI(message) {
         throw new Error('Access token is missing');
     }
     try {
-        const res = await fetch('/api/open-ai', {
+        const res = await fetch('/danum-backend/open-ai', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ export async function getMessage(createId) {
 
     try {
         const res = await fetch(
-            `/api/open-ai/${createId}`,
+            `/danum-backend/open-ai/${createId}`,
             {
                 method: 'GET',
                 headers: {
@@ -57,7 +57,7 @@ export async function closeAI(createId) {
 
     try {
         const res = await fetch(
-            `/api/open-ai/${createId}`,
+            `/danum-backend/open-ai/${createId}`,
             {
                 method: 'PATCH',
                 headers: {

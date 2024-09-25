@@ -2,7 +2,7 @@ const nextConfig = {
     async rewrites() {
         return [
             {
-                source: '/api/:slug*',
+                source: '/danum-backend/:slug*',
                 destination: `${process.env.NEXT_PUBLIC_BASE_URL}/:slug*`,
             },
         ];

@@ -3,7 +3,7 @@
 
 export async function fetchChatRooms() {
     const accessToken = localStorage.getItem('accessToken');
-    const res = await fetch('/api/chat/rooms', {
+    const res = await fetch('/danum-backend/chat/rooms', {
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`,
@@ -19,7 +19,7 @@ export async function fetchChatRooms() {
 // /chat/room
 export async function createChatRoom(name) {
     const accessToken = localStorage.getItem('accessToken');
-    const res = await fetch('/api/chat/room', {
+    const res = await fetch('/danum-backend/chat/room', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -39,13 +39,16 @@ export async function createChatRoom(name) {
 // chat/room/${roomId}
 export async function fetchRoomInfo(roomId) {
     const accessToken = localStorage.getItem('accessToken');
-    const res = await fetch(`/api/chat/room/${roomId}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-        },
-    });
+    const res = await fetch(
+        `/danum-backend/chat/room/${roomId}`,
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${accessToken}`,
+            },
+        }
+    );
     console.log('chatService.js:46', res);
 
     if (!res.ok) {
