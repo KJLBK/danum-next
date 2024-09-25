@@ -5,7 +5,6 @@ import React, {
 } from 'react';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import styles from './ToastEditor.module.css';
 
 const ToastEditor = forwardRef(
     ({ initialContent }, ref) => {
@@ -19,8 +18,8 @@ const ToastEditor = forwardRef(
         }));
 
         return (
-            <div className={styles.container}>
-                <div className={styles.editorWrapper}>
+            <div>
+                <div>
                     <Editor
                         ref={editorRef}
                         toolbarItems={[

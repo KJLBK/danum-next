@@ -3,8 +3,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { questionNew } from '../../../service/questionService';
 import { useRouter } from 'next/navigation';
-import { jwtDecode } from 'jwt-decode'; // jwtDecode를 올바르게 import
-import styles from './page.module.css'; // CSS 파일 import
+import { jwtDecode } from 'jwt-decode'; // Corrected jwtDecode import
+import styles from './page.module.css'; // Importing the CSS file
 
 export default function QuestionNewPage() {
     const [formData, setFormData] = useState({
@@ -25,7 +25,7 @@ export default function QuestionNewPage() {
         });
     }, []);
 
-    // 로컬 스토리지에서 JWT 토큰을 가져와 디코딩하는 useEffect
+    // Fetch JWT token from local storage and decode it
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
         if (token) {
@@ -36,7 +36,7 @@ export default function QuestionNewPage() {
             }));
             console.log(decoded.sub);
         }
-    }, []); // 컴포넌트가 로드될 때 한 번 실행
+    }, []); // Only run when the component mounts
 
     const onChangeData = (e) => {
         const { name, value } = e.target;
@@ -59,7 +59,7 @@ export default function QuestionNewPage() {
                     content: '',
                     createId: '',
                 });
-                router.push('/questions');
+                router.push('/questions'); // Redirect after submission
             }
         } catch (err) {
             console.error('Submission error:', err);
@@ -68,20 +68,29 @@ export default function QuestionNewPage() {
 
     return (
         <div className={styles.container}>
-            <h2>글쓰기 페이지</h2>
-            <form onSubmit={onSubmit}>
-                <div>
-                    <label htmlFor='title'>제목</label>
+            <form
+                onSubmit={onSubmit}
+                className={styles.form}
+            >
+                <div className={styles['form-row']}>
                     <input
                         type='text'
                         id='title'
                         name='title'
+                        placeholder='제목을 적어주세요.'
                         value={formData.title}
                         onChange={onChangeData}
                         required
+                        className={styles.input}
                     />
+                    <button
+                        type='submit'
+                        className={styles.button}
+                    >
+                        작성
+                    </button>
                 </div>
-                <div>
+                <div className={styles.ToastEditor}>
                     {ToastEditor && (
                         <ToastEditor
                             ref={editorRef}
@@ -91,7 +100,6 @@ export default function QuestionNewPage() {
                         />
                     )}
                 </div>
-                <button type='submit'>작성</button>
             </form>
         </div>
     );

@@ -1,0 +1,54 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* 요소가 컨테이너를 넘지 않도록 설정 */
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.button {
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.ToastEditor {
+    margin-top: 12px;
+    min-height: 300px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+}
