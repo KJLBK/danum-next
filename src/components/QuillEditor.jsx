@@ -1,5 +1,10 @@
 'use client';
-import React, { useEffect, useRef } from 'react';
+import React, {
+    useEffect,
+    useRef,
+    forwardRef,
+    useImperativeHandle,
+} from 'react';
 import dynamic from 'next/dynamic';
 import 'quill/dist/quill.snow.css';
 
@@ -8,12 +13,11 @@ const Quill = dynamic(() => import('quill'), {
     ssr: false, // 서버 사이드 렌더링 비활성화
 });
 
-export default function QuillEditor() {
+const QuillEditor = forwardRef((props, ref) => {
     const editorRef = useRef(null); // 에디터가 들어갈 ref
     const quillRef = useRef(null); // Quill 인스턴스를 저장할 ref
 
     useEffect(() => {
-        // Quill 모듈이 준비된 후에 실행
         async function initQuill() {
             const QuillInstance = (await import('quill'))
                 .default;
@@ -55,6 +59,22 @@ export default function QuillEditor() {
         initQuill(); // Quill 에디터 초기화
     }, []);
 
+    // 부모 컴포넌트에서 사용할 수 있는 메서드를 정의
+    useImperativeHandle(ref, () => ({
+        getContent: () => {
+            if (quillRef.current) {
+                return quillRef.current.root.innerHTML; // HTML 형식으로 반환
+            }
+            return '';
+        },
+        getText: () => {
+            if (quillRef.current) {
+                return quillRef.current.getText(); // 단순 텍스트 반환
+            }
+            return '';
+        },
+    }));
+
     return (
         <div>
             <div id='toolbar'></div>
@@ -65,4 +85,8 @@ export default function QuillEditor() {
             ></div>
         </div>
     );
-}
+});
+
+QuillEditor.displayName = 'QuillEditor'; // forwardRef 사용 시 컴포넌트 이름 지정
+
+export default QuillEditor;

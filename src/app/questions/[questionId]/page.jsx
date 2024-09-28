@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import { jwtDecode } from 'jwt-decode'; // jwtDecode를 올바르게 import
 import {
@@ -9,12 +9,20 @@ import {
 } from '../../../service/questionService';
 import QuestionCommentItem from '../../../components/question/QuestionCommentItem';
 import QuestionCommentNew from '../../../components/question/QuestionCommentNew';
+import dynamic from 'next/dynamic';
+import 'quill/dist/quill.snow.css'; // Quill 에디터 스타일
+
+// Quill을 동적으로 불러오기
+const Quill = dynamic(() => import('quill'), {
+    ssr: false, // 서버 사이드 렌더링 비활성화
+});
 
 export default function QuestionsViewPage() {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState({});
     const [comment, setComment] = useState([]);
     const [decodedToken, setDecodedToken] = useState(null); // decodedToken을 상태로 관리
     const params = useParams();
+    const editorRef = useRef(null); // Quill 인스턴스가 들어갈 ref
 
     // 질문 및 댓글 데이터를 가져오는 함수
     const fetchData = async () => {
@@ -42,6 +50,36 @@ export default function QuestionsViewPage() {
         }
     };
 
+    // Quill 에디터를 읽기 전용으로 설정하는 useEffect
+    useEffect(() => {
+        if (!editorRef.current) return;
+
+        async function initQuill() {
+            const QuillInstance = (await import('quill'))
+                .default;
+
+            const quill = new QuillInstance(
+                editorRef.current,
+                {
+                    theme: 'snow', // Quill 기본 테마
+                    readOnly: true, // 읽기 전용 모드
+                    modules: {
+                        toolbar: false, // 툴바 비활성화
+                    },
+                }
+            );
+
+            // Quill 인스턴스에 저장된 콘텐츠 설정 (HTML 형태일 경우)
+            if (data.content) {
+                quill.clipboard.dangerouslyPasteHTML(
+                    data.content
+                ); // HTML 데이터를 Quill에 렌더링
+            }
+        }
+
+        initQuill();
+    }, [data.content]); // data.content가 변경될 때마다 실행
+
     // 처음 컴포넌트가 로드될 때 데이터를 불러옴
     useEffect(() => {
         fetchData();
@@ -64,7 +102,19 @@ export default function QuestionsViewPage() {
                 {data.email} | {data.created_at} |{' '}
                 {data.view_count}
             </p>
-            <p>내용 : {data.content}</p>
+
+            {/* Quill을 통해 게시글 내용을 뷰어로 표시 */}
+            <div>
+                <div
+                    id='quill-viewer'
+                    ref={editorRef}
+                    style={{
+                        height: 'auto',
+                        minHeight: '300px',
+                    }}
+                ></div>
+            </div>
+
             <hr />
             <h2>댓글</h2>
 
