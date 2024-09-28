@@ -1,6 +1,7 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { jwtDecode } from 'jwt-decode'; // Corrected jwtDecode import
 import { questionNew } from '../../service/questionService';
 export default function QuestionNew() {
     const [formData, setFormData] = useState({
@@ -19,6 +20,19 @@ export default function QuestionNew() {
             [name]: value,
         });
     };
+
+    // Fetch JWT token from local storage and decode it
+    useEffect(() => {
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+            const decoded = jwtDecode(token);
+            setFormData((prevData) => ({
+                ...prevData,
+                email: decoded.sub,
+            }));
+            console.log(decoded.sub);
+        }
+    }, []); // Only run when the component mounts
 
     const onSubmit = async (e) => {
         e.preventDefault(); // 새로고침 방지
