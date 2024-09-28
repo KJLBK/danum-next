@@ -4,18 +4,19 @@ import React, {
     useRef,
     forwardRef,
     useImperativeHandle,
+    useState,
 } from 'react';
 import dynamic from 'next/dynamic';
 import 'quill/dist/quill.snow.css';
 
-// Quill 라이브러리를 동적으로 불러오기
 const Quill = dynamic(() => import('quill'), {
-    ssr: false, // 서버 사이드 렌더링 비활성화
+    ssr: false,
 });
 
 const QuillEditor = forwardRef((props, ref) => {
-    const editorRef = useRef(null); // 에디터가 들어갈 ref
-    const quillRef = useRef(null); // Quill 인스턴스를 저장할 ref
+    const editorRef = useRef(null);
+    const quillRef = useRef(null);
+    const [previewImages, setPreviewImages] = useState([]); // State to hold image URLs for preview
 
     useEffect(() => {
         async function initQuill() {
@@ -52,7 +53,6 @@ const QuillEditor = forwardRef((props, ref) => {
                     }
                 );
 
-                // Register the image handler
                 quillRef.current
                     .getModule('toolbar')
                     .addHandler('image', imageHandler);
@@ -71,16 +71,22 @@ const QuillEditor = forwardRef((props, ref) => {
         input.onchange = async () => {
             const file = input.files[0];
             if (file) {
-                const imageUrl =
+                const { url, key } =
                     await uploadImageToS3(file);
-                if (imageUrl) {
+                if (url) {
                     const range =
                         quillRef.current.getSelection();
                     quillRef.current.insertEmbed(
                         range.index,
                         'image',
-                        imageUrl
+                        url
                     );
+
+                    // Add the uploaded image's key and URL to the previewImages state
+                    setPreviewImages((prev) => [
+                        ...prev,
+                        { key, url },
+                    ]);
                 }
             }
         };
@@ -92,14 +98,13 @@ const QuillEditor = forwardRef((props, ref) => {
 
         try {
             const response = await fetch('/api/upload', {
-                // Update the URL based on your API route
                 method: 'POST',
                 body: formData,
             });
 
             const result = await response.json();
             if (response.ok) {
-                return result.url; // Assuming your backend returns the image URL
+                return { url: result.url, key: result.key }; // Return both the image URL and key
             } else {
                 console.error(
                     'Error uploading image:',
@@ -113,17 +118,17 @@ const QuillEditor = forwardRef((props, ref) => {
         }
     };
 
-    // 부모 컴포넌트에서 사용할 수 있는 메서드를 정의
+    // Method to retrieve content and text
     useImperativeHandle(ref, () => ({
         getContent: () => {
             if (quillRef.current) {
-                return quillRef.current.root.innerHTML; // HTML 형식으로 반환
+                return quillRef.current.root.innerHTML;
             }
             return '';
         },
         getText: () => {
             if (quillRef.current) {
-                return quillRef.current.getText(); // 단순 텍스트 반환
+                return quillRef.current.getText();
             }
             return '';
         },
@@ -141,6 +146,6 @@ const QuillEditor = forwardRef((props, ref) => {
     );
 });
 
-QuillEditor.displayName = 'QuillEditor'; // forwardRef 사용 시 컴포넌트 이름 지정
+QuillEditor.displayName = 'QuillEditor';
 
 export default QuillEditor;
