@@ -3,7 +3,7 @@ import React, {
     useEffect,
     useRef,
     forwardRef,
-    useImperativeHandle,
+    useImperativeHandle, // 부모 컴포넌트에서 content를 가져오기 위함
     useState,
 } from 'react';
 import dynamic from 'next/dynamic';
@@ -16,7 +16,15 @@ const Quill = dynamic(() => import('quill'), {
 const QuillEditor = forwardRef((props, ref) => {
     const editorRef = useRef(null);
     const quillRef = useRef(null);
-    const [previewImages, setPreviewImages] = useState([]); // State to hold image URLs for preview
+    const [previewImages, setPreviewImages] = useState([]); // 이미지 미리보기를 위한 상태
+    useImperativeHandle(ref, () => ({
+        getContent: () => {
+            if (quillRef.current) {
+                return quillRef.current.root.innerHTML; // 텍스트와 이미지 URL 포함한 HTML 반환
+            }
+            return '';
+        },
+    }));
 
     useEffect(() => {
         async function initQuill() {
@@ -47,12 +55,13 @@ const QuillEditor = forwardRef((props, ref) => {
                                     'code-block',
                                 ],
                                 [{ align: [] }],
-                                ['clean'],
+                                ['clean'], // 서식 제거
                             ],
                         },
                     }
                 );
 
+                // 이미지 버튼에 핸들러 추가
                 quillRef.current
                     .getModule('toolbar')
                     .addHandler('image', imageHandler);
@@ -62,6 +71,7 @@ const QuillEditor = forwardRef((props, ref) => {
         initQuill();
     }, []);
 
+    // 이미지 업로드 핸들러
     const imageHandler = async () => {
         const input = document.createElement('input');
         input.setAttribute('type', 'file');
@@ -71,8 +81,7 @@ const QuillEditor = forwardRef((props, ref) => {
         input.onchange = async () => {
             const file = input.files[0];
             if (file) {
-                const { url, key } =
-                    await uploadImageToS3(file);
+                const { url } = await uploadImageToS3(file); // 이미지 업로드 후 URL 획득
                 if (url) {
                     const range =
                         quillRef.current.getSelection();
@@ -80,18 +89,18 @@ const QuillEditor = forwardRef((props, ref) => {
                         range.index,
                         'image',
                         url
-                    );
-
-                    // Add the uploaded image's key and URL to the previewImages state
+                    ); // 에디터에 이미지 삽입
+                    // 미리보기 이미지 상태 업데이트
                     setPreviewImages((prev) => [
                         ...prev,
-                        { key, url },
+                        { url },
                     ]);
                 }
             }
         };
     };
 
+    // S3에 이미지 업로드
     const uploadImageToS3 = async (file) => {
         const formData = new FormData();
         formData.append('img', file);
@@ -104,7 +113,7 @@ const QuillEditor = forwardRef((props, ref) => {
 
             const result = await response.json();
             if (response.ok) {
-                return { url: result.url, key: result.key }; // Return both the image URL and key
+                return { url: result.url }; // 이미지 URL 반환
             } else {
                 console.error(
                     'Error uploading image:',
@@ -117,23 +126,6 @@ const QuillEditor = forwardRef((props, ref) => {
             return null;
         }
     };
-
-    // Method to retrieve content and text
-    useImperativeHandle(ref, () => ({
-        getContent: () => {
-            if (quillRef.current) {
-                return quillRef.current.root.innerHTML;
-            }
-            return '';
-        },
-        getText: () => {
-            if (quillRef.current) {
-                return quillRef.current.getText();
-            }
-            return '';
-        },
-    }));
-
     return (
         <div>
             <div id='toolbar'></div>

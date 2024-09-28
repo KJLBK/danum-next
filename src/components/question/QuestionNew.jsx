@@ -1,9 +1,10 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { jwtDecode } from 'jwt-decode'; // Corrected jwtDecode import
+import { jwtDecode } from 'jwt-decode';
 import { questionNew } from '../../service/questionService';
 import QuillEditor from '../QuillEditor';
+
 export default function QuestionNew() {
     const [formData, setFormData] = useState({
         email: '',
@@ -23,7 +24,6 @@ export default function QuestionNew() {
         });
     };
 
-    // Fetch JWT token from local storage and decode it
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
         if (token) {
@@ -34,22 +34,21 @@ export default function QuestionNew() {
             }));
             console.log(decoded.sub);
         }
-    }, []); // Only run when the component mounts
+    }, []);
 
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
             if (editorRef.current) {
-                const content =
+                const editorContent =
                     editorRef.current.getContent();
-                await questionNew({ ...formData, content });
-                setFormData({
-                    email: '',
-                    title: '',
-                    content: '',
-                    createId: '',
-                });
-                router.push('/questions'); // Redirect after submission
+                const updatedFormData = {
+                    ...formData,
+                    content: editorContent,
+                };
+
+                await questionNew(updatedFormData);
+                router.push('/questions');
             }
         } catch (err) {
             console.error('Submission error:', err);
