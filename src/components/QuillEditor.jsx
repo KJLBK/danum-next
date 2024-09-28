@@ -22,9 +22,7 @@ const QuillEditor = forwardRef((props, ref) => {
             const QuillInstance = (await import('quill'))
                 .default;
 
-            // Quill 인스턴스가 이미 생성되었는지 확인
             if (editorRef.current && !quillRef.current) {
-                // Quill 인스턴스 생성
                 quillRef.current = new QuillInstance(
                     editorRef.current,
                     {
@@ -47,17 +45,73 @@ const QuillEditor = forwardRef((props, ref) => {
                                     'image',
                                     'code-block',
                                 ],
-                                [{ align: [] }], // 텍스트 정렬 추가
-                                ['clean'], // 서식 제거
+                                [{ align: [] }],
+                                ['clean'],
                             ],
                         },
                     }
                 );
+
+                // Register the image handler
+                quillRef.current
+                    .getModule('toolbar')
+                    .addHandler('image', imageHandler);
             }
         }
 
-        initQuill(); // Quill 에디터 초기화
+        initQuill();
     }, []);
+
+    const imageHandler = async () => {
+        const input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.click();
+
+        input.onchange = async () => {
+            const file = input.files[0];
+            if (file) {
+                const imageUrl =
+                    await uploadImageToS3(file);
+                if (imageUrl) {
+                    const range =
+                        quillRef.current.getSelection();
+                    quillRef.current.insertEmbed(
+                        range.index,
+                        'image',
+                        imageUrl
+                    );
+                }
+            }
+        };
+    };
+
+    const uploadImageToS3 = async (file) => {
+        const formData = new FormData();
+        formData.append('img', file);
+
+        try {
+            const response = await fetch('/api/upload', {
+                // Update the URL based on your API route
+                method: 'POST',
+                body: formData,
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                return result.url; // Assuming your backend returns the image URL
+            } else {
+                console.error(
+                    'Error uploading image:',
+                    result.message
+                );
+                return null;
+            }
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            return null;
+        }
+    };
 
     // 부모 컴포넌트에서 사용할 수 있는 메서드를 정의
     useImperativeHandle(ref, () => ({

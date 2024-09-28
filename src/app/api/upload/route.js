@@ -1,7 +1,9 @@
 import {
     PutObjectCommand,
     S3Client,
+    GetObjectCommand,
 } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner'; // Importing from the correct package
 
 const Bucket = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME; // Ensure you use the NEXT_PUBLIC version for client-side access
 const s3 = new S3Client({
@@ -20,18 +22,29 @@ export async function POST(req, res) {
         const formData = await req.formData();
         const file = formData.get('img');
         const Body = await file.arrayBuffer();
-        console.log(file);
+
+        // Upload the image to S3
         await s3.send(
             new PutObjectCommand({
                 Bucket,
-                Key: file.name, // 저장시 넣고 싶은 파일 이름
+                Key: `${Date.now()}_${file.name}`, // Store with a unique name
                 Body,
                 ContentType: file.type,
             })
         );
 
+        // Generate a signed URL for the uploaded image
+        const imgUrl = await getSignedUrl(
+            s3,
+            new GetObjectCommand({
+                Bucket,
+                Key: `${Date.now()}_${file.name}`,
+            }),
+            { expiresIn: 3600 } // 1 hour expiration
+        );
+
         return new Response(
-            JSON.stringify({ message: 'OK' }),
+            JSON.stringify({ message: 'OK', url: imgUrl }), // Send back the image URL
             { status: 200 }
         );
     } catch (error) {
