@@ -46,7 +46,7 @@ export default function QuestionsViewPage() {
     useEffect(() => {
         fetchData();
         fetchComment();
-    }, [comment]); // 빈 배열로 설정하여 처음 로드될 때만 실행
+    }, []); // 빈 배열로 설정하여 처음 로드될 때만 실행
 
     // 로컬 스토리지에서 JWT 토큰을 가져와 디코딩하는 useEffect
     useEffect(() => {
