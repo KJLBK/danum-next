@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import QuillEditor from '../../components/QuillEditor';
 // import { cookies } from 'next/headers';
 // import CheckAuthButton from '../../components/auth/CheckAuthButton';
 
@@ -73,6 +74,9 @@ export default function Test() {
                         저장하기
                     </button>
                 </form>
+            </div>
+            <div>
+                <QuillEditor />
             </div>
         </>
     );

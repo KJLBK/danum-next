@@ -1,7 +1,10 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { jwtDecode } from 'jwt-decode';
 import { questionNew } from '../../service/questionService';
+import QuillEditor from '../QuillEditor';
+
 export default function QuestionNew() {
     const [formData, setFormData] = useState({
         email: '',
@@ -11,6 +14,7 @@ export default function QuestionNew() {
     });
 
     const router = useRouter();
+    const editorRef = useRef();
 
     const onChangeData = (e) => {
         const { name, value } = e.target;
@@ -20,19 +24,34 @@ export default function QuestionNew() {
         });
     };
 
+    useEffect(() => {
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+            const decoded = jwtDecode(token);
+            setFormData((prevData) => ({
+                ...prevData,
+                email: decoded.sub,
+            }));
+            console.log(decoded.sub);
+        }
+    }, []);
+
     const onSubmit = async (e) => {
-        e.preventDefault(); // 새로고침 방지
+        e.preventDefault();
         try {
-            const response = await questionNew(formData);
-            setFormData({
-                email: '',
-                title: '',
-                content: '',
-                createId: '',
-            });
-            router.push('/');
+            if (editorRef.current) {
+                const editorContent =
+                    editorRef.current.getContent();
+                const updatedFormData = {
+                    ...formData,
+                    content: editorContent,
+                };
+
+                await questionNew(updatedFormData);
+                router.push('/questions');
+            }
         } catch (err) {
-            console.log(err);
+            console.error('Submission error:', err);
         }
     };
 
@@ -63,14 +82,7 @@ export default function QuestionNew() {
                     />
                 </div>
                 <div>
-                    <label className='content'>내용</label>
-                    <textarea
-                        id='content'
-                        name='content'
-                        value={formData.content}
-                        onChange={onChangeData}
-                        required
-                    />
+                    <QuillEditor ref={editorRef} />
                 </div>
                 <button type='submit'>작성</button>
             </form>
