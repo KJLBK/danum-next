@@ -25,7 +25,6 @@ export default function Profile({
 
         if (result.message === 'OK') {
             alert('이미지가 저장되었습니다.');
-            console.log(result.url);
             onImageChange(result.url); // 선택한 이미지 URL 전달
         }
     };
