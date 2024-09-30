@@ -5,6 +5,7 @@ import Input from '../common/Input';
 import Button from '../common/Button';
 import { join } from '../../service/authService';
 import KakaoMap from '../../app/map/page'; // KakaoMap 컴포넌트를 가져옴
+import Profile from './Profile';
 
 export default function JoinForm() {
     const [email, setEmail] = useState('');
@@ -14,6 +15,9 @@ export default function JoinForm() {
     const [name, setName] = useState('');
     const [latitude, setLatitude] = useState(''); // 위도 저장
     const [longitude, setLongitude] = useState(''); // 경도 저장
+    const [profileImageUri, setProfileImageUri] = useState(
+        '/logo-assets/android-chrome-192x192.png' // 기본 이미지 URL
+    );
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,7 +32,8 @@ export default function JoinForm() {
                 phone,
                 name,
                 parsedLatitude, // double 타입으로 변환된 위도
-                parsedLongitude // double 타입으로 변환된 경도
+                parsedLongitude, // double 타입으로 변환된 경도
+                profileImageUri // 프로필 이미지 URL 추가
             );
             console.log(response);
         } catch (err) {
@@ -40,6 +45,11 @@ export default function JoinForm() {
     const handleLocationChange = (location) => {
         setLatitude(location.latitude);
         setLongitude(location.longitude);
+    };
+
+    // 프로필 이미지 변경 시 처리하는 함수
+    const handleProfileImageChange = (imageUri) => {
+        setProfileImageUri(imageUri); // 이미지 URL 업데이트
     };
 
     return (
@@ -94,6 +104,11 @@ export default function JoinForm() {
                     onLocationChange={handleLocationChange}
                 />{' '}
                 {/* KakaoMap에서 위도/경도 받기 */}
+                {/* Profile 컴포넌트에 기본 이미지 및 변경 함수 전달 */}
+                <Profile
+                    profileImageUri={profileImageUri}
+                    onImageChange={handleProfileImageChange}
+                />
                 <Button
                     type='submit'
                     disabled={!latitude || !longitude}

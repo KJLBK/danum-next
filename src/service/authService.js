@@ -85,7 +85,8 @@ export async function join(
     phone,
     name,
     latitude,
-    longitude
+    longitude,
+    profileImageUri
 ) {
     let res;
 
@@ -100,6 +101,7 @@ export async function join(
                 name,
                 latitude: latitude, // 위도 double
                 longitude: longitude, // 경도 double
+                profileImageUri,
             }),
         });
         if (!res.ok) {
