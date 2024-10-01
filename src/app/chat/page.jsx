@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { fetchChatRooms } from '../../service/chatService';
-import { createChatRoom } from '../../service/chatService';
+import { getAllChatRooms } from '../../service/chatService';
+import { createGroupChat } from '../../service/chatService';
 import ChatRoomList from '../../components/chat/ChatRoomList';
 import { useAuthStore } from '../../store/authStore';
 import Input from '../../components/common/Input';
@@ -21,7 +21,7 @@ export default function ChatPage() {
     // error
     const loadRooms = async () => {
         try {
-            const fetchedRooms = await fetchChatRooms();
+            const fetchedRooms = await getAllChatRooms();
             console.log(fetchedRooms);
             setRooms(fetchedRooms);
         } catch (error) {
@@ -36,7 +36,7 @@ export default function ChatPage() {
         e.preventDefault();
         if (!newRoomName.trim()) return;
         try {
-            const newRoom = await createChatRoom(user);
+            const newRoom = await createGroupChat(user);
             console.log(newRoom);
             setRooms([...rooms, newRoom]);
             setNewRoomName('');

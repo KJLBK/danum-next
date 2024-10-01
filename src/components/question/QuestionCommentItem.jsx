@@ -3,6 +3,7 @@ import {
     questionCommentDelete,
     questionCommentUpdate,
 } from '../../service/questionService';
+import { createPrivateChat } from '../../service/chatService';
 
 export default function QuestionCommentItem({
     content,
@@ -33,9 +34,17 @@ export default function QuestionCommentItem({
         }
     };
 
+    // const handleChatInitiate = async () => {
+    //     try {
+    //         const res = await createPrivateChat()
+    //     }
+    // }
+
     return (
         <div>
+            {/* test - 영훈 | 0925 */}
             <h4>작성자: {email}</h4>
+
             <p>작성 시간: {created_at}</p>
 
             {/* 수정 중일 때와 아닐 때 UI를 구분 */}
