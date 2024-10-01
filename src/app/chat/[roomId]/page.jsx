@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { fetchRoomInfo } from '../../../service/chatService';
+import { getChatRoomInfo } from '../../../service/chatService';
 import ChatMessageList from '../../../components/chat/ChatMessageList';
 import { useAuthStore } from '../../../store/authStore';
 import SockJS from 'sockjs-client';
@@ -75,7 +75,7 @@ export default function ChatRoomPage() {
 
     const loadRoomInfo = async () => {
         try {
-            const info = await fetchRoomInfo(roomId);
+            const info = await getChatRoomInfo(roomId);
             console.log('[roomid]-page.jsx 68', info);
             setRoomInfo(info);
             console.log('[roomid]-page.jsx 79', roomInfo);
