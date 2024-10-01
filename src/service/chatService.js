@@ -134,6 +134,26 @@ export async function createPrivateChat(targetUserId) {
  * 응답: ChatMessage 객체 리스트 (JSON)
  * 기능: 메인 페이지나 대시보드에서 사용자의 모든 채팅 활동 요약을 보여줄 때 사용됩니다. 각 채팅방의 최신 메시지를 표시하여 사용자가 새 메시지나 미확인 대화를 빠르게 확인할 수 있게 합니다.
  */
+export async function getRecentMessages() {
+    const accessToken = localStorage.getItem('accessToken');
+    const res = await fetch(
+        '/danum-backend/chat/recent-messages',
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${accessToken}`,
+            },
+        }
+    );
+    console.log(res);
+    if (!res.ok) {
+        throw new Error('Failed to get recent messages');
+    }
+    return res.json();
+}
+// TODO: 미들웨어 처리 후 메인 페이지 구현시에 기능추가하기(10/1)
+
 /**
  * 채팅방 입장 및 이전 메시지 로드
  * URL: GET /chat/room/{roomId}/enter
@@ -147,6 +167,27 @@ export async function createPrivateChat(targetUserId) {
  * @param {String} roomId - 채팅방 ID
  * @returns {Promise<Object>} 채팅방 정보와 메시지 리스트
  */
+export async function enterChatRoom(roomID) {
+    const accessToken = localStorage.getItem('accessToken');
+    const res = await fetch(
+        `/danum-backend/chat/room/${roomID}/enter`,
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${accessToken}`,
+            },
+        }
+    );
+
+    if (!res.ok) {
+        throw new Error('Failed to get recent messages');
+    }
+
+    return res.json();
+}
+// TODO: 경빈이가 게시판 구현 완료시에 기능 추가(10/1)
+
 /**
  * 채팅방 메시지 조회
  * URL: GET /chat/room/{roomId}/messages
@@ -159,3 +200,23 @@ export async function createPrivateChat(targetUserId) {
  * @param {String} roomId - 채팅방 ID
  * @returns {Promise<Array>} 메시지 객체 리스트
  */
+// getChatRoomMessages
+export async function getChatMessages() {
+    const accessToken = localStorage.getItem('accessToken');
+    const res = await fetch(
+        `/danum-backend/chat/room/${roomID}/messages`,
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${accessToken}`,
+            },
+        }
+    );
+
+    if (!res.ok) {
+        throw new Error('Failed to get ChatMessages');
+    }
+
+    return res.json();
+}
