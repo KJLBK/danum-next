@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 export default function Profile({
-    profileImageUri,
+    profileImageUrl,
     onImageChange,
 }) {
     const [previewImg, setPreviewImg] = useState(null);
@@ -49,7 +49,7 @@ export default function Profile({
                 src={
                     previewImg
                         ? URL.createObjectURL(previewImg[0])
-                        : profileImageUri
+                        : profileImageUrl
                 }
                 alt='이미지 미리보기'
                 width={100}
