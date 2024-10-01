@@ -45,16 +45,21 @@ export default function Profile({
             <input type='file' onChange={fileHandler} />
 
             {/* 이미지 미리보기: 선택한 이미지가 없으면 기본 이미지 */}
-            <Image
-                src={
-                    previewImg
-                        ? URL.createObjectURL(previewImg[0])
-                        : profileImageUrl
-                }
-                alt='이미지 미리보기'
-                width={100}
-                height={100}
-            />
+            {(previewImg && previewImg[0]) ||
+            profileImageUrl ? (
+                <Image
+                    src={
+                        previewImg
+                            ? URL.createObjectURL(
+                                  previewImg[0]
+                              )
+                            : profileImageUrl
+                    }
+                    alt='이미지 미리보기'
+                    width={100}
+                    height={100}
+                />
+            ) : null}
 
             <button type='button' onClick={saveHandler}>
                 저장하기
