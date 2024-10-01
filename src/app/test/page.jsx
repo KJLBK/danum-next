@@ -24,7 +24,7 @@ export default function Test() {
         const formData = new FormData();
         formData.append('img', previewImg[0]);
 
-        const result = await fetch('/api/s3', {
+        const result = await fetch('/api/upload', {
             method: 'POST',
             body: formData,
         }).then((res) => res.json());

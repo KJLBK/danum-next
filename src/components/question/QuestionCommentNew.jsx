@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { questionCommentNew } from '../../service/questionService';
-
 export default function QuestionCommentNew({
     questionId,
     email,
