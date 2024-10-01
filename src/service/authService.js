@@ -103,7 +103,7 @@ export async function join(
             }),
         });
         if (!res.ok) {
-            throw new Error('Join failed');
+            return await res.json(); // 에러 메시지 받기
         }
     } catch (err) {
         throw new Error(err.message);

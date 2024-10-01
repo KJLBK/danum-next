@@ -14,6 +14,7 @@ export default function JoinForm() {
     const [name, setName] = useState('');
     const [latitude, setLatitude] = useState(''); // 위도 저장
     const [longitude, setLongitude] = useState(''); // 경도 저장
+    const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,9 +31,11 @@ export default function JoinForm() {
                 parsedLatitude, // double 타입으로 변환된 위도
                 parsedLongitude // double 타입으로 변환된 경도
             );
-            console.log(response);
+            if (!response.ok) {
+                setError(response.message);
+            }
         } catch (err) {
-            console.log('회원가입 실패');
+            console.log(err);
         }
     };
 
@@ -100,6 +103,7 @@ export default function JoinForm() {
                 >
                     회원가입
                 </Button>
+                <p style={{ color: 'red' }}>{error}</p>
             </form>
         </>
     );
