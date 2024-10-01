@@ -16,7 +16,7 @@ export default function JoinForm() {
     const [latitude, setLatitude] = useState(''); // 위도 저장
     const [longitude, setLongitude] = useState(''); // 경도 저장
     const [profileImageUrl, setProfileImageUrl] =
-        useState(null);
+        useState(null); // 이미지 저장
 
     const handleSubmit = async (e) => {
         e.preventDefault();
