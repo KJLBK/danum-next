@@ -1,4 +1,10 @@
 import { jwtDecode } from 'jwt-decode';
+import {
+    getAccessToken,
+    removeAccessToken,
+    setAccessToken,
+} from './tokenService';
+import { headers } from 'next/headers';
 
 export async function login(email, password) {
     try {
@@ -26,8 +32,7 @@ export async function login(email, password) {
         }
 
         // Access Token을 localStorage 저장
-        const token = await res.text();
-        localStorage.setItem('accessToken', token);
+        setAccessToken(res.text());
 
         // JWT에서 사용자 정보 추출
         const user = jwtDecode(token);
@@ -41,10 +46,9 @@ export async function login(email, password) {
 
 export async function logout(clearAuth) {
     try {
-        const AccessToken =
-            localStorage.getItem('accessToken'); // RefreshToken을 localStorage에서 가져옴
+        getAccessToken(); // getItem
         clearAuth();
-        localStorage.removeItem('accessToken');
+        removeAccessToken();
         await fetch('/danum-backend/logout', {
             method: 'GET',
             headers: {
@@ -54,27 +58,6 @@ export async function logout(clearAuth) {
         });
     } catch (err) {
         throw new Error(err.message);
-    }
-}
-
-// Test 로직
-export async function checkAuth(RefreshToken) {
-    try {
-        const res = await fetch(
-            '/danum-backend/auth/refresh',
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${RefreshToken}`,
-                },
-            }
-        );
-        const accessToken = await res.text();
-        localStorage.setItem('accessToken', accessToken);
-        console.log(jwtDecode(accessToken));
-    } catch (error) {
-        throw new Error(error.message);
     }
 }
 
@@ -112,4 +95,51 @@ export async function join(
     }
 
     return await res.json();
+}
+
+/**
+ * AccessToken 검증
+ * URL: POST /auth/check-expiration
+ * 설명: accessToken 헤더에 집어넣어서 유효한지 확인합니다.
+ * 인증: 필요
+ * 응답: is???= false 라고 뜨면 200
+ */
+
+export async function verifyAccessToken() {
+    try {
+        const res = await fetch(
+            '/danum-backend/auth/check-expiration',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${getAccessToken()}`,
+                },
+            }
+        );
+    } catch (error) {
+        throw new Error(error.message);
+    }
+    return await res.json();
+}
+
+// Test 로직
+export async function checkAuth(RefreshToken) {
+    try {
+        const res = await fetch(
+            '/danum-backend/auth/refresh',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${RefreshToken}`,
+                },
+            }
+        );
+        const accessToken = await res.text();
+        localStorage.setItem('accessToken', accessToken);
+        console.log(jwtDecode(accessToken));
+    } catch (error) {
+        throw new Error(error.message);
+    }
 }
