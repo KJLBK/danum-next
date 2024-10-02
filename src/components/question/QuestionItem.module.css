@@ -1,0 +1,71 @@
+.questionItem {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #ffffff;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    overflow: hidden;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.preview {
+    display: flex;
+    justify-content: space-between; /* 텍스트와 이미지가 양쪽에 배치되도록 설정 */
+    gap: 16px; /* 텍스트와 이미지 사이 간격 */
+}
+
+.textContainer {
+    display: flex;
+    flex-direction: column; /* 제목과 내용이 세로로 배치되도록 설정 */
+}
+
+.textContent {
+    font-size: 14px;
+    color: #333;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.images {
+    display: flex;
+    flex-direction: column; /* 여러 이미지를 세로로 나열 */
+    gap: 8px;
+}
+
+.imagePreview {
+    width: 100px; /* 이미지 너비 */
+    height: 100px; /* 이미지 높이 */
+    object-fit: cover; /* 이미지 비율 유지하면서 자르기 */
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.info {
+    display: flex;
+    gap: 12px;
+    font-size: 12px;
+    margin-top: 12px;
+}
+
+.email {
+    font-weight: bold;
+}
+
+.metaInfo {
+    color: #6c757d;
+}

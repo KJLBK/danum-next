@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { questionShow } from '../../service/questionService';
 import QuestionItem from '../../components/question/QuestionItem';
+import style from './page.module.css'; // CSS 모듈 임포트
 
 export default function QuestionPage() {
     const [data, setData] = useState([]);
@@ -10,7 +11,7 @@ export default function QuestionPage() {
         const fetchData = async () => {
             try {
                 const response = await questionShow(); // questionShow 호출
-                setData(response); // 가져온 데이터 상태 업데이트
+                setData(response.reverse()); // 가져온 데이터 상태 업데이트
             } catch (err) {
                 console.error('Error:', err);
             }
@@ -18,7 +19,7 @@ export default function QuestionPage() {
         fetchData();
     }, []);
     return (
-        <>
+        <div className={style.container}>
             <h2>질문 이야기</h2>
             <ul>
                 {data.map((item) => (
@@ -28,6 +29,6 @@ export default function QuestionPage() {
                     />
                 ))}
             </ul>
-        </>
+        </div>
     );
 }
