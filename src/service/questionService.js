@@ -147,7 +147,6 @@ export async function questionCommentNew({
         if (!response.ok) {
             throw new Error(`Error: ${response.status}`);
         }
-        alert('생성 완료');
         return response;
     } catch (error) {
         console.error('Error fetching data', error);
@@ -178,7 +177,6 @@ export async function questionCommentDelete(comment_id) {
         if (!response.ok) {
             throw new Error(`Error: ${response.status}`);
         }
-        alert('삭제 완료');
         return response;
     } catch (error) {
         console.error('Error fetching data', error);
@@ -210,7 +208,6 @@ export async function questionCommentUpdate(id, content) {
         if (!response.ok) {
             throw new Error(`Error: ${response.status}`);
         }
-        alert('수정 완료');
         return response;
     } catch (error) {
         console.error('Error fetching data', error);
