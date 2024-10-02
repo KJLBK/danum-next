@@ -4,5 +4,4 @@
     align-items: center; /* 가로 가운데 정렬 */
     justify-content: center; /* 세로 가운데 정렬 */
     min-height: 100vh; /* 전체 화면 높이 */
-    padding: 20px; /* 상하좌우 패딩 */
 }
