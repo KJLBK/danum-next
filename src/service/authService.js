@@ -132,10 +132,13 @@ export async function getProfile() {
         );
 
         if (!res.ok) {
-            throw new Error('Failed to fetch message');
+            throw new Error(
+                'Failed to fetch profile image'
+            );
         }
 
-        return await res.json(); // 메시지 내용을 JSON으로 반환
+        const url = await res.text(); // 응답을 JSON 형식으로 파싱
+        return url; // 파싱한 데이터를 반환
     } catch (err) {
         throw new Error(err.message);
     }

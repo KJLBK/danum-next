@@ -58,6 +58,7 @@ export default function Header() {
                         <Link href='/test'>테스트</Link>
                     </li>
                 </ul>
+                <GetProfile />
                 <ul className={styles['header-ul']}>
                     <SearchIcon />
                     <AlarmIcon />
