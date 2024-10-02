@@ -127,6 +127,7 @@ export default function QuestionsViewPage() {
                 <span className={style.email}>
                     {data.email}
                 </span>
+                &nbsp;&nbsp;
                 <span className={style.metaInfo}>
                     {formatTimeAgo(data.created_at)} • 읽음
                     {data.view_count}

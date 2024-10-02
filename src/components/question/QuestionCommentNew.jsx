@@ -43,6 +43,8 @@ export default function QuestionCommentNew({
             >
                 <input
                     className={style.input}
+                    id='content'
+                    name='content'
                     value={formData.content}
                     onChange={onChangeData}
                     required
