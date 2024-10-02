@@ -22,6 +22,20 @@ export default function JoinForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // 비밀번호 길이 확인
+        if (password.length <= 8 || password.length >= 16) {
+            setError(
+                '비밀번호는 8자 이상 16자 이하여야 합니다.'
+            );
+            return;
+        }
+
+        // 비밀번호와 비밀번호 확인 일치 여부 확인
+        if (password !== passwordCheck) {
+            setError('비밀번호가 일치하지 않습니다.');
+            return;
+        }
+
         const parsedLatitude = parseFloat(latitude);
         const parsedLongitude = parseFloat(longitude);
 
