@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { questionCommentNew } from '../../service/questionService';
+import style from './QuestionCommentNew.module.css';
+
 export default function QuestionCommentNew({
     questionId,
     email,
@@ -34,21 +36,24 @@ export default function QuestionCommentNew({
     };
 
     return (
-        <div>
-            <h2>댓글 쓰기</h2>
-            <form onSubmit={onSubmit}>
-                <div>
-                    <label htmlFor='content'>내용</label>
-                    <textarea
-                        id='content'
-                        name='content'
-                        value={formData.content}
-                        onChange={onChangeData}
-                        required
-                    />
-                </div>
-                <button type='submit'>작성</button>
+        <>
+            <form
+                onSubmit={onSubmit}
+                className={style.form}
+            >
+                <input
+                    className={style.input}
+                    value={formData.content}
+                    onChange={onChangeData}
+                    required
+                />
+                <button
+                    className={style.button}
+                    type='submit'
+                >
+                    작성
+                </button>
             </form>
-        </div>
+        </>
     );
 }

@@ -1,0 +1,20 @@
+.form {
+    display: flex;
+    width: 100%;
+    max-width: 100%; /* 부모 컨테이너의 최대 너비를 화면 크기에 맞게 설정 */
+    justify-content: space-between; /* 아이템 사이의 공간을 고르게 분배 */
+}
+
+.input {
+    flex: 1; /* 남은 공간을 채우도록 설정 */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    min-width: 0; /* flex-grow에 의해 크기 제한이 걸리지 않도록 */
+    margin-right: 10px; /* 버튼과의 간격 조정 */
+}
+
+.button {
+    padding: 10px 20px;
+    cursor: pointer;
+}

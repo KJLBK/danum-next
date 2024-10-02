@@ -1,0 +1,22 @@
+.title {
+    margin-left: 12px;
+}
+
+.info {
+    display: flex;
+    font-size: 16px;
+    margin: 12px;
+}
+
+.email {
+    font-weight: bold;
+}
+
+.metaInfo {
+    color: #6c757d;
+}
+
+.content {
+    font-size: 18px; /* 원하는 폰트 사이즈로 설정 */
+    line-height: 1.5; /* 줄 간격 조정 (선택 사항) */
+}
