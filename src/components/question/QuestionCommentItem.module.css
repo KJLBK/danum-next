@@ -33,3 +33,16 @@
     display: flex;
     gap: 5px; /* 버튼 간격 */
 }
+
+.textarea {
+    width: 100%; /* 너비를 100%로 설정 */
+    min-height: 70px; /* 최소 높이 */
+    max-height: 200px; /* 최대 높이 */
+    margin-top: 10px;
+    resize: vertical; /* 사용자가 세로로만 크기 조절 가능 */
+    padding: 8px; /* 텍스트와 경계 사이의 여백 */
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box; /* 패딩과 테두리를 포함한 너비 계산 */
+}

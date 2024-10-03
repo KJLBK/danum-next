@@ -91,6 +91,7 @@ export default function QuestionCommentItem({
                     </div>
                     {/* 수정 모드: 입력 필드를 사용하여 수정 가능 */}
                     <textarea
+                        className={style.textarea}
                         value={updatedContent}
                         onChange={(e) =>
                             setUpdatedContent(
