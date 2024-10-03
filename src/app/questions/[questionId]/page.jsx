@@ -125,7 +125,7 @@ export default function QuestionsViewPage() {
             <div className={style.info}>
                 <span className={style.profile}></span>
                 <span className={style.email}>
-                    {data.email}
+                    {data.author?.userName}
                 </span>
                 &nbsp;&nbsp;
                 <span className={style.metaInfo}>

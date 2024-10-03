@@ -5,7 +5,7 @@ export default function QuestionItem({
     question_id,
     title,
     content,
-    email,
+    author,
     created_at,
     view_count,
 }) {
@@ -76,9 +76,11 @@ export default function QuestionItem({
                 </div>
 
                 <div className={style.info}>
-                    <span className={style.profile}></span>
-                    <span className={style.email}>
-                        {email}
+                    <span className={style.profile}>
+                        <img src={author.profileImageUrl} />
+                    </span>
+                    <span className={style.userName}>
+                        {author.userName}
                     </span>
                     <span className={style.metaInfo}>
                         {formatTimeAgo(created_at)} • 읽음
