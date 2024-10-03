@@ -64,6 +64,33 @@ export async function questionShow() {
     }
 }
 
+// 질문이야기 게시판 삭제 로직
+export async function questionDelete(id) {
+    const token =
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU';
+
+    try {
+        const response = await fetch(
+            `/danum-backend/board/question/questions/${id}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        return response;
+    } catch (error) {
+        console.error('Error fetching data', error);
+        return [];
+    }
+}
+
 //질문이야기 게시판 상세 조회 로직
 export async function questionDetail(questionId) {
     const token =

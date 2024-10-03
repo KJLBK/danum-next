@@ -6,6 +6,7 @@ import { jwtDecode } from 'jwt-decode'; // jwtDecode를 올바르게 import
 import {
     questionDetail,
     questionCommentShow,
+    questionDelete,
 } from '../../../service/questionService';
 import QuestionCommentItem from '../../../components/question/QuestionCommentItem';
 import QuestionCommentNew from '../../../components/question/QuestionCommentNew';
@@ -23,6 +24,11 @@ export default function QuestionsViewPage() {
     const [decodedToken, setDecodedToken] = useState(null); // decodedToken을 상태로 관리
     const params = useParams();
     const editorRef = useRef(null); // Quill 인스턴스가 들어갈 ref
+
+    // 게시글 삭제 함수
+    const handleDelete = () => {
+        questionDelete(params.questionId);
+    };
 
     // 질문 및 댓글 데이터를 가져오는 함수
     const fetchData = async () => {
@@ -97,6 +103,7 @@ export default function QuestionsViewPage() {
 
     return (
         <div>
+            <button onClick={handleDelete}>삭제</button>
             <h2>제목 : {data.title}</h2>
             <p>
                 {data.email} | {data.created_at} |{' '}
