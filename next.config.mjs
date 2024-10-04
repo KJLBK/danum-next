@@ -8,6 +8,18 @@ const nextConfig = {
         ];
     },
 
+    // 이미지 호스트 설정 (S3 버킷)
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname:
+                    'danum-bucket.s3.ap-northeast-2.amazonaws.com',
+                pathname: '**',
+            },
+        ],
+    },
+
     // Webpack 설정 추가
     webpack(config) {
         config.module.rules.push({

@@ -6,6 +6,9 @@ import {
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 const Bucket = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME;
+const CloudFrontDomain =
+    process.env.NEXT_PUBLIC_CLOUDFRONT_DOMAIN; // CloudFront 도메인을 환경 변수로 추가
+
 const s3 = new S3Client({
     region: process.env.NEXT_PUBLIC_AWS_REGION,
     credentials: {
@@ -36,20 +39,24 @@ export async function POST(req, res) {
             })
         );
 
-        // Generate a signed URL for the uploaded image
+        // Generate a signed URL for the uploaded image from CloudFront
+        const cloudFrontUrl = `https://${CloudFrontDomain}/${key}`;
+
+        // Generate a signed URL with a long expiration time (e.g., 1 day)
         const imgUrl = await getSignedUrl(
             s3,
             new GetObjectCommand({
                 Bucket,
                 Key: key,
             }),
-            { expiresIn: 3600 } // 1 hour expiration
+            { expiresIn: 604800 } // 7 days expiration
         );
 
         return new Response(
             JSON.stringify({
                 message: 'OK',
-                url: imgUrl,
+                url: imgUrl, // 여전히 S3 URL의 signed URL
+                cloudFrontUrl, // CloudFront URL
                 key,
             }), // Send back the image URL and key
             { status: 200 }

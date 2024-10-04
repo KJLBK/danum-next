@@ -113,3 +113,33 @@ export async function join(
 
     return await res.json();
 }
+
+// 프로필 이미지 가져오는 로직
+
+export async function getProfile() {
+    const accessToken = localStorage.getItem('accessToken');
+
+    try {
+        const res = await fetch(
+            `/danum-backend/member/profile-image`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+
+        if (!res.ok) {
+            throw new Error(
+                'Failed to fetch profile image'
+            );
+        }
+
+        const url = await res.text(); // 응답을 JSON 형식으로 파싱
+        return url; // 파싱한 데이터를 반환
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
