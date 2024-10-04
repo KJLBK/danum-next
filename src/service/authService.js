@@ -87,7 +87,7 @@ export async function join(
             }),
         });
         if (!res.ok) {
-            throw new Error('Join failed');
+            return await res.json(); // 에러 메시지 받기
         }
     } catch (err) {
         throw new Error(err.message);
@@ -112,6 +112,7 @@ export async function verifyAccessToken(accessToken) {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
+
                     Authorization: `Bearer ${accessToken}`,
                 },
             }
@@ -119,6 +120,7 @@ export async function verifyAccessToken(accessToken) {
 
         if (!res.ok) {
             throw new Error(
+
                 `HTTP error! status: ${res.status}`
             );
         }

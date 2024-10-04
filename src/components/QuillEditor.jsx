@@ -90,6 +90,15 @@ const QuillEditor = forwardRef((props, ref) => {
                         'image',
                         url
                     ); // 에디터에 이미지 삽입
+                    // 삽입된 이미지 크기 조절
+                    const img =
+                        quillRef.current.root.querySelector(
+                            `img[src="${url}"]`
+                        );
+                    if (img) {
+                        img.style.width = '300px'; // 너비를 100%로 조정 (또는 원하는 값)
+                        img.style.height = 'auto'; // 비율을 유지하면서 높이 조정
+                    }
                     // 미리보기 이미지 상태 업데이트
                     setPreviewImages((prev) => [
                         ...prev,
