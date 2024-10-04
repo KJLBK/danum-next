@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { jwtDecode } from 'jwt-decode'; // jwtDecode를 올바르게 import
 import {
     questionDetail,
@@ -25,6 +25,7 @@ export default function QuestionsViewPage() {
     const [decodedToken, setDecodedToken] = useState(null); // decodedToken을 상태로 관리
     const params = useParams();
     const editorRef = useRef(null); // Quill 인스턴스가 들어갈 ref
+    const router = useRouter();
 
     // 시간을 "몇 시간 전" 형식으로 변환하는 함수
     const formatTimeAgo = (dateString) => {
@@ -52,6 +53,7 @@ export default function QuestionsViewPage() {
     // 게시글 삭제 함수
     const handleDelete = () => {
         questionDelete(params.questionId);
+        router.push('/questions');
     };
 
     // 질문 및 댓글 데이터를 가져오는 함수
@@ -138,13 +140,13 @@ export default function QuestionsViewPage() {
                     {formatTimeAgo(data.created_at)} • 읽음
                     {data.view_count}
                 </span>
+                <button
+                    className={style.button}
+                    onClick={handleDelete}
+                >
+                    삭제
+                </button>
             </div>
-            <button onClick={handleDelete}>삭제</button>
-            <h2>제목 : {data.title}</h2>
-            <p>
-                {data.email} | {data.created_at} |{' '}
-                {data.view_count}
-            </p>
 
             {/* Quill을 통해 게시글 내용을 뷰어로 표시 */}
             <div>
