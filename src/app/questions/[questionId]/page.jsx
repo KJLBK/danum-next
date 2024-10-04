@@ -7,6 +7,7 @@ import {
     questionDetail,
     questionCommentShow,
     questionDelete,
+    questionUpdate,
 } from '../../../service/questionService';
 import QuestionCommentItem from '../../../components/question/QuestionCommentItem';
 import QuestionCommentNew from '../../../components/question/QuestionCommentNew';
@@ -23,6 +24,7 @@ export default function QuestionsViewPage() {
     const [data, setData] = useState({});
     const [comment, setComment] = useState([]);
     const [decodedToken, setDecodedToken] = useState(null); // decodedToken을 상태로 관리
+    const [isEditing, setIsEditing] = useState(false); // 수정 모드 상태
     const params = useParams();
     const editorRef = useRef(null); // Quill 인스턴스가 들어갈 ref
     const router = useRouter();
@@ -54,6 +56,19 @@ export default function QuestionsViewPage() {
     const handleDelete = () => {
         questionDelete(params.questionId);
         router.push('/questions');
+    };
+
+    // 게시글 수정 함수 (서버로 업데이트 요청)
+    const handleUpdate = async () => {
+        try {
+            await questionUpdate(
+                params.questionId,
+                title,
+                contetnt
+            ); // 수정된 내용을 서버로 전송
+        } catch (error) {
+            console.error('Error updating comment:', error);
+        }
     };
 
     // 질문 및 댓글 데이터를 가져오는 함수
@@ -140,12 +155,35 @@ export default function QuestionsViewPage() {
                     {formatTimeAgo(data.created_at)} • 읽음
                     {data.view_count}
                 </span>
-                <button
-                    className={style.button}
-                    onClick={handleDelete}
-                >
-                    삭제
-                </button>
+                <div className={style.button}>
+                    {isEditing ? (
+                        <>
+                            <button onClick={handleUpdate}>
+                                저장
+                            </button>
+                            <button
+                                onClick={() =>
+                                    setIsEditing(false)
+                                }
+                            >
+                                취소
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <button
+                                onClick={() =>
+                                    setIsEditing(true)
+                                }
+                            >
+                                수정
+                            </button>
+                            <button onClick={handleDelete}>
+                                삭제
+                            </button>
+                        </>
+                    )}
+                </div>
             </div>
 
             {/* Quill을 통해 게시글 내용을 뷰어로 표시 */}

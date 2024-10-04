@@ -26,3 +26,7 @@
 .button {
     margin-left: auto; /* 자동 여백을 사용하여 오른쪽으로 배치 */
 }
+
+.button button:first-child {
+    margin-right: 10px; /* 수정 버튼과 삭제 버튼 사이의 간격 */
+}
