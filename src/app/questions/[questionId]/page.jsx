@@ -12,6 +12,7 @@ import QuestionCommentItem from '../../../components/question/QuestionCommentIte
 import QuestionCommentNew from '../../../components/question/QuestionCommentNew';
 import dynamic from 'next/dynamic';
 import 'quill/dist/quill.snow.css'; // Quill 에디터 스타일
+import style from './page.module.css';
 
 // Quill을 동적으로 불러오기
 const Quill = dynamic(() => import('quill'), {
@@ -24,6 +25,29 @@ export default function QuestionsViewPage() {
     const [decodedToken, setDecodedToken] = useState(null); // decodedToken을 상태로 관리
     const params = useParams();
     const editorRef = useRef(null); // Quill 인스턴스가 들어갈 ref
+
+    // 시간을 "몇 시간 전" 형식으로 변환하는 함수
+    const formatTimeAgo = (dateString) => {
+        const now = new Date();
+        const createdDate = new Date(dateString);
+        const diffInSeconds = Math.floor(
+            (now - createdDate) / 1000
+        ); // 두 날짜의 차이 (초 단위)
+
+        const minutes = Math.floor(diffInSeconds / 60);
+        const hours = Math.floor(diffInSeconds / 3600);
+        const days = Math.floor(diffInSeconds / 86400);
+
+        if (days > 0) {
+            return `${days}일 전`;
+        } else if (hours > 0) {
+            return `${hours}시간 전`;
+        } else if (minutes > 0) {
+            return `${minutes}분 전`;
+        } else {
+            return '방금 전';
+        }
+    };
 
     // 게시글 삭제 함수
     const handleDelete = () => {
@@ -103,6 +127,18 @@ export default function QuestionsViewPage() {
 
     return (
         <div>
+            <h1 className={style.title}>{data.title}</h1>
+            <div className={style.info}>
+                <span className={style.profile}></span>
+                <span className={style.email}>
+                    {data.author?.userName}
+                </span>
+                &nbsp;&nbsp;
+                <span className={style.metaInfo}>
+                    {formatTimeAgo(data.created_at)} • 읽음
+                    {data.view_count}
+                </span>
+            </div>
             <button onClick={handleDelete}>삭제</button>
             <h2>제목 : {data.title}</h2>
             <p>
@@ -113,6 +149,7 @@ export default function QuestionsViewPage() {
             {/* Quill을 통해 게시글 내용을 뷰어로 표시 */}
             <div>
                 <div
+                    className={style.content}
                     id='quill-viewer'
                     ref={editorRef}
                     style={{
