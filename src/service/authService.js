@@ -4,7 +4,6 @@ import {
     removeAccessToken,
     setAccessToken,
 } from './tokenService';
-import { headers } from 'next/headers';
 
 export async function login(email, password) {
     try {
@@ -30,12 +29,13 @@ export async function login(email, password) {
         if (!res.ok) {
             throw new Error('Login failed');
         }
+        const accessToken = await res.text();
 
         // Access Token을 localStorage 저장
-        setAccessToken(res.text());
+        setAccessToken(accessToken);
 
         // JWT에서 사용자 정보 추출
-        const user = jwtDecode(token);
+        const user = jwtDecode(accessToken);
         return { user }; // JWT 토큰과 디코딩된 사용자 정보 반환
     } catch (err) {
         throw new Error(err.message);
@@ -46,14 +46,13 @@ export async function login(email, password) {
 
 export async function logout(clearAuth) {
     try {
-        getAccessToken(); // getItem
         clearAuth();
         removeAccessToken();
         await fetch('/danum-backend/logout', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${AccessToken}`,
+                Authorization: `Bearer ${getAccessToken()}`,
             },
         });
     } catch (err) {
@@ -98,36 +97,44 @@ export async function join(
 }
 
 /**
- * AccessToken 검증
+ * AccessToken 검증(FrontServer)
  * URL: POST /auth/check-expiration
  * 설명: accessToken 헤더에 집어넣어서 유효한지 확인합니다.
  * 인증: 필요
  * 응답: is???= false 라고 뜨면 200
  */
 
-export async function verifyAccessToken() {
+export async function verifyAccessToken(accessToken) {
     try {
         const res = await fetch(
-            '/danum-backend/auth/check-expiration',
+            `${process.env.NEXT_PUBLIC_BASE_URL}/auth/check-expiration`,
             {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
-                    Authorization: `Bearer ${getAccessToken()}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
             }
         );
+
+        if (!res.ok) {
+            throw new Error(
+                `HTTP error! status: ${res.status}`
+            );
+        }
+        const data = await res.json();
+
+        return data;
     } catch (error) {
         throw new Error(error.message);
     }
-    return await res.json();
 }
 
-// Test 로직
+// Test 로직(FrontServer)
 export async function checkAuth(RefreshToken) {
     try {
         const res = await fetch(
-            '/danum-backend/auth/refresh',
+            `${process.env.NEXT_PUBLIC_BASE_URL}/auth/refresh`,
             {
                 method: 'POST',
                 headers: {
@@ -136,9 +143,9 @@ export async function checkAuth(RefreshToken) {
                 },
             }
         );
-        const accessToken = await res.text();
-        localStorage.setItem('accessToken', accessToken);
-        console.log(jwtDecode(accessToken));
+        const data = await res.text(); // 한번만 호출
+
+        return data;
     } catch (error) {
         throw new Error(error.message);
     }

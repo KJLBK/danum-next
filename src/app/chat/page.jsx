@@ -22,7 +22,7 @@ export default function ChatPage() {
     const loadRooms = async () => {
         try {
             const fetchedRooms = await getAllChatRooms();
-            console.log(fetchedRooms);
+
             setRooms(fetchedRooms);
         } catch (error) {
             console.error(
@@ -37,7 +37,7 @@ export default function ChatPage() {
         if (!newRoomName.trim()) return;
         try {
             const newRoom = await createGroupChat(user);
-            console.log(newRoom);
+
             setRooms([...rooms, newRoom]);
             setNewRoomName('');
         } catch (error) {

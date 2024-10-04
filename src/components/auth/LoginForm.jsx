@@ -5,7 +5,10 @@ import Input from '../common/Input';
 import Button from '../common/Button';
 import { login } from '../../service/authService';
 import { useAuthStore } from '../../store/authStore';
-import { useRouter } from 'next/navigation';
+import {
+    useRouter,
+    useSearchParams,
+} from 'next/navigation';
 
 export default function LoginForm() {
     const [email, setEmail] = useState('');
@@ -13,6 +16,9 @@ export default function LoginForm() {
     const [error, setError] = useState(null);
     const { setAuth } = useAuthStore();
     const router = useRouter();
+    const searchParams = useSearchParams();
+
+    const redirectPath = searchParams.get('from') || '/';
 
     // 로그인 로직 셋팅
     const handleSubmit = async (e) => {
@@ -20,7 +26,6 @@ export default function LoginForm() {
 
         try {
             const { user } = await login(email, password);
-
             const expiration = new Date(
                 user.exp * 1000
             ).toLocaleString();
@@ -30,7 +35,8 @@ export default function LoginForm() {
                 user.role[0].authority,
                 expiration
             );
-            router.push('/');
+            console.log(redirectPath);
+            router.push(redirectPath); // /chat으로 안가짐.
         } catch (err) {
             setError('로그인 실패 : ' + err.message);
         }

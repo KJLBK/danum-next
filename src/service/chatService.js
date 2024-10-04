@@ -16,7 +16,7 @@ export async function getAllChatRooms() {
             Authorization: `Bearer ${accessToken}`,
         },
     });
-    console.log(res);
+
     if (!res.ok) {
         throw new Error('Failed to fetch chat rooms');
     }
@@ -78,7 +78,6 @@ export async function getChatRoomInfo(roomId) {
             },
         }
     );
-    console.log('chatService.js:46', res);
 
     if (!res.ok) {
         throw new Error('Failed to fetch room info');
@@ -116,7 +115,6 @@ export async function createPrivateChat(targetUserId) {
             }),
         }
     );
-    console.log('chatService.js:70', res);
 
     if (!res.ok) {
         throw new Error(
@@ -146,7 +144,6 @@ export async function getRecentMessages() {
             },
         }
     );
-    console.log(res);
     if (!res.ok) {
         throw new Error('Failed to get recent messages');
     }
