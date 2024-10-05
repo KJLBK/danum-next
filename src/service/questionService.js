@@ -5,8 +5,7 @@ export async function questionNew({
     content,
     createId,
 }) {
-    const token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU';
+    const token = localStorage.getItem('accessToken');
 
     try {
         const response = await fetch(
@@ -39,8 +38,7 @@ export async function questionNew({
 
 //질문이야기 게시판 조회 로직
 export async function questionShow() {
-    const token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU';
+    const token = localStorage.getItem('accessToken');
 
     try {
         const response = await fetch(
@@ -66,8 +64,7 @@ export async function questionShow() {
 
 // 질문이야기 게시판 삭제 로직
 export async function questionDelete(id) {
-    const token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU';
+    const token = localStorage.getItem('accessToken');
 
     try {
         const response = await fetch(
@@ -93,8 +90,7 @@ export async function questionDelete(id) {
 
 // 질문이야기 수정 로직
 export async function questionUpdate(id, title, content) {
-    const token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU';
+    const token = localStorage.getItem('accessToken');
 
     try {
         const response = await fetch(
@@ -125,8 +121,7 @@ export async function questionUpdate(id, title, content) {
 
 //질문이야기 게시판 상세 조회 로직
 export async function questionDetail(questionId) {
-    const token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU';
+    const token = localStorage.getItem('accessToken');
 
     try {
         const response = await fetch(
@@ -152,8 +147,7 @@ export async function questionDetail(questionId) {
 
 //질문이야기 댓글 조회 로직
 export async function questionCommentShow(questionId) {
-    const token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU';
+    const token = localStorage.getItem('accessToken');
 
     try {
         const response = await fetch(
@@ -183,8 +177,7 @@ export async function questionCommentNew({
     member_email,
     content,
 }) {
-    const token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU';
+    const token = localStorage.getItem('accessToken');
 
     try {
         const response = await fetch(
@@ -215,8 +208,7 @@ export async function questionCommentNew({
 
 // 질문이야기 댓글 삭제 로직
 export async function questionCommentDelete(comment_id) {
-    const token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU';
+    const token = localStorage.getItem('accessToken');
 
     try {
         const response = await fetch(
@@ -245,8 +237,7 @@ export async function questionCommentDelete(comment_id) {
 
 // 질문이야기 댓글 수정 로직
 export async function questionCommentUpdate(id, content) {
-    const token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEiLCJyb2xlIjpbeyJhdXRob3JpdHkiOiJBRE1JTiJ9XSwiZXhwIjoyMDE2MjYyMzYyfQ.sUoNzSqQtO7A6eAOkUbCb4_lPL96i8xkIHyvI3X6TfU';
+    const token = localStorage.getItem('accessToken');
 
     try {
         const response = await fetch(
