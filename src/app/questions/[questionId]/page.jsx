@@ -1,11 +1,12 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { jwtDecode } from 'jwt-decode'; // jwtDecode를 올바르게 import
 import {
     questionDetail,
     questionCommentShow,
+    questionDelete,
 } from '../../../service/questionService';
 import QuestionCommentItem from '../../../components/question/QuestionCommentItem';
 import QuestionCommentNew from '../../../components/question/QuestionCommentNew';
@@ -22,8 +23,10 @@ export default function QuestionsViewPage() {
     const [data, setData] = useState({});
     const [comment, setComment] = useState([]);
     const [decodedToken, setDecodedToken] = useState(null); // decodedToken을 상태로 관리
+    const [isModalOpen, setModalOpen] = useState(false); // 모달 열림 상태 관리
     const params = useParams();
     const editorRef = useRef(null); // Quill 인스턴스가 들어갈 ref
+    const router = useRouter();
 
     // 시간을 "몇 시간 전" 형식으로 변환하는 함수
     const formatTimeAgo = (dateString) => {
@@ -46,6 +49,27 @@ export default function QuestionsViewPage() {
         } else {
             return '방금 전';
         }
+    };
+
+    // 게시글 삭제 함수
+    const handleDelete = () => {
+        questionDelete(params.questionId);
+        router.push('/questions');
+    };
+
+    // 모달을 열기 위한 함수
+    const openModal = () => {
+        setModalOpen(true);
+    };
+
+    // 모달을 닫기 위한 함수
+    const closeModal = () => {
+        setModalOpen(false);
+    };
+
+    // 수정 페이지로 이동하는 함수
+    const goToEditPage = () => {
+        router.push(`/questions/${params.questionId}/edit`);
     };
 
     // 질문 및 댓글 데이터를 가져오는 함수
@@ -129,9 +153,24 @@ export default function QuestionsViewPage() {
                 </span>
                 &nbsp;&nbsp;
                 <span className={style.metaInfo}>
-                    {formatTimeAgo(data.created_at)} • 읽음
+                    {formatTimeAgo(data.created_at)} • 읽음{' '}
                     {data.view_count}
                 </span>
+                <div
+                    className={`${style.button} ${
+                        decodedToken?.sub ===
+                        data.author?.userId
+                            ? ''
+                            : style.hide
+                    }`}
+                >
+                    <button onClick={goToEditPage}>
+                        수정
+                    </button>
+                    <button onClick={openModal}>
+                        삭제
+                    </button>
+                </div>
             </div>
 
             {/* Quill을 통해 게시글 내용을 뷰어로 표시 */}
@@ -171,6 +210,25 @@ export default function QuestionsViewPage() {
                     } // 로그인되지 않으면 null 전달
                 />
             ))}
+
+            {/* 모달 */}
+            {isModalOpen && (
+                <div className={style.modal}>
+                    <div className={style.modalContent}>
+                        <h2>게시글 삭제</h2>
+                        <p>
+                            정말로 게시글을
+                            삭제하시겠습니까?
+                        </p>
+                        <button onClick={handleDelete}>
+                            확인
+                        </button>
+                        <button onClick={closeModal}>
+                            취소
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
