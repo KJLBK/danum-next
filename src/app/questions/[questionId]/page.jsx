@@ -144,7 +144,14 @@ export default function QuestionsViewPage() {
                     {formatTimeAgo(data.created_at)} • 읽음
                     {data.view_count}
                 </span>
-                <div className={style.button}>
+                <div
+                    className={`${style.button} ${
+                        decodedToken?.sub ===
+                        data.author?.userId
+                            ? ''
+                            : style.hide
+                    }`}
+                >
                     <button onClick={goToEditPage}>
                         수정
                     </button>
