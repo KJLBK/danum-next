@@ -23,12 +23,12 @@ export default function ChatRoomPage() {
 
     useEffect(() => {
         loadRoomInfo();
-        console.log('1');
+
         // 500 -> token error
         const socket = new SockJS(
             `/danum-backend/ws-stomp`
         );
-        console.log('2');
+
         stompClient.current = new Client({
             webSocketFactory: () => socket,
             connectHeaders: {
