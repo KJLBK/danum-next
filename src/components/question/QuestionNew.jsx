@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { jwtDecode } from 'jwt-decode';
 import { questionNew } from '../../service/questionService';
 import QuillEditor from '../QuillEditor';
+import style from './QuestionNew.module.css';
 
 export default function QuestionNew() {
     const [formData, setFormData] = useState({
@@ -59,19 +60,7 @@ export default function QuestionNew() {
         <div>
             <h2>글쓰기 페이지</h2>
             <form onSubmit={onSubmit}>
-                <div>
-                    <label className='email'>이메일</label>
-                    <input
-                        type='email'
-                        id='email'
-                        name='email'
-                        value={formData.email}
-                        onChange={onChangeData}
-                        required
-                    />
-                </div>
-                <div>
-                    <label className='title'>제목</label>
+                <div className={style.formRow}>
                     <input
                         type='text'
                         id='title'
@@ -79,12 +68,18 @@ export default function QuestionNew() {
                         value={formData.title}
                         onChange={onChangeData}
                         required
+                        className={style.input}
                     />
+                    <button
+                        type='submit'
+                        className={style.button}
+                    >
+                        작성
+                    </button>
                 </div>
                 <div>
                     <QuillEditor ref={editorRef} />
                 </div>
-                <button type='submit'>작성</button>
             </form>
         </div>
     );

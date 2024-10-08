@@ -80,7 +80,7 @@ const QuillEditor = forwardRef((props, ref) => {
             <div
                 id='editor'
                 ref={editorRef}
-                style={{ height: '300px' }}
+                style={{ height: '400px' }}
             />
         </div>
     );
