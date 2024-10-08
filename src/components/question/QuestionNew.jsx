@@ -33,7 +33,6 @@ export default function QuestionNew() {
                 ...prevData,
                 email: decoded.sub,
             }));
-            console.log(decoded.sub);
         }
     }, []);
 
