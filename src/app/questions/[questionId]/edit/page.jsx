@@ -10,6 +10,7 @@ import {
 import dynamic from 'next/dynamic';
 import 'quill/dist/quill.snow.css'; // Quill 에디터 스타일
 import QuillEditor from '../../../../components/QuillEditor';
+import style from './page.module.css';
 
 // Quill을 동적으로 불러오기
 const Quill = dynamic(() => import('quill'), {
@@ -76,11 +77,14 @@ export default function EditQuestionPage() {
 
     return (
         <div>
-            <h1>질문 수정하기</h1>
-            <div>
-                <label>제목</label>
+            <h2>게시글 수정</h2>
+            <div className={style.formRow}>
                 <input
+                    className={style.input}
                     type='text'
+                    id='title'
+                    name='title'
+                    required
                     value={data.title}
                     onChange={(e) =>
                         setData({
@@ -89,6 +93,12 @@ export default function EditQuestionPage() {
                         })
                     }
                 />
+                <button
+                    onClick={handleUpdate}
+                    className={style.button}
+                >
+                    수정
+                </button>
             </div>
 
             <div>
@@ -98,9 +108,6 @@ export default function EditQuestionPage() {
                     content={data.content}
                 />
             </div>
-            <button onClick={handleUpdate}>
-                수정 완료
-            </button>
         </div>
     );
 }
