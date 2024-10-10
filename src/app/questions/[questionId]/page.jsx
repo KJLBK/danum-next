@@ -13,6 +13,7 @@ import QuestionCommentNew from '../../../components/question/QuestionCommentNew'
 import dynamic from 'next/dynamic';
 import 'quill/dist/quill.snow.css'; // Quill 에디터 스타일
 import style from './page.module.css';
+import { getAccessToken } from '../../../service/tokenService';
 
 // Quill을 동적으로 불러오기
 const Quill = dynamic(() => import('quill'), {
@@ -136,7 +137,7 @@ export default function QuestionsViewPage() {
 
     // 로컬 스토리지에서 JWT 토큰을 가져와 디코딩하는 useEffect
     useEffect(() => {
-        const token = localStorage.getItem('accessToken');
+        const token = getAccessToken();
         if (token) {
             const decoded = jwtDecode(token);
             setDecodedToken(decoded); // 디코딩된 토큰을 상태로 저장

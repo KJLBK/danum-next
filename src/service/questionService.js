@@ -1,3 +1,5 @@
+import { getAccessToken } from './tokenService';
+
 // 질문이야기 게시판 생성 로직
 export async function questionNew({
     email,
@@ -5,7 +7,7 @@ export async function questionNew({
     content,
     createId,
 }) {
-    const token = localStorage.getItem('accessToken');
+    const token = getAccessToken();
 
     try {
         const response = await fetch(
@@ -38,16 +40,11 @@ export async function questionNew({
 
 //질문이야기 게시판 조회 로직
 export async function questionShow() {
-    const token = localStorage.getItem('accessToken');
-
     try {
         const response = await fetch(
             '/danum-backend/board/question/show',
             {
                 method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
             }
         );
 
@@ -64,7 +61,7 @@ export async function questionShow() {
 
 // 질문이야기 게시판 삭제 로직
 export async function questionDelete(id) {
-    const token = localStorage.getItem('accessToken');
+    const token = getAccessToken();
 
     try {
         const response = await fetch(
@@ -90,7 +87,7 @@ export async function questionDelete(id) {
 
 // 질문이야기 수정 로직
 export async function questionUpdate(id, title, content) {
-    const token = localStorage.getItem('accessToken');
+    const token = getAccessToken();
 
     try {
         const response = await fetch(
@@ -121,16 +118,11 @@ export async function questionUpdate(id, title, content) {
 
 //질문이야기 게시판 상세 조회 로직
 export async function questionDetail(questionId) {
-    const token = localStorage.getItem('accessToken');
-
     try {
         const response = await fetch(
             `/danum-backend/board/question/show/${questionId}`,
             {
                 method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
             }
         );
 
@@ -147,16 +139,11 @@ export async function questionDetail(questionId) {
 
 //질문이야기 댓글 조회 로직
 export async function questionCommentShow(questionId) {
-    const token = localStorage.getItem('accessToken');
-
     try {
         const response = await fetch(
             `/danum-backend/board/question/comment/show/${questionId}`,
             {
                 method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
             }
         );
 
@@ -177,7 +164,7 @@ export async function questionCommentNew({
     member_email,
     content,
 }) {
-    const token = localStorage.getItem('accessToken');
+    const token = getAccessToken();
 
     try {
         const response = await fetch(
@@ -208,7 +195,7 @@ export async function questionCommentNew({
 
 // 질문이야기 댓글 삭제 로직
 export async function questionCommentDelete(comment_id) {
-    const token = localStorage.getItem('accessToken');
+    const token = getAccessToken();
 
     try {
         const response = await fetch(
@@ -237,7 +224,7 @@ export async function questionCommentDelete(comment_id) {
 
 // 질문이야기 댓글 수정 로직
 export async function questionCommentUpdate(id, content) {
-    const token = localStorage.getItem('accessToken');
+    const token = getAccessToken();
 
     try {
         const response = await fetch(

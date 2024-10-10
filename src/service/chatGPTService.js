@@ -1,6 +1,8 @@
+import { getAccessToken } from './tokenService';
+
 // chatGPT에게 질문을 시작하는 로직
 export async function generateAI(message) {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = getAccessToken();
     if (!accessToken) {
         throw new Error('Access token is missing');
     }
@@ -27,7 +29,7 @@ export async function generateAI(message) {
 
 // chatGPT 대화 내용을 가져오는 로직
 export async function getMessage(createId) {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = getAccessToken();
 
     try {
         const res = await fetch(
@@ -53,7 +55,7 @@ export async function getMessage(createId) {
 
 //chatGPT 대화를 종료하는 로직
 export async function closeAI(createId) {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = getAccessToken();
 
     try {
         const res = await fetch(

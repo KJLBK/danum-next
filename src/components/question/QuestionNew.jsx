@@ -25,7 +25,7 @@ export default function QuestionNew() {
     };
 
     useEffect(() => {
-        const token = localStorage.getItem('accessToken');
+        const token = getAccessToken();
         if (token) {
             const decoded = jwtDecode(token);
             setFormData((prevData) => ({
