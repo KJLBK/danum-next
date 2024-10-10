@@ -8,8 +8,10 @@
  *
  * @returns {Promise<Array>} ChatRoom 객체 리스트
  */
+import { getAccessToken } from './tokenService';
+
 export async function getAllChatRooms() {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = getAccessToken();
     const res = await fetch('/danum-backend/chat/rooms', {
         headers: {
             'Content-Type': 'application/json',
@@ -37,7 +39,7 @@ export async function getAllChatRooms() {
  * @returns {Promise<Object>} 생성된 ChatRoom 객체
  */
 export async function createGroupChat(name) {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = getAccessToken();
     const res = await fetch('/danum-backend/chat/room', {
         method: 'POST',
         headers: {
@@ -67,7 +69,7 @@ export async function createGroupChat(name) {
  */
 // getChatRoomInfo
 export async function getChatRoomInfo(roomId) {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = getAccessToken();
     const res = await fetch(
         `/danum-backend/chat/room/${roomId}`,
         {
@@ -101,7 +103,7 @@ export async function getChatRoomInfo(roomId) {
  * @returns {Promise<Object>} 생성된 채팅방 정보
  */
 export async function createPrivateChat(targetUserId) {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = getAccessToken();
     const res = await fetch(
         '/danum-backend/chat/room/one-to-one',
         {
@@ -133,7 +135,7 @@ export async function createPrivateChat(targetUserId) {
  * 기능: 메인 페이지나 대시보드에서 사용자의 모든 채팅 활동 요약을 보여줄 때 사용됩니다. 각 채팅방의 최신 메시지를 표시하여 사용자가 새 메시지나 미확인 대화를 빠르게 확인할 수 있게 합니다.
  */
 export async function getRecentMessages() {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = getAccessToken();
     const res = await fetch(
         '/danum-backend/chat/recent-messages',
         {
@@ -165,7 +167,7 @@ export async function getRecentMessages() {
  * @returns {Promise<Object>} 채팅방 정보와 메시지 리스트
  */
 export async function enterChatRoom(roomID) {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = getAccessToken();
     const res = await fetch(
         `/danum-backend/chat/room/${roomID}/enter`,
         {
@@ -199,7 +201,7 @@ export async function enterChatRoom(roomID) {
  */
 // getChatRoomMessages
 export async function getChatMessages() {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = getAccessToken();
     const res = await fetch(
         `/danum-backend/chat/room/${roomID}/messages`,
         {
