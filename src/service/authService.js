@@ -1,8 +1,6 @@
-import { jwtDecode } from 'jwt-decode';
 import {
     getAccessToken,
     removeAccessToken,
-    setAccessToken,
 } from './tokenService';
 
 export async function login(email, password) {
@@ -29,14 +27,7 @@ export async function login(email, password) {
         if (!res.ok) {
             throw new Error('Login failed');
         }
-        const accessToken = await res.text();
-
-        // Access Token을 localStorage 저장
-        setAccessToken(accessToken);
-
-        // JWT에서 사용자 정보 추출
-        const user = jwtDecode(accessToken);
-        return { user }; // JWT 토큰과 디코딩된 사용자 정보 반환
+        return await res.text();
     } catch (err) {
         throw new Error(err.message);
     }
@@ -120,7 +111,6 @@ export async function verifyAccessToken(accessToken) {
 
         if (!res.ok) {
             throw new Error(
-
                 `HTTP error! status: ${res.status}`
             );
         }

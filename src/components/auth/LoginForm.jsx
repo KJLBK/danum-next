@@ -3,72 +3,70 @@
 import { useState } from 'react';
 import Input from '../common/Input';
 import Button from '../common/Button';
-import { login } from '../../service/authService';
-import { useAuthStore } from '../../store/authStore';
-import {
-    useRouter,
-    useSearchParams,
-} from 'next/navigation';
+import { useLogin } from '../../hooks/useLogin';
 
 export default function LoginForm() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+    });
     const [error, setError] = useState(null);
-    const { setAuth } = useAuthStore();
-    const router = useRouter();
-    const searchParams = useSearchParams();
 
-    const redirectPath = searchParams.get('from') || '/';
-
-    // 로그인 로직 셋팅
-    const handleSubmit = async (e) => {
+    const { mutate, isLoading, isError } = useLogin();
+    const handleSubmit = (e) => {
         e.preventDefault();
-
-        try {
-            const { user } = await login(email, password);
-            const expiration = new Date(
-                user.exp * 1000
-            ).toLocaleString();
-
-            setAuth(
-                user.sub,
-                user.role[0].authority,
-                expiration
-            );
-            console.log(redirectPath);
-            router.push(redirectPath); // /chat으로 안가짐.
-        } catch (err) {
-            setError('로그인 실패 : ' + err.message);
-        }
+        mutate(
+            {
+                email: formData.email,
+                password: formData.password,
+            },
+            {
+                onError: (err) => {
+                    setError('로그인 실패: ' + err.message);
+                },
+            }
+        );
     };
 
     return (
         <>
             <form onSubmit={handleSubmit}>
                 <Input
-                    type="text"
-                    value={email}
+                    type="email"
+                    value={formData.email}
                     onChange={(e) =>
-                        setEmail(e.target.value)
+                        setFormData((prev) => ({
+                            ...prev,
+                            email: e.target.value,
+                        }))
                     }
                     placeholder="이메일을 입력해 주세요"
                     required
                 />
                 <Input
                     type="password"
-                    value={password}
+                    value={formData.password}
                     onChange={(e) =>
-                        setPassword(e.target.value)
+                        setFormData((prev) => ({
+                            ...prev,
+                            password: e.target.value,
+                        }))
                     }
                     placeholder="비밀번호를 입력해 주세요"
                     required
                 />
-                <Button type="submit">로그인</Button>
+                <Button type="submit" disabled={isLoading}>
+                    {isLoading ? '로그인 중...' : '로그인'}
+                </Button>
             </form>
+            {isError && (
+                <p style={{ color: 'red' }}>
+                    로그인 중 오류가 발생했습니다.
+                </p>
+            )}
             {error && (
                 <p style={{ color: 'red' }}>{error}</p>
             )}
-            {/* TODO: 비밀번호가 생각나지 않나요? */}{' '}
         </>
     );
 }
