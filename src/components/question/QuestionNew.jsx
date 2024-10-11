@@ -2,9 +2,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { jwtDecode } from 'jwt-decode';
-import { questionNew } from '../../service/questionService';
+import { questionNew } from '../../services/questionService';
 import QuillEditor from '../QuillEditor';
 import style from './QuestionNew.module.css';
+import { getAccessToken } from '../../services/tokenService';
 
 export default function QuestionNew() {
     const [formData, setFormData] = useState({
@@ -61,16 +62,16 @@ export default function QuestionNew() {
             <form onSubmit={onSubmit}>
                 <div className={style.formRow}>
                     <input
-                        type='text'
-                        id='title'
-                        name='title'
+                        type="text"
+                        id="title"
+                        name="title"
                         value={formData.title}
                         onChange={onChangeData}
                         required
                         className={style.input}
                     />
                     <button
-                        type='submit'
+                        type="submit"
                         className={style.button}
                     >
                         작성

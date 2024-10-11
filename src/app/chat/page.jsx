@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getAllChatRooms } from '../../service/chatService';
-import { createGroupChat } from '../../service/chatService';
+import {
+    getAllChatRooms,
+    createGroupChat,
+} from '../../services/chatService';
 import ChatRoomList from '../../components/chat/ChatRoomList';
-import { useAuthStore } from '../../store/authStore';
+import { useAuthStore } from '../../stores/authStore';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 

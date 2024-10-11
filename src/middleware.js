@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import {
     checkAuth,
     verifyAccessToken,
-} from './service/authService';
+} from './services/authService';
 
 export async function middleware(req) {
     const cookies = req.cookies;

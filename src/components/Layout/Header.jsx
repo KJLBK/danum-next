@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useAuthStore } from '../../store/authStore';
+import { useAuthStore } from '../../stores/authStore';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import styles from '../../styles/Header.module.css';
@@ -36,26 +36,26 @@ export default function Header() {
             <div className={styles['header-div']}>
                 <ul className={styles['header-ul']}>
                     <li>
-                        <a href='/'>danum</a>
+                        <a href="/">danum</a>
                     </li>
                     <li className={isActive('/')}>
-                        <Link href='/'>홈</Link>
+                        <Link href="/">홈</Link>
                     </li>
                     <li className={isActive('/villages')}>
-                        <Link href='/villages'>
+                        <Link href="/villages">
                             동네이야기
                         </Link>
                     </li>
                     <li className={isActive('/questions')}>
-                        <Link href='/questions'>
+                        <Link href="/questions">
                             질문이야기
                         </Link>
                     </li>
                     <li className={isActive('/chat')}>
-                        <Link href='/chat'>채팅</Link>
+                        <Link href="/chat">채팅</Link>
                     </li>
                     <li className={isActive('/test')}>
-                        <Link href='/test'>테스트</Link>
+                        <Link href="/test">테스트</Link>
                     </li>
                 </ul>
                 <GetProfile />

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { questionCommentNew } from '../../service/questionService';
+import { questionCommentNew } from '../../services/questionService';
 import style from './QuestionCommentNew.module.css';
 
 export default function QuestionCommentNew({
@@ -43,15 +43,15 @@ export default function QuestionCommentNew({
             >
                 <input
                     className={style.input}
-                    id='content'
-                    name='content'
+                    id="content"
+                    name="content"
                     value={formData.content}
                     onChange={onChangeData}
                     required
                 />
                 <button
                     className={style.button}
-                    type='submit'
+                    type="submit"
                 >
                     작성
                 </button>

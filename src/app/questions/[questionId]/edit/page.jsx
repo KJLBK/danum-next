@@ -6,7 +6,7 @@ import { useParams, useRouter } from 'next/navigation';
 import {
     questionDetail,
     questionUpdate,
-} from '../../../../service/questionService';
+} from '../../../../services/questionService';
 import dynamic from 'next/dynamic';
 import 'quill/dist/quill.snow.css'; // Quill 에디터 스타일
 import QuillEditor from '../../../../components/QuillEditor';
@@ -81,9 +81,9 @@ export default function EditQuestionPage() {
             <div className={style.formRow}>
                 <input
                     className={style.input}
-                    type='text'
-                    id='title'
-                    name='title'
+                    type="text"
+                    id="title"
+                    name="title"
                     required
                     value={data.title}
                     onChange={(e) =>

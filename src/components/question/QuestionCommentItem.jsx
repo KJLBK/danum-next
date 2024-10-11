@@ -2,8 +2,8 @@ import { useState } from 'react';
 import {
     questionCommentDelete,
     questionCommentUpdate,
-} from '../../service/questionService';
-import { createPrivateChat } from '../../service/chatService';
+} from '../../services/questionService';
+import { createPrivateChat } from '../../services/chatService';
 import style from './QuestionCommentItem.module.css';
 
 export default function QuestionCommentItem({

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { questionShow } from '../../service/questionService';
+import { questionShow } from '../../services/questionService';
 import QuestionItem from '../../components/question/QuestionItem';
 import style from './page.module.css'; // CSS 모듈 임포트
 
