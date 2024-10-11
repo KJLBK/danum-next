@@ -1,5 +1,6 @@
 import './globals.css';
 import Header from '../components/Layout/Header';
+import QueryProvider from '../components/Layout/QueryProvider';
 
 export const metadata = {
     title: '다눔: 지식 커뮤니티 플랫폼',
@@ -20,8 +21,12 @@ export default function RootLayout({ children }) {
                 />
             </head>
             <body>
-                <Header />
-                {children}
+                <>
+                    <QueryProvider>
+                        <Header />
+                        {children}
+                    </QueryProvider>
+                </>
             </body>
         </html>
     );
