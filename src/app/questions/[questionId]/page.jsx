@@ -7,13 +7,13 @@ import {
     questionDetail,
     questionCommentShow,
     questionDelete,
-} from '../../../service/questionService';
+} from '../../../services/questionService';
 import QuestionCommentItem from '../../../components/question/QuestionCommentItem';
 import QuestionCommentNew from '../../../components/question/QuestionCommentNew';
 import dynamic from 'next/dynamic';
 import 'quill/dist/quill.snow.css'; // Quill 에디터 스타일
 import style from './page.module.css';
-import { getAccessToken } from '../../../service/tokenService';
+import { getAccessToken } from '../../../services/tokenService';
 
 // Quill을 동적으로 불러오기
 const Quill = dynamic(() => import('quill'), {
@@ -178,7 +178,7 @@ export default function QuestionsViewPage() {
             <div>
                 <div
                     className={style.content}
-                    id='quill-viewer'
+                    id="quill-viewer"
                     ref={editorRef}
                     style={{
                         height: 'auto',

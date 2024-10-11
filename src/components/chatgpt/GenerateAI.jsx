@@ -5,7 +5,7 @@ import {
     generateAI,
     getMessage,
     closeAI,
-} from '../../service/chatGPTService';
+} from '../../services/chatGPTService';
 
 export default function GenerateAI() {
     const [message, setMessage] = useState(''); // 입력 메시지
@@ -55,8 +55,8 @@ export default function GenerateAI() {
         <div>
             <p>질문을 적어주세요.</p>
             <textarea
-                id='message'
-                name='message'
+                id="message"
+                name="message"
                 value={message}
                 onChange={onChangeMessage}
             />

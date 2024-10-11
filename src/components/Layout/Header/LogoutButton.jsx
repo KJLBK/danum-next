@@ -1,5 +1,5 @@
-import { logout } from '../../../service/authService';
-import { useAuthStore } from '../../../store/authStore';
+import { logout } from '../../../services/authService';
+import { useAuthStore } from '../../../stores/authStore';
 import Button from '../../common/Button';
 
 export function LogoutButton() {

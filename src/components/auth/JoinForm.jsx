@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Input from '../common/Input';
 import Button from '../common/Button';
-import { join } from '../../service/authService';
+import { join } from '../../services/authService';
 import KakaoMap from '../../app/map/page'; // KakaoMap 컴포넌트를 가져옴
 import Profile from './Profile';
 
@@ -72,48 +72,48 @@ export default function JoinForm() {
         <>
             <form onSubmit={handleSubmit}>
                 <Input
-                    type='email'
+                    type="email"
                     value={email}
                     onChange={(e) =>
                         setEmail(e.target.value)
                     }
-                    placeholder='이메일'
+                    placeholder="이메일"
                     required
                 />
                 <Input
-                    type='password'
+                    type="password"
                     value={password}
                     onChange={(e) =>
                         setPassword(e.target.value)
                     }
-                    placeholder='비밀번호'
+                    placeholder="비밀번호"
                     required
                 />
                 <Input
-                    type='password'
+                    type="password"
                     value={passwordCheck}
                     onChange={(e) =>
                         setPasswordCheck(e.target.value)
                     }
-                    placeholder='비밀번호 확인'
+                    placeholder="비밀번호 확인"
                     required
                 />
                 <Input
-                    type='text'
+                    type="text"
                     value={phone}
                     onChange={(e) =>
                         setPhone(e.target.value)
                     }
-                    placeholder='전화번호'
+                    placeholder="전화번호"
                     required
                 />
                 <Input
-                    type='text'
+                    type="text"
                     value={name}
                     onChange={(e) =>
                         setName(e.target.value)
                     }
-                    placeholder='이름'
+                    placeholder="이름"
                     required
                 />
                 <KakaoMap
@@ -126,7 +126,7 @@ export default function JoinForm() {
                     onImageChange={handleProfileImageChange}
                 />
                 <Button
-                    type='submit'
+                    type="submit"
                     disabled={!latitude || !longitude}
                 >
                     회원가입

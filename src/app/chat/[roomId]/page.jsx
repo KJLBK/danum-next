@@ -2,9 +2,9 @@
 
 import { useParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { getChatRoomInfo } from '../../../service/chatService';
+import { getChatRoomInfo } from '../../../services/chatService';
 import ChatMessageList from '../../../components/chat/ChatMessageList';
-import { useAuthStore } from '../../../store/authStore';
+import { useAuthStore } from '../../../stores/authStore';
 import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
 import ChatInput from '../../../components/chat/ChatInput';

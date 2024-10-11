@@ -1,8 +1,8 @@
 // /src/hooks/useLogin.js
 import { useMutation } from '@tanstack/react-query';
-import { login } from '../service/authService';
-import { setAccessToken } from '../service/tokenService';
-import { useAuthStore } from '../store/authStore';
+import { login } from '../services/authService';
+import { setAccessToken } from '../services/tokenService';
+import { useAuthStore } from '../stores/authStore';
 import {
     useRouter,
     useSearchParams,
