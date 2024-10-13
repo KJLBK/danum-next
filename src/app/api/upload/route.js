@@ -5,9 +5,9 @@ import {
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
-const Bucket = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME;
+const Bucket = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME; // S3 버킷 이름
 const CloudFrontDomain =
-    process.env.NEXT_PUBLIC_CLOUDFRONT_DOMAIN; // CloudFront 도메인을 환경 변수로 추가
+    process.env.NEXT_PUBLIC_CLOUDFRONT_DOMAIN; // CloudFront 도메인
 
 const s3 = new S3Client({
     region: process.env.NEXT_PUBLIC_AWS_REGION,
@@ -26,39 +26,28 @@ export async function POST(req, res) {
         const file = formData.get('img');
         const Body = await file.arrayBuffer();
 
-        // Generate a unique key for the uploaded image
+        // 업로드할 이미지의 고유 키 생성
         const key = `${Date.now()}_${file.name}`;
 
-        // Upload the image to S3
+        // 이미지를 S3에 업로드
         await s3.send(
             new PutObjectCommand({
                 Bucket,
-                Key: key, // Use the generated key
+                Key: key,
                 Body,
                 ContentType: file.type,
             })
         );
 
-        // Generate a signed URL for the uploaded image from CloudFront
+        // CloudFront URL 생성
         const cloudFrontUrl = `https://${CloudFrontDomain}/${key}`;
-
-        // Generate a signed URL with a long expiration time (e.g., 1 day)
-        const imgUrl = await getSignedUrl(
-            s3,
-            new GetObjectCommand({
-                Bucket,
-                Key: key,
-            }),
-            { expiresIn: 604800 } // 7 days expiration
-        );
 
         return new Response(
             JSON.stringify({
                 message: 'OK',
-                url: imgUrl, // 여전히 S3 URL의 signed URL
-                cloudFrontUrl, // CloudFront URL
+                url: cloudFrontUrl, // CloudFront URL 반환
                 key,
-            }), // Send back the image URL and key
+            }),
             { status: 200 }
         );
     } catch (error) {
