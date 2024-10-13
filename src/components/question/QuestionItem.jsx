@@ -83,6 +83,7 @@ export default function QuestionItem({
                                 author?.profileImageUrl ||
                                 '/danum-logo.png'
                             } // Fallback to default image
+                            alt='프로필'
                             width={30} // Desired width
                             height={30} // Desired height
                             objectFit='cover'
