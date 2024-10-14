@@ -62,16 +62,16 @@ export default function QuestionNew() {
             <form onSubmit={onSubmit}>
                 <div className={style.formRow}>
                     <input
-                        type="text"
-                        id="title"
-                        name="title"
+                        type='text'
+                        id='title'
+                        name='title'
                         value={formData.title}
                         onChange={onChangeData}
                         required
                         className={style.input}
                     />
                     <button
-                        type="submit"
+                        type='submit'
                         className={style.button}
                     >
                         작성

@@ -146,7 +146,7 @@ export async function checkAuth(RefreshToken) {
 // 프로필 이미지 가져오는 로직
 
 export async function getProfile() {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = getAccessToken();
 
     try {
         const res = await fetch(

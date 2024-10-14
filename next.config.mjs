@@ -8,13 +8,18 @@ const nextConfig = {
         ];
     },
 
-    // 이미지 호스트 설정 (S3 버킷)
+    // 이미지 호스트 설정 (S3 버킷과 CloudFront)
     images: {
         remotePatterns: [
             {
                 protocol: 'https',
                 hostname:
                     'danum-bucket.s3.ap-northeast-2.amazonaws.com',
+                pathname: '**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'd1v2wety3l5yaa.cloudfront.net', // CloudFront 도메인 추가
                 pathname: '**',
             },
         ],

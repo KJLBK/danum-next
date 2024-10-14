@@ -1,4 +1,3 @@
-// QuillEditor.jsx
 'use client';
 
 import React, {
@@ -6,7 +5,6 @@ import React, {
     useRef,
     forwardRef,
     useImperativeHandle,
-    useState,
 } from 'react';
 import dynamic from 'next/dynamic';
 import 'quill/dist/quill.snow.css';
@@ -21,10 +19,9 @@ const QuillEditor = forwardRef((props, ref) => {
 
     useImperativeHandle(ref, () => ({
         getContent: () => {
-            if (quillRef.current) {
-                return quillRef.current.root.innerHTML; // Quill 인스턴스에서 HTML 반환
-            }
-            return '';
+            return quillRef.current
+                ? quillRef.current.root.innerHTML
+                : '';
         },
     }));
 
@@ -39,31 +36,43 @@ const QuillEditor = forwardRef((props, ref) => {
                     {
                         theme: 'snow',
                         modules: {
-                            toolbar: [
-                                [{ header: [1, 2, false] }],
-                                [
-                                    'bold',
-                                    'italic',
-                                    'underline',
-                                    'strike',
+                            toolbar: {
+                                container: [
+                                    [
+                                        {
+                                            header: [
+                                                1,
+                                                2,
+                                                false,
+                                            ],
+                                        },
+                                    ],
+                                    [
+                                        'bold',
+                                        'italic',
+                                        'underline',
+                                        'strike',
+                                    ],
+                                    [
+                                        { list: 'ordered' },
+                                        { list: 'bullet' },
+                                    ],
+                                    [
+                                        'link',
+                                        'image',
+                                        'code-block',
+                                    ], // Ensure image button is included
+                                    ['clean'], // Clear formatting
                                 ],
-                                [
-                                    { list: 'ordered' },
-                                    { list: 'bullet' },
-                                ],
-                                [
-                                    'link',
-                                    'image',
-                                    'code-block',
-                                ],
-                                [{ align: [] }],
-                                ['clean'], // 서식 제거
-                            ],
+                                handlers: {
+                                    image: imageHandler, // Custom image handler
+                                },
+                            },
                         },
                     }
                 );
 
-                // 기존 콘텐츠가 있을 경우 Quill에 로드
+                // Load existing content if provided
                 if (props.content) {
                     quillRef.current.clipboard.dangerouslyPasteHTML(
                         props.content
@@ -73,7 +82,44 @@ const QuillEditor = forwardRef((props, ref) => {
         }
 
         initQuill();
-    }, [props.content]); // props.content가 변경될 때마다 실행
+    }, [props.content]);
+
+    const imageHandler = () => {
+        const input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.style.display = 'none';
+        document.body.appendChild(input);
+
+        input.onchange = async () => {
+            const file = input.files[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append('img', file);
+
+                // Replace '/api/upload' with your actual upload endpoint
+                const result = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData,
+                }).then((res) => res.json());
+
+                if (result.message === 'OK') {
+                    const range =
+                        quillRef.current.getSelection();
+                    quillRef.current.insertEmbed(
+                        range.index,
+                        'image',
+                        result.url
+                    );
+                } else {
+                    alert('Image upload failed.'); // Alert on upload failure
+                }
+            }
+            document.body.removeChild(input); // Clean up input element
+        };
+
+        input.click(); // Open file chooser
+    };
 
     return (
         <div>

@@ -32,7 +32,7 @@ export default function GetProfile() {
         <div>
             <Image
                 src={profileImage}
-                alt="Profile"
+                alt='Profile'
                 width={30} // Next.js Image 컴포넌트에 필요한 width 속성
                 height={30} // Next.js Image 컴포넌트에 필요한 height 속성
                 style={{

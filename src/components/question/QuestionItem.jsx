@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import style from './QuestionItem.module.css';
+import Image from 'next/image';
 
 export default function QuestionItem({
     question_id,
@@ -77,7 +78,16 @@ export default function QuestionItem({
 
                 <div className={style.info}>
                     <span className={style.profile}>
-                        <img src={author.profileImageUrl} />
+                        <Image
+                            src={
+                                author?.profileImageUrl ||
+                                '/danum-logo.png'
+                            } // Fallback to default image
+                            alt='프로필'
+                            width={30} // Desired width
+                            height={30} // Desired height
+                            objectFit='cover'
+                        />
                     </span>
                     <span className={style.userName}>
                         {author.userName}
