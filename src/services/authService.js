@@ -21,7 +21,7 @@ export async function login(email, password) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ email, password }),
-            }
+            },
         );
 
         if (!res.ok) {
@@ -52,39 +52,19 @@ export async function logout(clearAuth) {
 }
 
 // 회원가입 로직
-export async function join(
-    email,
-    password,
-    phone,
-    name,
-    latitude,
-    longitude,
-    profileImageUrl
-) {
-    let res;
-
-    try {
-        res = await fetch('/danum-backend/member/join', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                email,
-                password,
-                phone,
-                name,
-                latitude: latitude, // 위도 double
-                longitude: longitude, // 경도 double
-                profileImageUrl,
-            }),
-        });
-        if (!res.ok) {
-            return await res.json(); // 에러 메시지 받기
-        }
-    } catch (err) {
-        throw new Error(err.message);
+export async function join(formData) {
+    console.log(formData);
+    const res = await fetch('/danum-backend/member/join', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+    });
+    if (!res.ok) {
+        throw new Error('회원가입에 실패했습니다.');
     }
-
-    return await res.json();
+    return res.json();
 }
 
 /**
@@ -106,12 +86,12 @@ export async function verifyAccessToken(accessToken) {
 
                     Authorization: `Bearer ${accessToken}`,
                 },
-            }
+            },
         );
 
         if (!res.ok) {
             throw new Error(
-                `HTTP error! status: ${res.status}`
+                `HTTP error! status: ${res.status}`,
             );
         }
         const data = await res.json();
@@ -133,7 +113,7 @@ export async function checkAuth(RefreshToken) {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${RefreshToken}`,
                 },
-            }
+            },
         );
         const data = await res.text(); // 한번만 호출
 
@@ -157,12 +137,12 @@ export async function getProfile() {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
                 },
-            }
+            },
         );
 
         if (!res.ok) {
             throw new Error(
-                'Failed to fetch profile image'
+                'Failed to fetch profile image',
             );
         }
 

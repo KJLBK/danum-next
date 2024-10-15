@@ -6,26 +6,40 @@ import Button from '../common/Button';
 import { join } from '../../services/authService';
 import KakaoMap from '../../app/map/page'; // KakaoMap 컴포넌트를 가져옴
 import Profile from './Profile';
+import { useMutation } from '@tanstack/react-query';
 
 export default function JoinForm() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordCheck, setPasswordCheck] = useState('');
-    const [phone, setPhone] = useState('');
-    const [name, setName] = useState('');
-    const [latitude, setLatitude] = useState(''); // 위도 저장
-    const [longitude, setLongitude] = useState(''); // 경도 저장
-    const [profileImageUrl, setProfileImageUrl] =
-        useState(''); // 이미지 저장
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+        passwordCheck: '',
+        phone: '',
+        name: '',
+        latitude: '',
+        longitude: '',
+        profileImageUrl: '',
+    });
     const [error, setError] = useState('');
 
-    const handleSubmit = async (e) => {
+    const mutation = useMutation({
+        mutationFn: async (formData) => {
+            return await join(formData);
+        },
+        onError: (err) => {
+            setError('회원가입 실패: ' + err.message);
+        },
+        onSuccess: (data) =>
+            console.log('회원가입 성공', data),
+    });
+
+    const handleSubmit = (e) => {
         e.preventDefault();
+        const { password, passwordCheck } = formData;
 
         // 비밀번호 길이 확인
         if (password.length <= 8 || password.length >= 16) {
             setError(
-                '비밀번호는 8자 이상 16자 이하여야 합니다.'
+                '비밀번호는 8자 이상 16자 이하여야 합니다.',
             );
             return;
         }
@@ -36,36 +50,16 @@ export default function JoinForm() {
             return;
         }
 
-        const parsedLatitude = parseFloat(latitude);
-        const parsedLongitude = parseFloat(longitude);
-
-        try {
-            const response = await join(
-                email,
-                password,
-                phone,
-                name,
-                parsedLatitude, // double 타입으로 변환된 위도
-                parsedLongitude, // double 타입으로 변환된 경도
-                profileImageUrl // 프로필 이미지 URL 추가
-            );
-            if (!response.ok) {
-                setError(response.message);
-            }
-        } catch (err) {
-            console.log(err);
-        }
+        mutation.mutate(formData);
     };
 
-    // KakaoMap에서 위치 변경 시 위도와 경도를 각각 업데이트
-    const handleLocationChange = (location) => {
-        setLatitude(location.latitude);
-        setLongitude(location.longitude);
-    };
-
-    // 프로필 이미지 변경 시 처리하는 함수
-    const handleProfileImageChange = (imageUrl) => {
-        setProfileImageUrl(imageUrl); // 이미지 URL 업데이트
+    // 공통 onChange 핸들러
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
     };
 
     return (
@@ -73,64 +67,78 @@ export default function JoinForm() {
             <form onSubmit={handleSubmit}>
                 <Input
                     type="email"
-                    value={email}
-                    onChange={(e) =>
-                        setEmail(e.target.value)
-                    }
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     placeholder="이메일"
                     required
                 />
                 <Input
                     type="password"
-                    value={password}
-                    onChange={(e) =>
-                        setPassword(e.target.value)
-                    }
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
                     placeholder="비밀번호"
                     required
                 />
                 <Input
                     type="password"
-                    value={passwordCheck}
-                    onChange={(e) =>
-                        setPasswordCheck(e.target.value)
-                    }
+                    name="passwordCheck"
+                    value={formData.passwordCheck}
+                    onChange={handleInputChange}
                     placeholder="비밀번호 확인"
                     required
                 />
                 <Input
                     type="text"
-                    value={phone}
-                    onChange={(e) =>
-                        setPhone(e.target.value)
-                    }
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
                     placeholder="전화번호"
                     required
                 />
                 <Input
                     type="text"
-                    value={name}
-                    onChange={(e) =>
-                        setName(e.target.value)
-                    }
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
                     placeholder="이름"
                     required
                 />
                 <KakaoMap
-                    onLocationChange={handleLocationChange}
-                />{' '}
+                    onLocationChange={(location) =>
+                        setFormData({
+                            ...formData,
+                            latitude: location.latitude,
+                            longitude: location.longitude,
+                        })
+                    }
+                />
+
                 {/* KakaoMap에서 위도/경도 받기 */}
                 {/* Profile 컴포넌트에 기본 이미지 및 변경 함수 전달 */}
                 <Profile
-                    profileImageUrl={profileImageUrl}
-                    onImageChange={handleProfileImageChange}
+                    profileImageUrl={
+                        formData.profileImageUrl
+                    }
+                    onImageChange={(imageUrl) =>
+                        setFormData({
+                            ...formData,
+                            profileImageUrl: imageUrl,
+                        })
+                    }
                 />
+
                 <Button
                     type="submit"
-                    disabled={!latitude || !longitude}
+                    disabled={
+                        !formData.latitude ||
+                        !formData.longitude
+                    }
                 >
                     회원가입
                 </Button>
+                {/* TODO: 회원가입 성공 후 이동하는 코드가 없음 */}
                 <p style={{ color: 'red' }}>{error}</p>
             </form>
         </>
