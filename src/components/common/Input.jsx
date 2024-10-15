@@ -2,6 +2,7 @@
 
 export default function Input({
     type,
+    name,
     value,
     onChange,
     placeholder,
@@ -10,6 +11,7 @@ export default function Input({
     return (
         <input
             type={type}
+            name={name}
             value={value}
             onChange={onChange}
             placeholder={placeholder}
