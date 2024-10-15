@@ -38,7 +38,6 @@ export async function login(email, password) {
 export async function logout(clearAuth) {
     try {
         clearAuth();
-        removeAccessToken();
         await fetch('/danum-backend/logout', {
             method: 'GET',
             headers: {
@@ -46,6 +45,7 @@ export async function logout(clearAuth) {
                 Authorization: `Bearer ${getAccessToken()}`,
             },
         });
+        removeAccessToken();
     } catch (err) {
         throw new Error(err.message);
     }
