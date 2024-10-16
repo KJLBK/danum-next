@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import styles from './Profile.module.css'; // CSS 모듈 임포트
 
 export default function Profile({
     profileImageUrl,
@@ -9,7 +10,6 @@ export default function Profile({
 }) {
     const [previewImg, setPreviewImg] = useState(null);
 
-    // 이미지 저장
     const saveHandler = async () => {
         if (!previewImg) {
             return;
@@ -25,11 +25,10 @@ export default function Profile({
 
         if (result.message === 'OK') {
             alert('이미지가 저장되었습니다.');
-            onImageChange(result.url); // 선택한 이미지 URL 전달
+            onImageChange(result.url);
         }
     };
 
-    // 이미지 미리보기
     const fileHandler = (e) => {
         const file = e.target.files;
 
@@ -39,30 +38,43 @@ export default function Profile({
     };
 
     return (
-        <div>
-            {/* 파일 업로드  */}
-            <input type='file' onChange={fileHandler} />
+        <div className={styles.profileContainer}>
+            <div className={styles.imageContainer}>
+                {(previewImg && previewImg[0]) ||
+                profileImageUrl ? (
+                    <Image
+                        src={
+                            previewImg
+                                ? URL.createObjectURL(
+                                      previewImg[0],
+                                  )
+                                : profileImageUrl
+                        }
+                        alt="이미지 미리보기"
+                        width={100}
+                        height={100}
+                        className={styles.profileImage}
+                    />
+                ) : null}
+            </div>
+            <div className={styles.buttonContainer}>
+                <label className={styles.fileLabel}>
+                    파일 선택
+                    <input
+                        type="file"
+                        onChange={fileHandler}
+                        className={styles.fileInput}
+                    />
+                </label>
 
-            {/* 이미지 미리보기: 선택한 이미지가 없으면 기본 이미지 */}
-            {(previewImg && previewImg[0]) ||
-            profileImageUrl ? (
-                <Image
-                    src={
-                        previewImg
-                            ? URL.createObjectURL(
-                                  previewImg[0]
-                              )
-                            : profileImageUrl
-                    }
-                    alt='이미지 미리보기'
-                    width={100}
-                    height={100}
-                />
-            ) : null}
-
-            <button type='button' onClick={saveHandler}>
-                저장하기
-            </button>
+                <button
+                    type="button"
+                    onClick={saveHandler}
+                    className={styles.saveButton}
+                >
+                    저장하기
+                </button>
+            </div>
         </div>
     );
 }

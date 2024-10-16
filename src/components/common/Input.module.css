@@ -1,0 +1,40 @@
+.container {
+    display: flex;
+    flex-direction: column; /* 세로로 정렬 */
+    justify-content: center; /* 세로축 기준 중앙 정렬 */
+    align-items: center; /* 가로축 기준 중앙 정렬 */
+    width: 100%; /* 부모 요소에 맞게 100% 너비 */
+    max-width: 400px; /* 최대 너비를 설정 */
+    margin: 0 auto; /* 가운데 정렬을 위한 마진 설정 */
+    padding: 1rem; /* 내부 패딩 추가 */
+}
+
+.input {
+    width: 100%; /* input 필드를 container에 맞춰 확장 */
+    height: 50px; /* 기존 스타일 유지 */
+    background-color: #05060f0a;
+    border-radius: 0.5rem;
+    padding: 0 1rem;
+    border: 2px solid transparent;
+    font-size: 1.2rem;
+}
+
+.label {
+    margin-bottom: 0.5rem; /* 레이블과 input 사이의 간격 */
+    font-size: 1rem;
+    font-weight: bold;
+    color: #05060f99;
+    text-align: left; /* 레이블을 왼쪽 정렬 */
+    width: 100%; /* 레이블이 input 필드와 같은 너비 */
+}
+
+.input:hover,
+.input:focus {
+    outline: none;
+    border-color: #05060f;
+}
+
+.input-group:hover .label,
+.input:focus {
+    color: #05060fc2;
+}

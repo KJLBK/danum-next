@@ -1,4 +1,5 @@
 // Input.jsx
+import style from './Input.module.css';
 
 export default function Input({
     type,
@@ -9,15 +10,17 @@ export default function Input({
     required,
 }) {
     return (
-        <input
-            type={type}
-            name={name}
-            value={value}
-            onChange={onChange}
-            placeholder={placeholder}
-            required={required}
-            // TODO: styled to LoginInput
-            // style={{ fontSize: '.875rem' }}
-        />
+        <div className={style.container}>
+            <label className={style.label}>{name}</label>
+            <input
+                className={style.input}
+                type={type}
+                name={name}
+                value={value}
+                onChange={onChange}
+                placeholder={placeholder}
+                required={required}
+            />
+        </div>
     );
 }
