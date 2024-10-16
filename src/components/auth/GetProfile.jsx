@@ -47,7 +47,8 @@ export default function GetProfile() {
 
     if (profileError) {
         console.log(
-            '프로필 이미지 가져오기 실패' + err.message,
+            '프로필 이미지 가져오기 실패: ' +
+                profileError.message,
         );
     }
 
@@ -96,14 +97,17 @@ export default function GetProfile() {
         return <div>Error: {error}</div>;
     }
 
-    if (!profileImage && isLoading) {
-        return <div>Loading...</div>;
+    if (isLoading) {
+        return <div>Loading...</div>; // 로딩 중일 때 표시
     }
+
+    const profileImageSrc =
+        profileImage || '/danum-logo.png'; // 프로필 이미지가 없을 때 기본 이미지 사용
 
     return (
         <div className={styles.profileContainer}>
             <Image
-                src={profileImage}
+                src={profileImageSrc} // 기본 이미지 또는 프로필 이미지
                 alt="Profile"
                 width={30}
                 height={30}
