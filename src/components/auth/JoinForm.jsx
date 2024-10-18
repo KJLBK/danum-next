@@ -17,6 +17,7 @@ export default function JoinForm() {
         name: '',
         latitude: '',
         longitude: '',
+        address: '',
         profileImageUrl: '',
     });
     const [error, setError] = useState('');
@@ -111,6 +112,7 @@ export default function JoinForm() {
                             ...formData,
                             latitude: location.latitude,
                             longitude: location.longitude,
+                            address: location.address,
                         })
                     }
                 />
