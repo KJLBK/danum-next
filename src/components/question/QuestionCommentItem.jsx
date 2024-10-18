@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import {
     questionCommentDelete,
+    questionCommentDeselect,
+    questionCommentSelect,
     questionCommentUpdate,
 } from '../../services/questionService';
 import { createPrivateChat } from '../../services/chatService';
@@ -11,9 +13,12 @@ export default function QuestionCommentItem({
     email, // 댓글 작성자 이메일
     created_at,
     comment_id,
+    question_id, // 채택을 위한 게시글 id 값
+    accepted, // 댓글의 채택 상태
     emailCheck, // 로그인된 사용자 이메일 (부모 컴포넌트에서 전달)
 }) {
     const [isEditing, setIsEditing] = useState(false); // 수정 모드 상태
+    const [isSelect, setIsSelect] = useState(accepted); // 채택 상태
     const [updatedContent, setUpdatedContent] =
         useState(content); // 수정된 내용을 저장하는 상태
 
@@ -22,7 +27,7 @@ export default function QuestionCommentItem({
         const now = new Date();
         const createdDate = new Date(dateString);
         const diffInSeconds = Math.floor(
-            (now - createdDate) / 1000
+            (now - createdDate) / 1000,
         ); // 두 날짜의 차이 (초 단위)
 
         const minutes = Math.floor(diffInSeconds / 60);
@@ -40,6 +45,26 @@ export default function QuestionCommentItem({
         }
     };
 
+    // 댓글 채택하기
+    const handleSelect = () => {
+        questionCommentSelect(question_id, comment_id);
+    };
+
+    // 댓글 채택취소
+    const handleDeselect = () => {
+        questionCommentDeselect(question_id, comment_id);
+    };
+
+    // 댓글 채택 토글 함수
+    const toggleSelect = () => {
+        if (!isSelect) {
+            handleSelect();
+        } else {
+            handleDeselect();
+        }
+        setIsSelect(!isSelect);
+    };
+
     // 댓글 삭제 함수
     const handleDelete = () => {
         questionCommentDelete(comment_id);
@@ -50,7 +75,7 @@ export default function QuestionCommentItem({
         try {
             await questionCommentUpdate(
                 comment_id,
-                updatedContent
+                updatedContent,
             ); // 수정된 내용을 서버로 전송
             setIsEditing(false); // 수정 모드 종료
         } catch (error) {
@@ -95,7 +120,7 @@ export default function QuestionCommentItem({
                         value={updatedContent}
                         onChange={(e) =>
                             setUpdatedContent(
-                                e.target.value
+                                e.target.value,
                             )
                         }
                     />
@@ -125,6 +150,9 @@ export default function QuestionCommentItem({
                     <div className={style.content}>
                         {content}
                     </div>
+                    <button onClick={toggleSelect}>
+                        채택
+                    </button>
                 </>
             )}
         </div>

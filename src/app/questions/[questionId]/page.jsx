@@ -34,7 +34,7 @@ export default function QuestionsViewPage() {
         const now = new Date();
         const createdDate = new Date(dateString);
         const diffInSeconds = Math.floor(
-            (now - createdDate) / 1000
+            (now - createdDate) / 1000,
         ); // 두 날짜의 차이 (초 단위)
 
         const minutes = Math.floor(diffInSeconds / 60);
@@ -77,13 +77,13 @@ export default function QuestionsViewPage() {
     const fetchData = async () => {
         try {
             const response = await questionDetail(
-                params.questionId
+                params.questionId,
             );
             setData(response);
         } catch (err) {
             console.error(
                 'Error fetching question detail:',
-                err
+                err,
             );
         }
     };
@@ -91,7 +91,7 @@ export default function QuestionsViewPage() {
     const fetchComment = async () => {
         try {
             const response = await questionCommentShow(
-                params.questionId
+                params.questionId,
             );
             setComment(response);
         } catch (err) {
@@ -115,13 +115,13 @@ export default function QuestionsViewPage() {
                     modules: {
                         toolbar: false, // 툴바 비활성화
                     },
-                }
+                },
             );
 
             // Quill 인스턴스에 저장된 콘텐츠 설정 (HTML 형태일 경우)
             if (data.content) {
                 quill.clipboard.dangerouslyPasteHTML(
-                    data.content
+                    data.content,
                 ); // HTML 데이터를 Quill에 렌더링
             }
         }
@@ -178,7 +178,7 @@ export default function QuestionsViewPage() {
             <div>
                 <div
                     className={style.content}
-                    id='quill-viewer'
+                    id="quill-viewer"
                     ref={editorRef}
                     style={{
                         height: 'auto',
@@ -202,6 +202,7 @@ export default function QuestionsViewPage() {
 
             {comment.map((item) => (
                 <QuestionCommentItem
+                    question_id={params.questionId}
                     key={item.comment_id}
                     {...item}
                     emailCheck={
