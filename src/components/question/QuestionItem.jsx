@@ -15,7 +15,7 @@ export default function QuestionItem({
         const now = new Date();
         const createdDate = new Date(dateString);
         const diffInSeconds = Math.floor(
-            (now - createdDate) / 1000
+            (now - createdDate) / 1000,
         ); // 두 날짜의 차이 (초 단위)
 
         const minutes = Math.floor(diffInSeconds / 60);
@@ -39,7 +39,7 @@ export default function QuestionItem({
         div.innerHTML = htmlString;
 
         const images = Array.from(
-            div.querySelectorAll('img')
+            div.querySelectorAll('img'),
         ).map((img) => img.src);
 
         // <img> 태그 제거한 텍스트
@@ -81,12 +81,12 @@ export default function QuestionItem({
                         <Image
                             src={
                                 author?.profileImageUrl ||
-                                '/danum-logo.png'
+                                '/logo-assets/android-chrome-512x512.png'
                             } // Fallback to default image
-                            alt='프로필'
+                            alt="프로필"
                             width={30} // Desired width
                             height={30} // Desired height
-                            objectFit='cover'
+                            style={{ objectFit: 'cover' }}
                         />
                     </span>
                     <span className={style.userName}>
