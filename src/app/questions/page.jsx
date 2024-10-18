@@ -11,13 +11,17 @@ export default function QuestionPage() {
         const fetchData = async () => {
             try {
                 const response = await questionShow(); // questionShow 호출
-                setData(response.reverse()); // 가져온 데이터 상태 업데이트
+                const reverseContent = [
+                    ...response.content,
+                ].reverse();
+                setData(reverseContent); // 가져온 데이터 상태 업데이트
             } catch (err) {
                 console.error('Error:', err);
             }
         };
         fetchData();
     }, []);
+
     return (
         <div className={style.container}>
             <h2>질문 이야기</h2>
