@@ -5,6 +5,7 @@ import {
 } from '../../../services/questionService';
 import { createPrivateChat } from '../../../services/chatService';
 import style from './QuestionCommentItem.module.css';
+import { formatTimeAgo } from '../../../utils/timeFormat';
 
 export default function QuestionCommentItem({
     content,
@@ -16,29 +17,6 @@ export default function QuestionCommentItem({
     const [isEditing, setIsEditing] = useState(false); // 수정 모드 상태
     const [updatedContent, setUpdatedContent] =
         useState(content); // 수정된 내용을 저장하는 상태
-
-    // 시간을 "몇 시간 전" 형식으로 변환하는 함수
-    const formatTimeAgo = (dateString) => {
-        const now = new Date();
-        const createdDate = new Date(dateString);
-        const diffInSeconds = Math.floor(
-            (now - createdDate) / 1000,
-        ); // 두 날짜의 차이 (초 단위)
-
-        const minutes = Math.floor(diffInSeconds / 60);
-        const hours = Math.floor(diffInSeconds / 3600);
-        const days = Math.floor(diffInSeconds / 86400);
-
-        if (days > 0) {
-            return `${days}일 전`;
-        } else if (hours > 0) {
-            return `${hours}시간 전`;
-        } else if (minutes > 0) {
-            return `${minutes}분 전`;
-        } else {
-            return '방금 전';
-        }
-    };
 
     // 댓글 삭제 함수
     const handleDelete = () => {
