@@ -2,8 +2,8 @@ import { useState } from 'react';
 import {
     questionCommentDelete,
     questionCommentUpdate,
-} from '../../services/questionService';
-import { createPrivateChat } from '../../services/chatService';
+} from '../../../services/questionService';
+import { createPrivateChat } from '../../../services/chatService';
 import style from './QuestionCommentItem.module.css';
 
 export default function QuestionCommentItem({
@@ -22,7 +22,7 @@ export default function QuestionCommentItem({
         const now = new Date();
         const createdDate = new Date(dateString);
         const diffInSeconds = Math.floor(
-            (now - createdDate) / 1000
+            (now - createdDate) / 1000,
         ); // 두 날짜의 차이 (초 단위)
 
         const minutes = Math.floor(diffInSeconds / 60);
@@ -50,7 +50,7 @@ export default function QuestionCommentItem({
         try {
             await questionCommentUpdate(
                 comment_id,
-                updatedContent
+                updatedContent,
             ); // 수정된 내용을 서버로 전송
             setIsEditing(false); // 수정 모드 종료
         } catch (error) {
@@ -95,7 +95,7 @@ export default function QuestionCommentItem({
                         value={updatedContent}
                         onChange={(e) =>
                             setUpdatedContent(
-                                e.target.value
+                                e.target.value,
                             )
                         }
                     />

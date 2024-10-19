@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { questionCommentNew } from '../../services/questionService';
+import { questionCommentNew } from '../../../services/questionService';
 import style from './QuestionCommentNew.module.css';
 
 export default function QuestionCommentNew({

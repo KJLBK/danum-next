@@ -6,11 +6,12 @@ import {
     questionDetail,
     questionCommentShow,
 } from '../../../services/questionService';
-import QuestionCommentItem from '../../../components/question/QuestionCommentItem';
-import QuestionCommentNew from '../../../components/question/QuestionCommentNew';
+import QuestionCommentItem from '../../../components/question/comment/QuestionCommentItem';
+import QuestionCommentNew from '../../../components/question/new/QuestionCommentNew';
 import style from './page.module.css';
 import QuillViewer from '../../../components/question/view/QuillViewer';
 import PostInfoPanel from '../../../components/question/view/PostInfoPanel';
+import { useAuthStore } from '../../../stores/authStore';
 
 export default function QuestionsViewPage() {
     const [data, setData] = useState({});
@@ -18,6 +19,7 @@ export default function QuestionsViewPage() {
     const [decodedToken, setDecodedToken] = useState(null); // decodedToken을 상태로 관리
     const [isModalOpen, setModalOpen] = useState(false); // 모달 열림 상태 관리
     const params = useParams();
+    const { isLoggedIn, user } = useAuthStore();
 
     // 시간을 "몇 시간 전" 형식으로 변환하는 함수 -> /utils/timeFormat.js
 
@@ -63,10 +65,9 @@ export default function QuestionsViewPage() {
             <hr />
             <h2>댓글</h2>
 
-            {/* JWT 토큰이 존재할 때만 새로운 댓글 작성 */}
-            {decodedToken ? (
+            {isLoggedIn ? (
                 <QuestionCommentNew
-                    email={decodedToken.sub} // decodedToken에서 이메일 정보를 전달
+                    email={user} // decodedToken에서 이메일 정보를 전달
                     questionId={params.questionId}
                 />
             ) : (
@@ -77,11 +78,7 @@ export default function QuestionsViewPage() {
                 <QuestionCommentItem
                     key={item.comment_id}
                     {...item}
-                    emailCheck={
-                        decodedToken
-                            ? decodedToken.sub
-                            : null
-                    } // 로그인되지 않으면 null 전달
+                    emailCheck={isLoggedIn ? user : null} // 로그인되지 않으면 null 전달
                 />
             ))}
         </div>
