@@ -5,6 +5,8 @@ import { useParams } from 'next/navigation';
 import {
     questionDetail,
     questionCommentShow,
+    quesitonCommentSelect,
+    quesitonCommentDeselect,
 } from '../../../services/questionService';
 import QuestionCommentItem from '../../../components/question/comment/QuestionCommentItem';
 import QuestionCommentNew from '../../../components/question/new/QuestionCommentNew';
@@ -15,15 +17,13 @@ import { useAuthStore } from '../../../stores/authStore';
 
 export default function QuestionsViewPage() {
     const [data, setData] = useState({});
-    const [comment, setComment] = useState([]);
-    const [decodedToken, setDecodedToken] = useState(null); // decodedToken을 상태로 관리
-    const [isModalOpen, setModalOpen] = useState(false); // 모달 열림 상태 관리
+    const [comments, setComments] = useState([]);
+    const [selectedCommentId, setSelectedCommentId] =
+        useState(null); // 선택된 댓글 ID를 추적
     const params = useParams();
     const { isLoggedIn, user } = useAuthStore();
 
-    // 시간을 "몇 시간 전" 형식으로 변환하는 함수 -> /utils/timeFormat.js
-
-    // 질문 및 댓글 데이터를 가져오는 함수
+    // 질문과 댓글을 가져오는 함수
     const fetchData = async () => {
         try {
             const response = await questionDetail(
@@ -32,53 +32,95 @@ export default function QuestionsViewPage() {
             setData(response);
         } catch (err) {
             console.error(
-                'Error fetching question detail:',
+                '질문 세부 정보 가져오기 오류:',
                 err,
             );
         }
     };
 
-    const fetchComment = async () => {
+    const fetchComments = async () => {
         try {
             const response = await questionCommentShow(
                 params.questionId,
             );
-            setComment(response);
+            setComments(response);
+            const selectedComment = response.find(
+                (comment) => comment.accepted === true,
+            );
+            if (selectedComment) {
+                setSelectedCommentId(
+                    selectedComment.comment_id,
+                ); // 채택된 댓글 ID를 추적
+            }
         } catch (err) {
-            console.error('Error fetching comments:', err);
+            console.error('댓글 가져오기 오류:', err);
         }
     };
 
-    // 처음 컴포넌트가 로드될 때 데이터를 불러옴
     useEffect(() => {
         fetchData();
-        fetchComment();
-    }, []); // 빈 배열로 설정하여 처음 로드될 때만 실행
+        fetchComments();
+    }, [params.questionId]); // questionId가 변경될 때마다 다시 가져옴
+
+    // 댓글 선택 처리
+    const handleCommentSelect = async (commentId) => {
+        try {
+            // 현재 선택된 댓글이 있으면 선택 해제
+            if (selectedCommentId) {
+                await quesitonCommentDeselect(
+                    params.questionId,
+                    selectedCommentId,
+                );
+            }
+
+            // 같은 댓글이 선택되면 그냥 선택 해제
+            if (selectedCommentId === commentId) {
+                setSelectedCommentId(null); // 현재 댓글 선택 해제
+            } else {
+                await quesitonCommentSelect(
+                    params.questionId,
+                    commentId,
+                ); // 새로운 댓글 선택
+                setSelectedCommentId(commentId); // 새로운 선택된 댓글 ID 설정
+            }
+
+            // 댓글을 다시 가져와서 채택 상태 업데이트
+            fetchComments();
+        } catch (error) {
+            console.error(
+                '댓글 선택/해제 중 오류 발생:',
+                error,
+            );
+        }
+    };
 
     return (
         <div>
-            {/* question header */}
             <PostInfoPanel data={data} />
-            {/* question content */}
             <QuillViewer content={data.content} />
-
             <hr />
             <h2>댓글</h2>
 
             {isLoggedIn ? (
                 <QuestionCommentNew
-                    email={user} // decodedToken에서 이메일 정보를 전달
+                    email={user}
                     questionId={params.questionId}
                 />
             ) : (
-                <p>댓글을 작성하려면 로그인하세요.</p> // 로그인되지 않은 경우 메시지 표시
+                <p>댓글을 작성하려면 로그인하세요.</p>
             )}
 
-            {comment.map((item) => (
+            {comments.map((item) => (
                 <QuestionCommentItem
                     key={item.comment_id}
                     {...item}
-                    emailCheck={isLoggedIn ? user : null} // 로그인되지 않으면 null 전달
+                    emailCheck={isLoggedIn ? user : null}
+                    questionId={params.questionId}
+                    accepted={
+                        item.comment_id ===
+                        selectedCommentId
+                    } // 선택된 댓글 ID에 따라 채택 상태 설정
+                    onSelect={handleCommentSelect}
                 />
             ))}
         </div>

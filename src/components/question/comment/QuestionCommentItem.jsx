@@ -1,50 +1,53 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
     questionCommentDelete,
     questionCommentUpdate,
 } from '../../../services/questionService';
-import { createPrivateChat } from '../../../services/chatService';
 import style from './QuestionCommentItem.module.css';
 import { formatTimeAgo } from '../../../utils/timeFormat';
+import { useAuthStore } from '../../../stores/authStore';
 
 export default function QuestionCommentItem({
     content,
-    email, // 댓글 작성자 이메일
+    email,
     created_at,
     comment_id,
-    emailCheck, // 로그인된 사용자 이메일 (부모 컴포넌트에서 전달)
+    emailCheck,
+    accepted,
+    onSelect,
 }) {
-    const [isEditing, setIsEditing] = useState(false); // 수정 모드 상태
+    const [isEditing, setIsEditing] = useState(false);
     const [updatedContent, setUpdatedContent] =
-        useState(content); // 수정된 내용을 저장하는 상태
+        useState(content);
+    const { user } = useAuthStore();
 
     // 댓글 삭제 함수
     const handleDelete = () => {
         questionCommentDelete(comment_id);
     };
 
-    // 댓글 수정 함수 (서버로 업데이트 요청)
+    // 댓글 수정 함수
     const handleUpdate = async () => {
         try {
             await questionCommentUpdate(
                 comment_id,
                 updatedContent,
-            ); // 수정된 내용을 서버로 전송
-            setIsEditing(false); // 수정 모드 종료
+            );
+            setIsEditing(false);
         } catch (error) {
             console.error('Error updating comment:', error);
         }
     };
 
-    // const handleChatInitiate = async () => {
-    //     try {
-    //         const res = await createPrivateChat()
-    //     }
-    // }
+    // 댓글 채택 함수
+    const handleSelect = () => {
+        if (onSelect) {
+            onSelect(comment_id);
+        }
+    };
 
     return (
         <div className={style.comment}>
-            {/* test - 영훈 | 0925 */}
             <div className={style.email}>
                 <span>{email}</span>
                 <span className={style.time}>
@@ -52,7 +55,6 @@ export default function QuestionCommentItem({
                 </span>
             </div>
 
-            {/* 수정 중일 때와 아닐 때 UI를 구분 */}
             {isEditing ? (
                 <>
                     <div className={style.buttons}>
@@ -67,7 +69,6 @@ export default function QuestionCommentItem({
                             취소
                         </button>
                     </div>
-                    {/* 수정 모드: 입력 필드를 사용하여 수정 가능 */}
                     <textarea
                         className={style.textarea}
                         value={updatedContent}
@@ -80,29 +81,33 @@ export default function QuestionCommentItem({
                 </>
             ) : (
                 <>
-                    {/* 이메일이 본인 이메일과 일치할 때만 수정/삭제 버튼 표시 */}
-                    {email === emailCheck && (
-                        <>
-                            <div className={style.buttons}>
-                                <button
-                                    onClick={() =>
-                                        setIsEditing(true)
-                                    }
-                                >
-                                    수정
-                                </button>
-                                <button
-                                    onClick={handleDelete}
-                                >
-                                    삭제
-                                </button>
-                            </div>
-                        </>
+                    {email === user && (
+                        <div className={style.buttons}>
+                            <button
+                                onClick={() =>
+                                    setIsEditing(true)
+                                }
+                            >
+                                수정
+                            </button>
+                            <button onClick={handleDelete}>
+                                삭제
+                            </button>
+                        </div>
                     )}
-                    {/* 기본 모드: 댓글 내용 표시 */}
                     <div className={style.content}>
                         {content}
                     </div>
+                    {email === user && ( // 채택 버튼을 작성자에게만 보여주기
+                        <button
+                            onClick={handleSelect}
+                            disabled={accepted} // 이미 채택된 경우 비활성화
+                        >
+                            {accepted
+                                ? '채택됨'
+                                : '채택하기'}
+                        </button>
+                    )}
                 </>
             )}
         </div>
