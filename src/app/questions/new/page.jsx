@@ -1,4 +1,4 @@
-import QuestionNew from '../../../components/question/QuestionNew';
+import QuestionNew from '../../../components/question/new/QuestionNew';
 
 export default function QuestionNewPage() {
     return (

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { questionShow } from '../../services/questionService';
-import QuestionItem from '../../components/question/QuestionItem';
+import QuestionItem from '../../components/question/comment/QuestionItem';
 import style from './page.module.css'; // CSS 모듈 임포트
 
 export default function QuestionPage() {
