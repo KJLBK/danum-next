@@ -9,7 +9,7 @@ import {
 } from '../../../../services/questionService';
 import dynamic from 'next/dynamic';
 import 'quill/dist/quill.snow.css'; // Quill 에디터 스타일
-import QuillEditor from '../../../../components/QuillEditor';
+import QuillEditor from '../../../../components/question/new/QuillEditor';
 import style from './page.module.css';
 
 // Quill을 동적으로 불러오기
@@ -32,7 +32,7 @@ export default function EditQuestionPage() {
         const fetchQuestionData = async () => {
             try {
                 const response = await questionDetail(
-                    params.questionId
+                    params.questionId,
                 );
                 setData({
                     title: response.title || '', // title이 없을 경우 빈 문자열로 설정
@@ -42,7 +42,7 @@ export default function EditQuestionPage() {
             } catch (err) {
                 console.error(
                     'Error fetching question detail:',
-                    err
+                    err,
                 );
                 setIsLoading(false);
             }
@@ -66,7 +66,7 @@ export default function EditQuestionPage() {
         } catch (error) {
             console.error(
                 'Error updating question:',
-                error
+                error,
             );
         }
     };

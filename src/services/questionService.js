@@ -24,7 +24,7 @@ export async function questionNew({
                     content,
                     createId,
                 }),
-            }
+            },
         );
 
         if (!response.ok) {
@@ -45,7 +45,7 @@ export async function questionShow() {
             '/danum-backend/board/question/show',
             {
                 method: 'GET',
-            }
+            },
         );
 
         if (!response.ok) {
@@ -72,7 +72,7 @@ export async function questionDelete(id) {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
-            }
+            },
         );
 
         if (!response.ok) {
@@ -103,7 +103,7 @@ export async function questionUpdate(id, title, content) {
                     title,
                     content,
                 }),
-            }
+            },
         );
 
         if (!response.ok) {
@@ -123,7 +123,7 @@ export async function questionDetail(questionId) {
             `/danum-backend/board/question/show/${questionId}`,
             {
                 method: 'GET',
-            }
+            },
         );
 
         if (!response.ok) {
@@ -144,7 +144,7 @@ export async function questionCommentShow(questionId) {
             `/danum-backend/board/question/comment/show/${questionId}`,
             {
                 method: 'GET',
-            }
+            },
         );
 
         if (!response.ok) {
@@ -180,7 +180,7 @@ export async function questionCommentNew({
                     member_email,
                     content,
                 }),
-            }
+            },
         );
 
         if (!response.ok) {
@@ -209,7 +209,7 @@ export async function questionCommentDelete(comment_id) {
                 body: JSON.stringify({
                     comment_id,
                 }),
-            }
+            },
         );
 
         if (!response.ok) {
@@ -239,7 +239,65 @@ export async function questionCommentUpdate(id, content) {
                     id,
                     content,
                 }),
-            }
+            },
+        );
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        return response;
+    } catch (error) {
+        console.error('Error fetching data', error);
+        return [];
+    }
+}
+
+// 질문이야기 댓글 채택 기능
+export async function quesitonCommentSelect(
+    questionId,
+    commentId,
+) {
+    const token = getAccessToken();
+
+    try {
+        const response = await fetch(
+            `/danum-backend/board/question/comment/${questionId}/accept/${commentId}`,
+            {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            },
+        );
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        return response;
+    } catch (error) {
+        console.error('Error fetching data', error);
+        return [];
+    }
+}
+
+// 질문이야기 댓글 채택취소 기능
+export async function quesitonCommentDeselect(
+    questionId,
+    commentId,
+) {
+    const token = getAccessToken();
+
+    try {
+        const response = await fetch(
+            `/danum-backend/board/question/comment/${questionId}/unaccept/${commentId}`,
+            {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            },
         );
 
         if (!response.ok) {

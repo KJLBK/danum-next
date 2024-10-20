@@ -19,6 +19,7 @@ const KakaoMap = ({ onLocationChange }) => {
         const { latitude, longitude } = response.coords; // 위도와 경도 추출
         setLocation({ latitude, longitude }); // 현재 위치를 상태로 저장
         getAddress(latitude, longitude); // 초기 주소를 가져오기 위한 함수 호출
+
         onLocationChange({ latitude, longitude }); // 부모 컴포넌트에 위도/경도 전달
     };
 

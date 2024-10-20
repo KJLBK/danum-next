@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import style from './QuestionItem.module.css';
 import Image from 'next/image';
+import { formatTimeAgo } from '../../../utils/timeFormat';
 
 export default function QuestionItem({
     question_id,
@@ -10,36 +11,13 @@ export default function QuestionItem({
     created_at,
     view_count,
 }) {
-    // 시간을 "몇 시간 전" 형식으로 변환하는 함수
-    const formatTimeAgo = (dateString) => {
-        const now = new Date();
-        const createdDate = new Date(dateString);
-        const diffInSeconds = Math.floor(
-            (now - createdDate) / 1000
-        ); // 두 날짜의 차이 (초 단위)
-
-        const minutes = Math.floor(diffInSeconds / 60);
-        const hours = Math.floor(diffInSeconds / 3600);
-        const days = Math.floor(diffInSeconds / 86400);
-
-        if (days > 0) {
-            return `${days}일 전`;
-        } else if (hours > 0) {
-            return `${hours}시간 전`;
-        } else if (minutes > 0) {
-            return `${minutes}분 전`;
-        } else {
-            return '방금 전';
-        }
-    };
-
     // content에서 <img> 태그를 추출하는 함수
     const extractImages = (htmlString) => {
         const div = document.createElement('div');
         div.innerHTML = htmlString;
 
         const images = Array.from(
-            div.querySelectorAll('img')
+            div.querySelectorAll('img'),
         ).map((img) => img.src);
 
         // <img> 태그 제거한 텍스트
@@ -81,12 +59,12 @@ export default function QuestionItem({
                         <Image
                             src={
                                 author?.profileImageUrl ||
-                                '/danum-logo.png'
+                                '/logo-assets/android-chrome-512x512.png'
                             } // Fallback to default image
-                            alt='프로필'
+                            alt="프로필"
                             width={30} // Desired width
                             height={30} // Desired height
-                            objectFit='cover'
+                            style={{ objectFit: 'cover' }}
                         />
                     </span>
                     <span className={style.userName}>
