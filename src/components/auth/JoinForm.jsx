@@ -66,6 +66,17 @@ export default function JoinForm() {
     return (
         <>
             <form onSubmit={handleSubmit}>
+                <Profile
+                    profileImageUrl={
+                        formData.profileImageUrl
+                    }
+                    onImageChange={(imageUrl) =>
+                        setFormData({
+                            ...formData,
+                            profileImageUrl: imageUrl,
+                        })
+                    }
+                />
                 <Input
                     type="email"
                     name="email"
@@ -119,17 +130,6 @@ export default function JoinForm() {
 
                 {/* KakaoMap에서 위도/경도 받기 */}
                 {/* Profile 컴포넌트에 기본 이미지 및 변경 함수 전달 */}
-                <Profile
-                    profileImageUrl={
-                        formData.profileImageUrl
-                    }
-                    onImageChange={(imageUrl) =>
-                        setFormData({
-                            ...formData,
-                            profileImageUrl: imageUrl,
-                        })
-                    }
-                />
 
                 <Button
                     type="submit"

@@ -102,7 +102,8 @@ export default function GetProfile() {
     }
 
     const profileImageSrc =
-        profileImage || '/logo-assets/android-chrome-512x512.png'; // 프로필 이미지가 없을 때 기본 이미지 사용
+        profileImage ||
+        '/logo-assets/android-chrome-512x512.png'; // 프로필 이미지가 없을 때 기본 이미지 사용
 
     return (
         <div className={styles.profileContainer}>
