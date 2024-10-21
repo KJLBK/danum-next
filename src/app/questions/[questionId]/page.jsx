@@ -5,9 +5,8 @@ import { useParams } from 'next/navigation';
 import {
     questionDetail,
     questionCommentShow,
-    quesitonCommentSelect,
-    quesitonCommentDeselect,
 } from '../../../services/questionService';
+import { handleCommentSelection } from '../../../hooks/commentSelect'; // 서비스 함수 import
 import QuestionCommentItem from '../../../components/question/comment/QuestionCommentItem';
 import QuestionCommentNew from '../../../components/question/new/QuestionCommentNew';
 import style from './page.module.css';
@@ -19,7 +18,7 @@ export default function QuestionsViewPage() {
     const [data, setData] = useState({});
     const [comments, setComments] = useState([]);
     const [selectedCommentId, setSelectedCommentId] =
-        useState(null); // 선택된 댓글 ID를 추적
+        useState(null);
     const params = useParams();
     const { isLoggedIn, user } = useAuthStore();
 
@@ -50,7 +49,7 @@ export default function QuestionsViewPage() {
             if (selectedComment) {
                 setSelectedCommentId(
                     selectedComment.comment_id,
-                ); // 채택된 댓글 ID를 추적
+                ); // 채택된 댓글 ID 추적
             }
         } catch (err) {
             console.error('댓글 가져오기 오류:', err);
@@ -62,36 +61,15 @@ export default function QuestionsViewPage() {
         fetchComments();
     }, [params.questionId]); // questionId가 변경될 때마다 다시 가져옴
 
-    // 댓글 선택 처리
-    const handleCommentSelect = async (commentId) => {
-        try {
-            // 현재 선택된 댓글이 있으면 선택 해제
-            if (selectedCommentId) {
-                await quesitonCommentDeselect(
-                    params.questionId,
-                    selectedCommentId,
-                );
-            }
-
-            // 같은 댓글이 선택되면 그냥 선택 해제
-            if (selectedCommentId === commentId) {
-                setSelectedCommentId(null); // 현재 댓글 선택 해제
-            } else {
-                await quesitonCommentSelect(
-                    params.questionId,
-                    commentId,
-                ); // 새로운 댓글 선택
-                setSelectedCommentId(commentId); // 새로운 선택된 댓글 ID 설정
-            }
-
-            // 댓글을 다시 가져와서 채택 상태 업데이트
-            fetchComments();
-        } catch (error) {
-            console.error(
-                '댓글 선택/해제 중 오류 발생:',
-                error,
-            );
-        }
+    // 서비스 함수 호출로 댓글 선택/해제 처리
+    const onSelectComment = (commentId) => {
+        handleCommentSelection(
+            params.questionId,
+            commentId,
+            selectedCommentId,
+            setSelectedCommentId,
+            setComments,
+        );
     };
 
     return (
@@ -120,7 +98,7 @@ export default function QuestionsViewPage() {
                         item.comment_id ===
                         selectedCommentId
                     } // 선택된 댓글 ID에 따라 채택 상태 설정
-                    onSelect={handleCommentSelect}
+                    onSelect={onSelectComment} // 선택 이벤트 핸들러
                 />
             ))}
         </div>
