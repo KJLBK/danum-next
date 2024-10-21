@@ -1,85 +1,55 @@
-// 'use client';
+import PostInfoPanel from '../../components/question/view/PostInfoPanel';
+import QuillViewer from '../../components/question/view/QuillViewer';
 
-// import Image from 'next/image';
-// import { useState } from 'react';
-// import QuillEditor from '../../components/QuillEditor';
-import { cookies } from 'next/headers';
-import CheckAuthButton from '../../components/auth/CheckAuthButton';
+const QUESTIONS_DATA_DUMMY = [
+    {
+        question_id: 36,
+        title: 'How to implement chat functionality?',
+        content:
+            'I am struggling with implementing a chat feature using WebSocket. Can anyone help?',
+        author: {
+            userId: 'user123@example.com',
+            userName: 'TechLover',
+            profileImageUrl:
+                'https://example.com/profile1.png',
+        },
+        created_at: '2024-10-01T12:45:21.123456',
+        conversation: null,
+        like: 2,
+        view_count: 20,
+    },
+];
+const COMMENTS_DATA_DUMMY = [
+    {
+        comment_id: 59,
+        email: 'pep@pep',
+        content: 'jkbkjk',
+        created_at: '2024-10-19T02:32:22.689067',
+        accepted: false,
+    },
+    {
+        comment_id: 61,
+        email: 'Ehd@Ehd',
+        content: 'vnxznv,mxz',
+        created_at: '2024-10-19T17:53:04.602792',
+        accepted: false,
+    },
+    {
+        comment_id: 62,
+        email: 'Ehd@Ehd',
+        content: 'vmdn,a',
+        created_at: '2024-10-19T17:54:06.187184',
+        accepted: false,
+    },
+];
 
 export default function Test() {
-    // 서버 측에서 cookies 사용
-    const cookieStore = cookies();
-    const RefreshToken =
-        cookieStore.get('refreshToken')?.value;
-
-    // 이미지 테스트
-    // const [previewImg, setPreviewImg] = useState();
-
-    // 이미지 저장
-    // const saveHandler = async () => {
-    //     if (!previewImg) {
-    //         return;
-    //     }
-
-    //     const formData = new FormData();
-    //     formData.append('img', previewImg[0]);
-
-    //     const result = await fetch('/api/upload', {
-    //         method: 'POST',
-    //         body: formData,
-    //     }).then((res) => res.json());
-
-    //     if (result.message === 'OK') {
-    //         alert('이미지가 저장되었습니다.');
-    //     }
-    // };
-
-    // 이미지 미리보기
-    // const fileHandler = (e) => {
-    //     const file = e.target.files;
-
-    //     if (file && file.length > 0) {
-    //         setPreviewImg(file);
-    //     }
-    // };
-
     return (
         <>
-            {/* 클라이언트 컴포넌트에 RefreshToken 전달 */}
-            <CheckAuthButton RefreshToken={RefreshToken} />
-            {/*
-            <div>
-                <form>
-
-                    <input
-                        type="file"
-                        onChange={fileHandler}
-                    />
-
-
-                    {previewImg && (
-                        <Image
-                            src={URL.createObjectURL(
-                                previewImg[0]
-                            )}
-                            alt="이미지 미리보기"
-                            width={100}
-                            height={100}
-                        />
-                    )}
-
-                    <button
-                        type="button"
-                        onClick={saveHandler}
-                    >
-                        저장하기
-                    </button>
-                </form>
-            </div>
-            <div>
-                <QuillEditor />
-            </div>
-            */}
+            <PostInfoPanel data={QUESTIONS_DATA_DUMMY[0]} />
+            <QuillViewer
+                content={QUESTIONS_DATA_DUMMY[0].content}
+            />
         </>
     );
 }

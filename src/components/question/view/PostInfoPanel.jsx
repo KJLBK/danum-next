@@ -5,6 +5,7 @@ import Modal from '../../../components/common/Modal';
 import { formatTimeAgo } from '../../../utils/timeFormat';
 import style from './PostInfoPanel.module.css';
 import { useAuthStore } from '../../../stores/authStore';
+import AuthorChatButton from '../../chat/AuthorChatButton';
 
 export default function PostInfoPanel({ data }) {
     const [isModalOpen, setModalOpen] = useState(false);
@@ -33,7 +34,9 @@ export default function PostInfoPanel({ data }) {
             <div className={style.info}>
                 <span className={style.profile}></span>
                 <span className={style.email}>
-                    {data.author?.userName}
+                    <AuthorChatButton
+                        username={data.author?.userName}
+                    />
                 </span>
                 &nbsp;&nbsp;
                 <span className={style.metaInfo}>
