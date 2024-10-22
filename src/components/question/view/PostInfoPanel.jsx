@@ -35,7 +35,8 @@ export default function PostInfoPanel({ data }) {
                 <span className={style.profile}></span>
                 <span className={style.email}>
                     <AuthorChatButton
-                        username={data.author?.userName}
+                        userId={data.author?.userId}
+                        userName={data.author?.userName}
                     />
                 </span>
                 &nbsp;&nbsp;
@@ -44,7 +45,7 @@ export default function PostInfoPanel({ data }) {
                     {data.view_count}
                 </span>
                 <div
-                    className={`${style.button} ${user === data.author?.userId ? '' : style.hide}`}
+                    className={`${style.button} ${user !== data.author?.userId ? '' : style.hide}`}
                 >
                     <button onClick={goToEditPage}>
                         수정

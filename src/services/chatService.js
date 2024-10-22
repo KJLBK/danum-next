@@ -78,7 +78,7 @@ export async function getChatRoomInfo(roomId) {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${accessToken}`,
             },
-        }
+        },
     );
 
     if (!res.ok) {
@@ -113,14 +113,14 @@ export async function createPrivateChat(targetUserId) {
                 Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-                targetUserId: targetUserId,
+                targetUserId: `${targetUserId}`,
             }),
-        }
+        },
     );
 
     if (!res.ok) {
         throw new Error(
-            'Failed to create one-to-one chat room'
+            'Failed to create one-to-one chat room',
         );
     }
     return res.json();
@@ -144,7 +144,7 @@ export async function getRecentMessages() {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${accessToken}`,
             },
-        }
+        },
     );
     if (!res.ok) {
         throw new Error('Failed to get recent messages');
@@ -176,7 +176,7 @@ export async function enterChatRoom(roomID) {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${accessToken}`,
             },
-        }
+        },
     );
 
     if (!res.ok) {
@@ -210,7 +210,7 @@ export async function getChatMessages() {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${accessToken}`,
             },
-        }
+        },
     );
 
     if (!res.ok) {
