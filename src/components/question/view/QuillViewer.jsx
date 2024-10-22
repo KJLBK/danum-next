@@ -3,6 +3,8 @@
     /q/[qid]/QuestionsViewPage 에서 사용중
 */
 
+'use client';
+
 import dynamic from 'next/dynamic';
 // import 'quill/dist/quill.snow.css';
 // TODO: (질문)이거 왜 선언해놓은건지?
