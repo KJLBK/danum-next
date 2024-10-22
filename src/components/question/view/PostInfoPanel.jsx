@@ -5,6 +5,7 @@ import Modal from '../../../components/common/Modal';
 import { formatTimeAgo } from '../../../utils/timeFormat';
 import style from './PostInfoPanel.module.css';
 import { useAuthStore } from '../../../stores/authStore';
+import AuthorChatButton from '../../chat/AuthorChatButton';
 
 export default function PostInfoPanel({ data }) {
     const [isModalOpen, setModalOpen] = useState(false);
@@ -33,7 +34,10 @@ export default function PostInfoPanel({ data }) {
             <div className={style.info}>
                 <span className={style.profile}></span>
                 <span className={style.email}>
-                    {data.author?.userName}
+                    <AuthorChatButton
+                        userId={data.author?.userId}
+                        userName={data.author?.userName}
+                    />
                 </span>
                 &nbsp;&nbsp;
                 <span className={style.metaInfo}>
@@ -41,7 +45,7 @@ export default function PostInfoPanel({ data }) {
                     {data.view_count}
                 </span>
                 <div
-                    className={`${style.button} ${user === data.author?.userId ? '' : style.hide}`}
+                    className={`${style.button} ${user !== data.author?.userId ? '' : style.hide}`}
                 >
                     <button onClick={goToEditPage}>
                         수정

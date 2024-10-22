@@ -78,25 +78,22 @@ export async function join(formData) {
 export async function verifyAccessToken(accessToken) {
     try {
         const res = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/auth/check-expiration`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}auth/check-expiration`,
             {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
-
                     Authorization: `Bearer ${accessToken}`,
                 },
             },
         );
-
         if (!res.ok) {
             throw new Error(
                 `HTTP error! status: ${res.status}`,
             );
         }
-        const data = await res.json();
 
-        return data;
+        return await res.json();
     } catch (error) {
         throw new Error(error.message);
     }
