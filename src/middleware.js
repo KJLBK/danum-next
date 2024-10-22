@@ -35,7 +35,7 @@ export async function middleware(req) {
                 newAccessToken,
                 {
                     path: '/',
-                }
+                },
             );
 
             return response;
