@@ -76,3 +76,34 @@ export async function villageDetail(villageId) {
         return [];
     }
 }
+
+// 동네이야기 게시판 수정 로직
+export async function villageUpdate(id, title, content) {
+    const token = getAccessToken();
+
+    try {
+        const response = await fetch(
+            `/danum-backend/board/village/update`,
+            {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id,
+                    title,
+                    content,
+                }),
+            },
+        );
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        return response;
+    } catch (error) {
+        console.error('Error fetching data', error);
+        return [];
+    }
+}
