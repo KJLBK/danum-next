@@ -3,14 +3,26 @@ import style from './PostInfoPanel.module.css';
 import { formatTimeAgo } from '../../../utils/timeFormat';
 import { useParams, useRouter } from 'next/navigation';
 import { useAuthStore } from '../../../stores/authStore';
+import { villageDelete } from '../../../services/villageService';
+import Modal from '../../../components/common/Modal';
+import { useState } from 'react';
 
 export default function PostInfoPanel({ data }) {
+    const [isModalOpen, setModalOpen] = useState(false);
     const params = useParams();
     const router = useRouter();
     const { user } = useAuthStore();
 
     const goToEditPage = () => {
         router.push(`/villages/${params.villageId}/edit`);
+    };
+
+    const openModal = () => setModalOpen(true);
+    const closeModal = () => setModalOpen(false);
+
+    const handleDelete = () => {
+        villageDelete(params.villageId);
+        router.push('/villages');
     };
 
     return (
@@ -35,8 +47,21 @@ export default function PostInfoPanel({ data }) {
                     <button onClick={goToEditPage}>
                         수정
                     </button>
+                    <button onClick={openModal}>
+                        삭제
+                    </button>
                 </div>
             </div>
+            {/* 모달 */}
+            {isModalOpen && (
+                <Modal
+                    isOpen={isModalOpen}
+                    title="게시글 삭제"
+                    content="정말로 게시글을 삭제하시겠습니까?"
+                    onConfirm={handleDelete}
+                    onCancel={closeModal}
+                />
+            )}
         </>
     );
 }

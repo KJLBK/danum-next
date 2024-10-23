@@ -107,3 +107,29 @@ export async function villageUpdate(id, title, content) {
         return [];
     }
 }
+
+// 동네이야기 게시판 삭제 로직
+export async function villageDelete(id) {
+    const token = getAccessToken();
+
+    try {
+        const response = await fetch(
+            `/danum-backend/board/village/villages/${id}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            },
+        );
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        return response;
+    } catch (error) {
+        console.error('Error fetching data', error);
+        return [];
+    }
+}
