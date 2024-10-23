@@ -55,3 +55,24 @@ export async function villageShow() {
         console.error('Error fetching data', error);
     }
 }
+
+// 동네이야기 게시판 상세 조회 로직
+export async function villageDetail(villageId) {
+    try {
+        const response = await fetch(
+            `/danum-backend/board/village/show/${villageId}`,
+            {
+                method: 'GET',
+            },
+        );
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching data', error);
+        return [];
+    }
+}
