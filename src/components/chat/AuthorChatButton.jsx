@@ -59,7 +59,7 @@ export default function AuthorChatButton({
                 <Modal
                     isOpen={isModalOpen}
                     title="채팅하기"
-                    content={`${userName}님과 채팅을 시작하시겠습니까?`}
+                    content={`${userName}(${userId})님과 채팅을 시작하시겠습니까?`}
                     onConfirm={startChat}
                     onCancel={closeModal}
                 />

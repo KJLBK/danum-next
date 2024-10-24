@@ -78,7 +78,7 @@ export async function join(formData) {
 export async function verifyAccessToken(accessToken) {
     try {
         const res = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}auth/check-expiration`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/auth/check-expiration`,
             {
                 method: 'POST',
                 headers: {
