@@ -133,3 +133,23 @@ export async function villageDelete(id) {
         return [];
     }
 }
+
+// 동네게시판 태그 필터링 로직
+export async function villageType(postType) {
+    try {
+        const response = await fetch(
+            `/danum-backend/board/village/by-type/${postType}`,
+            {
+                method: 'GET',
+            },
+        );
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching data', error);
+        return [];
+    }
+}
