@@ -1,0 +1,26 @@
+.container {
+    display: flex; /* Flexbox 사용 */
+    flex-direction: column; /* 세로 방향으로 배치 */
+    align-items: center; /* 가로 가운데 정렬 */
+    justify-content: center; /* 세로 가운데 정렬 */
+    min-height: 100vh; /* 전체 화면 높이 */
+}
+
+.top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 522px;
+    height: 100px; /* 원하는 높이 설정 */
+}
+
+.title {
+    text-align: center;
+}
+
+.category {
+    position: absolute;
+    right: 0;
+    margin-right: 20px; /* 오른쪽 여백을 원하는 만큼 조정 */
+}
