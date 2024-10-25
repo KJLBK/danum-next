@@ -2,10 +2,12 @@
 import { useAuthStore } from '../../../stores/authStore';
 import QuillEditor from '../../../components/question/new/QuillEditor';
 import { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { villageNew } from '../../../services/villageService';
 export default function VillagePostingPage() {
     const { user } = useAuthStore();
     const editorRef = useRef();
+    const router = useRouter();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -35,6 +37,7 @@ export default function VillagePostingPage() {
                 };
 
                 await villageNew(updatedFormData);
+                router.push('/villages');
             }
         } catch (err) {
             console.error('Submission error:', err);
