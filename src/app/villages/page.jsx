@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import {
     villageShow,
     villageType,
+    villageLocalShow,
 } from '../../services/villageService';
 import VillageItem from '../../components/village/view/VillageItem';
 import style from './page.module.css';
@@ -14,9 +15,16 @@ export default function Villages() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = postType
-                    ? await villageType(postType)
-                    : await villageShow();
+                let response;
+                if (postType === 'DAILY') {
+                    response = await villageType(postType);
+                } else if (postType === 'QUESTION') {
+                    response = await villageType(postType);
+                } else if (postType === 'LOCAL') {
+                    response = await villageLocalShow();
+                } else {
+                    response = await villageShow();
+                }
                 const reverseContent = [
                     ...response.content,
                 ].reverse();
@@ -51,6 +59,9 @@ export default function Villages() {
                     </option>
                     <option name="tagType" value="QUESTION">
                         질문
+                    </option>
+                    <option name="tagType" value="LOCAL">
+                        내 지역
                     </option>
                 </select>
             </div>

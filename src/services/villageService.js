@@ -153,3 +153,27 @@ export async function villageType(postType) {
         return [];
     }
 }
+
+// 동네게시판 지역 게시글 필터링 로직
+export async function villageLocalShow() {
+    const token = getAccessToken();
+    try {
+        const response = await fetch(
+            `/danum-backend/board/village/local`,
+            {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            },
+        );
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching data', error);
+        return [];
+    }
+}

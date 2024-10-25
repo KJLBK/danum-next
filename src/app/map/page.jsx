@@ -57,6 +57,11 @@ const KakaoMap = ({ onLocationChange }) => {
                         result[0]?.address?.address_name ||
                         '주소를 찾을 수 없습니다.';
                     setAddress(newAddress); // 주소 상태 업데이트
+                    onLocationChange({
+                        latitude,
+                        longitude,
+                        address: newAddress,
+                    });
                 } else {
                     console.error(
                         'Failed to get address: ',
@@ -106,6 +111,7 @@ const KakaoMap = ({ onLocationChange }) => {
                 />
 
                 <button
+                    type="button"
                     className={styles.openButton}
                     onClick={() => setIsModalOpen(true)}
                 >
