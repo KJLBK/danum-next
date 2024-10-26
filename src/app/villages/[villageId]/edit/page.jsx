@@ -7,7 +7,7 @@ import {
     villageUpdate,
 } from '../../../../services/villageService';
 import style from './page.module.css';
-import QuillEditor from '../../../../components/question/new/QuillEditor';
+import QuillEditor from '../../../../components/common/board/QuillEditor';
 
 export default function EditVillagePage() {
     const [data, setData] = useState({

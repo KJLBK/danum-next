@@ -70,6 +70,7 @@ export default function Villages() {
                 {data.map((item) => (
                     <BoardItem
                         key={item.village_id}
+                        village_id={item.village_id}
                         board="villages"
                         {...item}
                     />

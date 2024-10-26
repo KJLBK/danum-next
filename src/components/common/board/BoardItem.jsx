@@ -4,7 +4,8 @@ import Image from 'next/image';
 import { formatTimeAgo } from '../../../utils/timeFormat';
 
 export default function BoardItem({
-    id,
+    question_id,
+    village_id,
     title,
     content,
     author,
@@ -27,6 +28,7 @@ export default function BoardItem({
         return { images, textContent };
     };
 
+    const id = question_id || village_id;
     const { images, textContent } = extractImages(content);
 
     return (

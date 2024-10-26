@@ -28,7 +28,8 @@ export default function QuestionPage() {
             <ul>
                 {data.map((item) => (
                     <BoardItem
-                        key={item.id}
+                        key={item.question_id}
+                        question_id={item.question_id}
                         board="questions"
                         {...item}
                     />
