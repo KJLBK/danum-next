@@ -2,9 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { villageDetail } from '../../../services/villageService';
-import PostInfoPanel from '../../../components/village/view/PostInfoPanel';
-import QuillViewer from '../../../components/question/view/QuillViewer';
+import {
+    villageDetail,
+    villageDelete,
+} from '../../../services/villageService';
+import PostInfoPanel from '../../../components/common/board/PostInfoPanel';
+import QuillViewer from '../../../components/common/board/QuillViewer';
 
 export default function VillageViewPage() {
     const [data, setData] = useState({});
@@ -30,7 +33,11 @@ export default function VillageViewPage() {
 
     return (
         <>
-            <PostInfoPanel data={data} />
+            <PostInfoPanel
+                data={data}
+                board="villages"
+                onDelete={villageDelete}
+            />
             <QuillViewer content={data.content} />
         </>
     );

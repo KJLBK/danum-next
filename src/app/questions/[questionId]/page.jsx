@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import {
     questionDetail,
+    questionDelete,
     questionCommentShow,
 } from '../../../services/questionService';
 import { handleCommentSelection } from '../../../hooks/commentSelect'; // 서비스 함수 import
 import QuestionCommentItem from '../../../components/question/comment/QuestionCommentItem';
 import QuestionCommentNew from '../../../components/question/new/QuestionCommentNew';
-import style from './page.module.css';
-import QuillViewer from '../../../components/question/view/QuillViewer';
-import PostInfoPanel from '../../../components/question/view/PostInfoPanel';
+import QuillViewer from '../../../components/common/board/QuillViewer';
+import PostInfoPanel from '../../../components/common/board/PostInfoPanel';
 import { useAuthStore } from '../../../stores/authStore';
 
 export default function QuestionsViewPage() {
@@ -74,7 +74,11 @@ export default function QuestionsViewPage() {
 
     return (
         <div>
-            <PostInfoPanel data={data} />
+            <PostInfoPanel
+                data={data}
+                board="questions"
+                onDelete={questionDelete}
+            />
             <QuillViewer content={data.content} />
             <hr />
             <h2>댓글</h2>
