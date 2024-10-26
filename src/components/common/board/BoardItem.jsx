@@ -1,15 +1,17 @@
 import Link from 'next/link';
-import style from './QuestionItem.module.css';
+import style from './BoardItem.module.css';
 import Image from 'next/image';
 import { formatTimeAgo } from '../../../utils/timeFormat';
 
-export default function QuestionItem({
+export default function BoardItem({
     question_id,
+    village_id,
     title,
     content,
     author,
     created_at,
     view_count,
+    board, // 어떤 게시판인지 확인하는 값
 }) {
     // content에서 <img> 태그를 추출하는 함수
     const extractImages = (htmlString) => {
@@ -26,11 +28,12 @@ export default function QuestionItem({
         return { images, textContent };
     };
 
+    const id = question_id || village_id;
     const { images, textContent } = extractImages(content);
 
     return (
-        <div className={style.questionItem}>
-            <Link href={`/questions/${question_id}`}>
+        <div className={style.boardItem}>
+            <Link href={`/${board}/${id}`}>
                 <div className={style.preview}>
                     <div className={style.textContainer}>
                         <h2 className={style.title}>

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { questionShow } from '../../services/questionService';
-import QuestionItem from '../../components/question/comment/QuestionItem';
 import style from './page.module.css'; // CSS 모듈 임포트
+import BoardItem from '../../components/common/board/BoardItem';
 
 export default function QuestionPage() {
     const [data, setData] = useState([]);
@@ -27,8 +27,10 @@ export default function QuestionPage() {
             <h2>질문 이야기</h2>
             <ul>
                 {data.map((item) => (
-                    <QuestionItem
+                    <BoardItem
                         key={item.question_id}
+                        question_id={item.question_id}
+                        board="questions"
                         {...item}
                     />
                 ))}

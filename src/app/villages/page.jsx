@@ -5,7 +5,7 @@ import {
     villageType,
     villageLocalShow,
 } from '../../services/villageService';
-import VillageItem from '../../components/village/view/VillageItem';
+import BoardItem from '../../components/common/board/BoardItem';
 import style from './page.module.css';
 
 export default function Villages() {
@@ -68,8 +68,10 @@ export default function Villages() {
 
             <ul>
                 {data.map((item) => (
-                    <VillageItem
+                    <BoardItem
                         key={item.village_id}
+                        village_id={item.village_id}
+                        board="villages"
                         {...item}
                     />
                 ))}

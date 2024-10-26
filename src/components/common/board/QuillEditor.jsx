@@ -69,13 +69,13 @@ const QuillEditor = forwardRef((props, ref) => {
                                 },
                             },
                         },
-                    }
+                    },
                 );
 
                 // Load existing content if provided
                 if (props.content) {
                     quillRef.current.clipboard.dangerouslyPasteHTML(
-                        props.content
+                        props.content,
                     );
                 }
             }
@@ -109,7 +109,7 @@ const QuillEditor = forwardRef((props, ref) => {
                     quillRef.current.insertEmbed(
                         range.index,
                         'image',
-                        result.url
+                        result.url,
                     );
                 } else {
                     alert('Image upload failed.'); // Alert on upload failure
@@ -124,7 +124,7 @@ const QuillEditor = forwardRef((props, ref) => {
     return (
         <div>
             <div
-                id='editor'
+                id="editor"
                 ref={editorRef}
                 style={{ height: '400px' }}
             />
