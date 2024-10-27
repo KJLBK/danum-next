@@ -112,9 +112,7 @@ export async function createPrivateChat(targetUserId) {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${accessToken}`,
             },
-            body: JSON.stringify({
-                targetUserId: `${targetUserId}`,
-            }),
+            body: JSON.stringify(targetUserId),
         },
     );
 

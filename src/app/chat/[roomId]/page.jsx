@@ -2,12 +2,16 @@
 
 import { useParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { getChatRoomInfo } from '../../../services/chatService';
+import {
+    enterChatRoom,
+    getChatRoomInfo,
+} from '../../../services/chatService';
 import ChatMessageList from '../../../components/chat/ChatMessageList';
 import { useAuthStore } from '../../../stores/authStore';
 import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
 import ChatInput from '../../../components/chat/ChatInput';
+import { getAccessToken } from '../../../services/tokenService';
 
 export default function ChatRoomPage() {
     const { roomId } = useParams();
@@ -18,7 +22,7 @@ export default function ChatRoomPage() {
     const stompClient = useRef(null);
     const accessToken =
         typeof window !== 'undefined'
-            ? localStorage.getItem('accessToken')
+            ? getAccessToken()
             : null;
 
     useEffect(() => {
@@ -26,7 +30,7 @@ export default function ChatRoomPage() {
 
         // 500 -> token error
         const socket = new SockJS(
-            `/danum-backend/ws-stomp`
+            `/danum-backend/ws-stomp`,
         );
 
         stompClient.current = new Client({
@@ -36,21 +40,21 @@ export default function ChatRoomPage() {
             },
             debug: (str) =>
                 console.log(
-                    '[roomid]-page.jsx:stompClient debug',
-                    str
+                    '[debug]\n[roomid]-page.jsx:stompClient debug\n\n',
+                    str,
                 ),
             onConnect: () => {
                 stompClient.current.subscribe(
                     `/sub/chat/room/${roomId}`,
                     (message) => {
                         const receivedMessage = JSON.parse(
-                            message.body
+                            message.body,
                         );
                         setMessages((prevMessages) => [
                             ...prevMessages,
                             receivedMessage,
                         ]);
-                    }
+                    },
                 );
 
                 // Send ENTER message
@@ -82,7 +86,7 @@ export default function ChatRoomPage() {
         } catch (error) {
             console.error(
                 'ERR(/app/chat/[roomId]/page.jsx:loadRoomInfo):' +
-                    error
+                    error,
             );
         }
     };
