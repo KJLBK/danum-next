@@ -6,8 +6,8 @@ import {
     villageDetail,
     villageDelete,
 } from '../../../services/villageService';
-import PostInfoPanel from '../../../components/common/board/PostInfoPanel';
-import QuillViewer from '../../../components/common/board/QuillViewer';
+import PostInfoPanel from '../../../components/board/PostInfoPanel';
+import QuillViewer from '../../../components/board/QuillViewer';
 
 export default function VillageViewPage() {
     const [data, setData] = useState({});

@@ -10,8 +10,8 @@ import {
 import { handleCommentSelection } from '../../../hooks/commentSelect'; // 서비스 함수 import
 import QuestionCommentItem from '../../../components/question/comment/QuestionCommentItem';
 import QuestionCommentNew from '../../../components/question/new/QuestionCommentNew';
-import QuillViewer from '../../../components/common/board/QuillViewer';
-import PostInfoPanel from '../../../components/common/board/PostInfoPanel';
+import QuillViewer from '../../../components/board/QuillViewer';
+import PostInfoPanel from '../../../components/board/PostInfoPanel';
 import { useAuthStore } from '../../../stores/authStore';
 
 export default function QuestionsViewPage() {
