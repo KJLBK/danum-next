@@ -5,12 +5,20 @@ import Input from '../common/Input';
 import Button from '../common/Button';
 import { useLogin } from '../../hooks/useLogin';
 
+import {
+    useRouter,
+    useSearchParams,
+} from 'next/navigation';
+
 export default function LoginForm() {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
     const [error, setError] = useState(null);
+    const router = useRouter();
+    const SearchParams = useSearchParams();
+    const redirectUrl = SearchParams.get('from') || '/';
 
     const { mutate, isLoading, isError } = useLogin();
     const handleSubmit = (e) => {
@@ -21,10 +29,16 @@ export default function LoginForm() {
                 password: formData.password,
             },
             {
+                onSuccess: () => {
+                    router.push(redirectUrl);
+                    console.log(
+                        `로그인 성공 ${redirectUrl}`,
+                    );
+                },
                 onError: (err) => {
                     setError('로그인 실패: ' + err.message);
                 },
-            }
+            },
         );
     };
 

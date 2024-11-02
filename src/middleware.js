@@ -9,36 +9,33 @@ export async function middleware(req) {
     const accessToken = cookies.get('accessToken')?.value;
     const refreshToken = cookies.get('refreshToken')?.value;
 
-    if (!accessToken) {
+    if (!accessToken && !refreshToken) {
         return redirectToLogin(req);
     }
 
     try {
-        const verifyResponse =
-            await verifyAccessToken(accessToken);
-
-        if (!verifyResponse.isExpired) {
-            return NextResponse.next();
+        if (accessToken) {
+            const verifyResponse =
+                await verifyAccessToken(accessToken);
+            if (!verifyResponse.isExpired) {
+                return NextResponse.next();
+            }
         }
 
-        const refreshResponse =
-            await checkAuth(refreshToken); // error
-
-        if (refreshResponse.ok) {
-            const { accessToken: newAccessToken } =
-                await refreshResponse.json();
-
-            const response = NextResponse.next();
-
-            response.cookies.set(
-                'accessToken',
-                newAccessToken,
-                {
-                    path: '/',
-                },
-            );
-
-            return response;
+        if (refreshToken) {
+            const refreshResponse =
+                await checkAuth(refreshToken);
+            if (refreshResponse) {
+                const { accessToken: newAccessToken } =
+                    refreshResponse;
+                const response = NextResponse.next();
+                response.cookies.set(
+                    'accessToken',
+                    newAccessToken,
+                    { path: '/' },
+                );
+                return response;
+            }
         }
 
         return redirectToLogin(req);
@@ -50,10 +47,7 @@ export async function middleware(req) {
 
 function redirectToLogin(req) {
     const loginUrl = new URL('/login', req.url);
-
-    // 로그인 후에 사용자가 어디에서 왔는지 정보를 유지
     loginUrl.searchParams.set('from', req.nextUrl.pathname);
-
     return NextResponse.redirect(loginUrl);
 }
 
