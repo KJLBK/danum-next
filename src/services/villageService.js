@@ -180,7 +180,7 @@ export async function villageLocalShow() {
 
 // 동네게시판 댓글 생성 로직
 export async function villageCommentNew({
-    village_Id,
+    village_id,
     member_email,
     content,
 }) {
@@ -195,7 +195,7 @@ export async function villageCommentNew({
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    village_Id,
+                    village_id,
                     member_email,
                     content,
                 }),

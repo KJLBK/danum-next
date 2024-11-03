@@ -1,6 +1,6 @@
 'use client';
 import { useAuthStore } from '../../../stores/authStore';
-import QuillEditor from '../../../components/board/QuillEditor';
+import QuillEditor from '../../../components/board/new/QuillEditor';
 import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { villageNew } from '../../../services/villageService';

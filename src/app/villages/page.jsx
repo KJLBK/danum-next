@@ -5,7 +5,7 @@ import {
     villageType,
     villageLocalShow,
 } from '../../services/villageService';
-import BoardItem from '../../components/board/BoardItem';
+import BoardItem from '../../components/board/view/BoardItem';
 import style from './page.module.css';
 
 export default function Villages() {

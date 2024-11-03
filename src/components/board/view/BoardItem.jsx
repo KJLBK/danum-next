@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import style from './BoardItem.module.css';
 import Image from 'next/image';
-import { formatTimeAgo } from '../../utils/timeFormat';
+import { formatTimeAgo } from '../../../utils/timeFormat';
 
 export default function BoardItem({
     question_id,

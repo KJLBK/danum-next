@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { questionShow } from '../../services/questionService';
 import style from './page.module.css'; // CSS 모듈 임포트
-import BoardItem from '../../components/board/BoardItem';
+import BoardItem from '../../components/board/view/BoardItem';
 
 export default function QuestionPage() {
     const [data, setData] = useState([]);
