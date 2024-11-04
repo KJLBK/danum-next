@@ -5,7 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 import { questionNew } from '../../../services/questionService';
 import style from './page.module.css';
 import { getAccessToken } from '../../../services/tokenService';
-import QuillEditor from '../../../components/common/board/QuillEditor';
+import QuillEditor from '../../../components/board/new/QuillEditor';
 export default function QuestionNewPage() {
     const [formData, setFormData] = useState({
         email: '',

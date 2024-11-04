@@ -1,5 +1,5 @@
-import PostInfoPanel from '../../components/common/board/PostInfoPanel';
-import QuillViewer from '../../components/common/board/QuillViewer';
+import PostInfoPanel from '../../components/board/view/PostInfoPanel';
+import QuillViewer from '../../components/board/view/QuillViewer';
 
 const QUESTIONS_DATA_DUMMY = [
     {

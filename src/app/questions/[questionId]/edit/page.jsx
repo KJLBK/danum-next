@@ -9,7 +9,7 @@ import {
 } from '../../../../services/questionService';
 import dynamic from 'next/dynamic';
 import 'quill/dist/quill.snow.css'; // Quill 에디터 스타일
-import QuillEditor from '../../../../components/common/board/QuillEditor';
+import QuillEditor from '../../../../components/board/new/QuillEditor';
 import style from './page.module.css';
 
 // Quill을 동적으로 불러오기

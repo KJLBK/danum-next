@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import Modal from '../Modal';
+import Modal from '../../common/Modal';
 import { formatTimeAgo } from '../../../utils/timeFormat';
 import style from './PostInfoPanel.module.css';
 import { useAuthStore } from '../../../stores/authStore';

@@ -6,12 +6,15 @@ import {
     questionDetail,
     questionDelete,
     questionCommentShow,
+    questionCommentNew,
+    questionCommentDelete,
+    questionCommentUpdate,
 } from '../../../services/questionService';
 import { handleCommentSelection } from '../../../hooks/commentSelect'; // 서비스 함수 import
-import QuestionCommentItem from '../../../components/question/comment/QuestionCommentItem';
-import QuestionCommentNew from '../../../components/question/new/QuestionCommentNew';
-import QuillViewer from '../../../components/common/board/QuillViewer';
-import PostInfoPanel from '../../../components/common/board/PostInfoPanel';
+import CommentItem from '../../../components/board/view/CommentItem';
+import CommentNew from '../../../components/board/new/CommentNew';
+import QuillViewer from '../../../components/board/view/QuillViewer';
+import PostInfoPanel from '../../../components/board/view/PostInfoPanel';
 import { useAuthStore } from '../../../stores/authStore';
 
 export default function QuestionsViewPage() {
@@ -21,6 +24,7 @@ export default function QuestionsViewPage() {
         useState(null);
     const params = useParams();
     const { isLoggedIn, user } = useAuthStore();
+    const [author, setAuthor] = useState('');
 
     // 질문과 댓글을 가져오는 함수
     const fetchData = async () => {
@@ -29,6 +33,7 @@ export default function QuestionsViewPage() {
                 params.questionId,
             );
             setData(response);
+            setAuthor(response.author.userId);
         } catch (err) {
             console.error(
                 '질문 세부 정보 가져오기 오류:',
@@ -62,13 +67,14 @@ export default function QuestionsViewPage() {
     }, [params.questionId]); // questionId가 변경될 때마다 다시 가져옴
 
     // 서비스 함수 호출로 댓글 선택/해제 처리
-    const onSelectComment = (commentId) => {
-        handleCommentSelection(
+    const onSelectComment = async (commentId) => {
+        await handleCommentSelection(
             params.questionId,
             commentId,
             selectedCommentId,
             setSelectedCommentId,
             setComments,
+            'question',
         );
     };
 
@@ -84,25 +90,25 @@ export default function QuestionsViewPage() {
             <h2>댓글</h2>
 
             {isLoggedIn ? (
-                <QuestionCommentNew
+                <CommentNew
+                    postId={params.questionId}
                     email={user}
-                    questionId={params.questionId}
+                    onSubmitComment={questionCommentNew}
+                    type="question"
                 />
             ) : (
                 <p>댓글을 작성하려면 로그인하세요.</p>
             )}
 
             {comments.map((item) => (
-                <QuestionCommentItem
+                <CommentItem
                     key={item.comment_id}
                     {...item}
-                    emailCheck={isLoggedIn ? user : null}
-                    questionId={params.questionId}
-                    accepted={
-                        item.comment_id ===
-                        selectedCommentId
-                    } // 선택된 댓글 ID에 따라 채택 상태 설정
-                    onSelect={onSelectComment} // 선택 이벤트 핸들러
+                    author={author}
+                    onSelect={onSelectComment}
+                    onDelete={questionCommentDelete}
+                    onUpdate={questionCommentUpdate}
+                    type="question"
                 />
             ))}
         </div>
