@@ -24,6 +24,7 @@ export default function QuestionsViewPage() {
         useState(null);
     const params = useParams();
     const { isLoggedIn, user } = useAuthStore();
+    const [author, setAuthor] = useState('');
 
     // 질문과 댓글을 가져오는 함수
     const fetchData = async () => {
@@ -32,6 +33,7 @@ export default function QuestionsViewPage() {
                 params.questionId,
             );
             setData(response);
+            setAuthor(response.author.userId);
         } catch (err) {
             console.error(
                 '질문 세부 정보 가져오기 오류:',
@@ -65,13 +67,14 @@ export default function QuestionsViewPage() {
     }, [params.questionId]); // questionId가 변경될 때마다 다시 가져옴
 
     // 서비스 함수 호출로 댓글 선택/해제 처리
-    const onSelectComment = (commentId) => {
-        handleCommentSelection(
+    const onSelectComment = async (commentId) => {
+        await handleCommentSelection(
             params.questionId,
             commentId,
             selectedCommentId,
             setSelectedCommentId,
             setComments,
+            'question',
         );
     };
 
@@ -101,10 +104,7 @@ export default function QuestionsViewPage() {
                 <CommentItem
                     key={item.comment_id}
                     {...item}
-                    accepted={
-                        item.comment_id ===
-                        selectedCommentId
-                    }
+                    author={author}
                     onSelect={onSelectComment}
                     onDelete={questionCommentDelete}
                     onUpdate={questionCommentUpdate}

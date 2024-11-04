@@ -13,6 +13,7 @@ export default function CommentItem({
     onSelect,
     onDelete,
     onUpdate,
+    author,
     type, // 'question' or 'village'
 }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -91,17 +92,13 @@ export default function CommentItem({
                     <div className={style.content}>
                         {content}
                     </div>
-                    {type === 'question' &&
-                        email === user && (
-                            <button
-                                onClick={handleSelect}
-                                disabled={accepted}
-                            >
-                                {accepted
-                                    ? '채택됨'
-                                    : '채택하기'}
-                            </button>
-                        )}
+                    {author === user && (
+                        <button onClick={handleSelect}>
+                            {accepted
+                                ? '채택해제'
+                                : '채택하기'}
+                        </button>
+                    )}
                 </>
             )}
         </div>
