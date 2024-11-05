@@ -345,3 +345,29 @@ export async function villageUnaccept(
         return [];
     }
 }
+
+// 동네게시판 게시물 좋아요 기능 로직
+export async function villageLike({ villageId }) {
+    const token = getAccessToken();
+
+    try {
+        const response = await fetch(
+            `/danum-backend/board/village/like/${villageId}`,
+            {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            },
+        );
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        return response;
+    } catch (error) {
+        console.error('Error', error);
+        return [];
+    }
+}
