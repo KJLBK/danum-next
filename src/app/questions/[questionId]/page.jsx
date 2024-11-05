@@ -16,6 +16,7 @@ import CommentNew from '../../../components/board/new/CommentNew';
 import QuillViewer from '../../../components/board/view/QuillViewer';
 import PostInfoPanel from '../../../components/board/view/PostInfoPanel';
 import { useAuthStore } from '../../../stores/authStore';
+import { aiChat } from '../../../services/chatGPTService';
 
 export default function QuestionsViewPage() {
     const [data, setData] = useState({});
@@ -25,6 +26,7 @@ export default function QuestionsViewPage() {
     const params = useParams();
     const { isLoggedIn, user } = useAuthStore();
     const [author, setAuthor] = useState('');
+    const [message, setMessage] = useState('');
 
     // 질문과 댓글을 가져오는 함수
     const fetchData = async () => {
@@ -78,6 +80,15 @@ export default function QuestionsViewPage() {
         );
     };
 
+    const handleMessage = (e) => {
+        setMessage(e.target.value);
+    };
+
+    const handleAiChat = async () => {
+        await aiChat(params.questionId, message);
+        location.reload();
+    };
+
     return (
         <div>
             <PostInfoPanel
@@ -86,6 +97,21 @@ export default function QuestionsViewPage() {
                 onDelete={questionDelete}
             />
             <QuillViewer content={data.content} />
+
+            {user === data.author?.userId ? (
+                <div>
+                    <input
+                        type="text"
+                        onChange={handleMessage}
+                        value={message}
+                    />
+                    <button onClick={handleAiChat}>
+                        질문
+                    </button>
+                </div>
+            ) : (
+                <div></div>
+            )}
             <hr />
             <h2>댓글</h2>
 
