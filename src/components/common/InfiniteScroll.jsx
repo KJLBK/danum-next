@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import Spinner from './Spinner';
 import './InfiniteScroll.css';
 import { usePostStore } from '../../stores/postStore';
-import { formatTimeAgo } from '../../utils/timeFormat';
+import BoardItem from '../board/view/BoardItem';
 
 export default function InfiniteScroll({
     serviceLogic,
@@ -94,19 +94,27 @@ export default function InfiniteScroll({
                     {page.content.map((post) => {
                         const isQuestion =
                             post.question_id !== undefined;
-                        const key = isQuestion
-                            ? `question-${post.question_id}`
-                            : `village-${post.village_id}`;
+                        const id = isQuestion
+                            ? post.question_id
+                            : post.village_id;
+                        const board = isQuestion
+                            ? 'questions'
+                            : 'villages';
+
                         return (
-                            <div key={key} className="post">
-                                <h3>{post.title}</h3>
-                                <p>{post.content}</p>
-                                <span>
-                                    {formatTimeAgo(
-                                        post.created_at,
-                                    )}
-                                </span>
-                            </div>
+                            <BoardItem
+                                key={id}
+                                question_id={
+                                    post.question_id
+                                }
+                                village_id={post.village_id}
+                                title={post.title}
+                                content={post.content}
+                                author={post.author}
+                                created_at={post.created_at}
+                                view_count={post.view_count}
+                                board={board}
+                            />
                         );
                     })}
                 </div>
