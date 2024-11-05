@@ -33,13 +33,13 @@ export const useAuthStore = create(
                 setItem: (name, value) => {
                     localStorage.setItem(
                         name,
-                        JSON.stringify(value)
+                        JSON.stringify(value),
                     );
                 },
                 removeItem: (name) => {
                     localStorage.removeItem(name);
                 },
             },
-        }
-    )
+        },
+    ),
 );
