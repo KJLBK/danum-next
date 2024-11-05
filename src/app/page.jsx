@@ -1,3 +1,4 @@
+import InfiniteScroll from '../components/common/InfiniteScroll';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
                 </aside>
                 <div className={styles.middle}>
                     {/* 질문(무한스크롤) */}
+                    <InfiniteScroll />
                 </div>
                 <aside className={styles.right}>
                     {/* 인기 게시물 */}
