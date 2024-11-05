@@ -311,7 +311,7 @@ export async function quesitonCommentDeselect(
 }
 
 // 질문이야기 게시물 좋아요 기능 로직
-export async function questionLike({ questionId }) {
+export async function questionLike(questionId) {
     const token = getAccessToken();
 
     try {

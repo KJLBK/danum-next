@@ -347,7 +347,7 @@ export async function villageUnaccept(
 }
 
 // 동네게시판 게시물 좋아요 기능 로직
-export async function villageLike({ villageId }) {
+export async function villageLike(villageId) {
     const token = getAccessToken();
 
     try {
