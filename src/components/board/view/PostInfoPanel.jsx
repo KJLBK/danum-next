@@ -7,6 +7,7 @@ import { formatTimeAgo } from '../../../utils/timeFormat';
 import style from './PostInfoPanel.module.css';
 import { useAuthStore } from '../../../stores/authStore';
 import AuthorChatButton from '../../chat/AuthorChatButton';
+import LikeButton from '../buttons/LikeButton';
 
 export default function PostInfoPanel({
     data,
@@ -52,7 +53,7 @@ export default function PostInfoPanel({
                     {formatTimeAgo(data.created_at)} • 읽음{' '}
                     {data.view_count}
                 </span>
-                {user === data.author?.userId && (
+                {user === data.author?.userId ? (
                     <div className={style.button}>
                         <button onClick={goToEditPage}>
                             수정
@@ -60,6 +61,14 @@ export default function PostInfoPanel({
                         <button onClick={openModal}>
                             삭제
                         </button>
+                    </div>
+                ) : (
+                    <div className={style.button}>
+                        <LikeButton
+                            postId={postId}
+                            board={board}
+                            likeCount={data.like}
+                        />
                     </div>
                 )}
             </div>

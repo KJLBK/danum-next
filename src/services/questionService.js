@@ -309,3 +309,29 @@ export async function quesitonCommentDeselect(
         return [];
     }
 }
+
+// 질문이야기 게시물 좋아요 기능 로직
+export async function questionLike(questionId) {
+    const token = getAccessToken();
+
+    try {
+        const response = await fetch(
+            `/danum-backend/board/question/like/${questionId}`,
+            {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            },
+        );
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        return response;
+    } catch (error) {
+        console.error('Error', error);
+        return [];
+    }
+}
