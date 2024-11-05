@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Input from '../common/Input';
 import Button from '../common/Button';
 import { useLogin } from '../../hooks/useLogin';
+import Link from 'next/link';
 
 import {
     useRouter,
@@ -72,6 +73,10 @@ export default function LoginForm() {
                 <Button type="submit" disabled={isLoading}>
                     {isLoading ? '로그인 중...' : '로그인'}
                 </Button>
+                <br />
+                <Link href="/join">
+                    <Button>회원가입</Button>
+                </Link>
             </form>
             {isError && (
                 <p style={{ color: 'red' }}>

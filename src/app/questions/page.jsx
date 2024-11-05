@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { questionShow } from '../../services/questionService';
 import style from './page.module.css'; // CSS 모듈 임포트
 import BoardItem from '../../components/board/view/BoardItem';
+import Link from 'next/link';
 
 export default function QuestionPage() {
     const [data, setData] = useState([]);
@@ -25,6 +26,9 @@ export default function QuestionPage() {
     return (
         <div className={style.container}>
             <h2>질문 이야기</h2>
+            <Link href="/questions/new">
+                <button>글 쓰기</button>
+            </Link>
             <ul>
                 {data.map((item) => (
                     <BoardItem
