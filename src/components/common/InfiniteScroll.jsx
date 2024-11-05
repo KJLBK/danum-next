@@ -2,13 +2,15 @@
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef } from 'react';
-import { fetchRecentPosts } from '../../services/postService';
 import Spinner from './Spinner';
 import './InfiniteScroll.css';
 import { usePostStore } from '../../stores/postStore';
 import { formatTimeAgo } from '../../utils/timeFormat';
 
-export default function InfiniteScroll() {
+export default function InfiniteScroll({
+    serviceLogic,
+    queryKey = ['data'],
+}) {
     const observerRef = useRef(null);
     const addPosts = usePostStore(
         (state) => state.addPosts,
@@ -22,14 +24,14 @@ export default function InfiniteScroll() {
         status,
         error,
     } = useInfiniteQuery({
-        queryKey: ['recentPosts'],
+        queryKey,
         queryFn: ({ pageParam = 1 }) => {
             console.log(`Fetching page: ${pageParam}`);
-            return fetchRecentPosts(pageParam);
+            return serviceLogic(pageParam);
         },
         getNextPageParam: (lastPage) => {
             return lastPage.last
-                ? (lastPage.pageNumber = 1)
+                ? (lastPage.pageNumber = 0)
                 : lastPage.pageNumber + 1;
         },
         onSuccess: (data) => {
