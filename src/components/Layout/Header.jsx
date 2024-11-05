@@ -58,7 +58,9 @@ export default function Header() {
                     </li>
                 </ul>
                 <ul className={styles['header-ul']}>
-                    <SearchIcon />
+                    <Link href="/search">
+                        <SearchIcon />
+                    </Link>
                     <AlarmIcon />
                     {/* hydration이 완료된 후에만 상태 확인 */}
                     {hydrated && !isLoggedIn ? (
