@@ -40,7 +40,7 @@ export async function getMessage(createId) {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
                 },
-            }
+            },
         );
 
         if (!res.ok) {
@@ -66,7 +66,7 @@ export async function closeAI(createId) {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
                 },
-            }
+            },
         );
 
         if (!res.ok) {
@@ -74,6 +74,37 @@ export async function closeAI(createId) {
         }
 
         return await res.json(); // 종료에 대한 응답 받기
+    } catch (err) {
+        throw new Error(err.message);
+    }
+}
+
+// chatGPT 추가 질문 로직
+export async function aiChat(questionId, message) {
+    const accessToken = getAccessToken();
+    if (!accessToken) {
+        throw new Error('Access token is missing');
+    }
+    try {
+        const res = await fetch(
+            `/danum-backend/board/question/${questionId}/ai-chat`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                body: JSON.stringify({
+                    message,
+                }),
+            },
+        );
+
+        if (!res.ok) {
+            throw new Error('Failed to generate message');
+        }
+
+        return await res.json(); // 응답 받기
     } catch (err) {
         throw new Error(err.message);
     }
