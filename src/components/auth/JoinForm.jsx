@@ -7,8 +7,10 @@ import { join } from '../../services/authService';
 import KakaoMap from '../../app/map/page'; // KakaoMap 컴포넌트를 가져옴
 import Profile from './Profile';
 import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
 export default function JoinForm() {
+    const router = useRouter();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -29,8 +31,10 @@ export default function JoinForm() {
         onError: (err) => {
             setError('회원가입 실패: ' + err.message);
         },
-        onSuccess: (data) =>
-            console.log('회원가입 성공', data),
+        onSuccess: (data) => {
+            console.log('회원가입 성공', data);
+            router.push('/login');
+        },
     });
 
     const handleSubmit = (e) => {
