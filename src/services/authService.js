@@ -68,6 +68,36 @@ export async function join(formData) {
 }
 
 /**
+ * AccessToken 검증(Client)
+ * URL: POST /auth/check-expiration
+ * 설명: accessToken 헤더에 집어넣어서 유효한지 확인합니다.
+ * 인증: 필요
+ * 응답: is???= false 라고 뜨면 200
+ */
+
+export async function verifyATokenToClient(accessToken) {
+    try {
+        const res = await fetch(
+            `/danum-backend/auth/check-expiration`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            },
+        );
+
+        const data = await res.json();
+        console.log('AccessToken 검증 성공', data);
+        return data;
+    } catch {
+        console.log('AccessToken 검증 실패');
+        return { isExpired: true };
+    }
+}
+
+/**
  * AccessToken 검증(FrontServer)
  * URL: POST /auth/check-expiration
  * 설명: accessToken 헤더에 집어넣어서 유효한지 확인합니다.
@@ -82,7 +112,7 @@ export async function verifyAccessToken(accessToken) {
             {
                 method: 'POST',
                 headers: {
-                    // 'Content-type': 'application/json',
+                    'Content-type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
                 },
             },

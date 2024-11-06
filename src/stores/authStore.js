@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 import {
     checkAuth,
     fetchUserData,
-    verifyAccessToken,
+    verifyATokenToClient,
 } from '../services/authService';
 import {
     getCookie,
@@ -64,11 +64,20 @@ export const useAuthStore = create(
 
                 if (accessToken) {
                     const isAuthenticated =
-                        await verifyAccessToken(
+                        await verifyATokenToClient(
                             accessToken,
                         );
+                    console.log(
+                        '> AccessToken 만료? :',
+                        isAuthenticated.status === 500 ||
+                            isAuthenticated.isExpired ===
+                                true,
+                    );
 
-                    if (!isAuthenticated) {
+                    if (
+                        isAuthenticated.status === 500 ||
+                        isAuthenticated.isExpired === true
+                    ) {
                         // Access Token이 만료된 경우 Refresh Token을 사용해 갱신
                         await useAuthStore
                             .getState()
