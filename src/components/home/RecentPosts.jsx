@@ -1,4 +1,4 @@
-import { fetchRecentPosts } from '../../services/postService';
+import { fetchRecentPosts } from '../../services/postService.server';
 import InfiniteScroll from '../common/InfiniteScroll';
 
 export default function RecentPosts() {
