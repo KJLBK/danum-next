@@ -1,6 +1,5 @@
-import InfiniteScroll from '../components/common/InfiniteScroll';
+import PopularPosts from '../components/home/\bPopularPosts/PopularPosts';
 import RecentPosts from '../components/home/RecentPosts';
-import { fetchRecentPosts } from '../services/postService';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -18,6 +17,7 @@ export default function Home() {
                 </div>
                 <aside className={styles.right}>
                     {/* 인기 게시물 */}
+                    <PopularPosts />
                     {/* ??? */}
                 </aside>
             </main>
