@@ -7,7 +7,10 @@ export default function PopularPostlist({ header, data }) {
             <ul>
                 {data.map((board) => (
                     <PopularPostButton
-                        key={board.question_id}
+                        key={
+                            board.question_id ||
+                            board.village_id
+                        }
                         item={board}
                     />
                 ))}
