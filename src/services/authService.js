@@ -46,8 +46,8 @@ export async function logout(clearAuth) {
             },
         });
         removeAccessToken();
-    } catch (err) {
-        throw new Error(err.message);
+    } catch {
+        console.log('로그아웃');
     }
 }
 
@@ -82,20 +82,17 @@ export async function verifyAccessToken(accessToken) {
             {
                 method: 'POST',
                 headers: {
-                    'Content-type': 'application/json',
+                    // 'Content-type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
                 },
             },
         );
-        if (!res.ok) {
-            throw new Error(
-                `HTTP error! status: ${res.status}`,
-            );
-        }
-
-        return await res.json();
-    } catch (error) {
-        throw new Error(error.message);
+        const data = await res.json();
+        console.log('AccessToken 검증 성공');
+        return data;
+    } catch (err) {
+        console.log('AccessToken 검증 실패');
+        return { isExpired: true };
     }
 }
 
@@ -113,7 +110,7 @@ export async function checkAuth(RefreshToken) {
             },
         );
         const data = await res.text(); // 한번만 호출
-
+        console.log('accessToken 발급');
         return data;
     } catch (error) {
         throw new Error(error.message);
@@ -147,5 +144,29 @@ export async function getProfile() {
         return url; // 파싱한 데이터를 반환
     } catch (err) {
         throw new Error(err.message);
+    }
+}
+
+// 유저정보 가져오는 API (member/me)
+export async function fetchUserData() {
+    const accessToken = getAccessToken();
+
+    try {
+        const res = await fetch(
+            `/danum-backend/member/me`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            },
+        );
+
+        return await res.json();
+    } catch {
+        console.log(
+            '유저 정보를 가져오는 것을 실패하였습니다.',
+        );
     }
 }

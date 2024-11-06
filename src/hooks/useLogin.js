@@ -7,10 +7,9 @@ import {
     useRouter,
     useSearchParams,
 } from 'next/navigation';
-import { jwtDecode } from 'jwt-decode';
 
 export function useLogin() {
-    const { setAuth } = useAuthStore();
+    const { setAuthState } = useAuthStore();
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -19,25 +18,10 @@ export function useLogin() {
     return useMutation({
         mutationFn: ({ email, password }) =>
             login(email, password), // 최신 문법에 맞게 수정
-        onSuccess: (accessToken) => {
+        onSuccess: async (accessToken) => {
             setAccessToken(accessToken);
-            console.log(accessToken);
-
-            try {
-                const user = jwtDecode(accessToken);
-                const expiration = new Date(
-                    user.exp * 1000
-                ).toLocaleString();
-                setAuth(
-                    user.sub,
-                    user.role[0].authority,
-                    expiration
-                );
-
-                router.push(redirectPath);
-            } catch (error) {
-                console.error('JWT 디코딩 오류:', error);
-            }
+            await setAuthState();
+            router.push(redirectPath);
         },
         onError: (error) => {
             console.error('로그인 실패:', error);

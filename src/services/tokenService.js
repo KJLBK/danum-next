@@ -17,3 +17,10 @@ export function setAccessToken(token) {
 export function removeAccessToken() {
     document.cookie = 'accessToken=; Max-Age=0; path=/;';
 }
+
+export function getCookie(name) {
+    const match = document.cookie.match(
+        new RegExp('(^| )' + name + '=([^;]+)'),
+    );
+    return match ? decodeURIComponent(match[2]) : null;
+}

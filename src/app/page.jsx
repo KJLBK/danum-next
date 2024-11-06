@@ -1,5 +1,6 @@
 import PopularPosts from '../components/home/\bPopularPosts/PopularPosts';
 import RecentPosts from '../components/home/RecentPosts';
+import MyProfile from '../components/profile/myProfile';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
                 <aside className={styles.left}>
                     {/* 로그인 전 */}
                     {/* 로그인 후 */}
+                    <MyProfile />
                 </aside>
                 <div className={styles.middle}>
                     {/* 질문(무한스크롤) */}

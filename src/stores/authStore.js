@@ -1,27 +1,121 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import {
+    checkAuth,
+    fetchUserData,
+    verifyAccessToken,
+} from '../services/authService';
+import {
+    getCookie,
+    setAccessToken,
+} from '../services/tokenService';
 
 export const useAuthStore = create(
     persist(
         (set) => ({
             user: null,
+            email: null,
+            active: null,
+            address: null,
+            contribution: null,
+            exp: null,
+            latitude: null,
+            longitude: null,
+            name: null,
+            profileImageUrl: null,
             role: null,
-            expiration: null,
             isLoggedIn: false,
-            setAuth: (user, role, expiration) =>
-                set({
-                    user,
-                    role,
-                    expiration,
-                    isLoggedIn: true,
-                }),
+            // 상태를 설정하는 함수
+            setAuth: (data) => {
+                const { password, ...filteredData } = data;
+                set({ ...filteredData, isLoggedIn: true });
+            },
+            setAuthState: async () => {
+                try {
+                    const user = await fetchUserData();
+                    console.log(user);
+                    useAuthStore.getState().setAuth(user);
+                } catch (err) {
+                    console.log(err);
+                }
+            },
+
+            // 상태를 초기화하는 함수
             clearAuth: () =>
                 set({
                     user: null,
+                    email: null,
+                    active: null,
+                    address: null,
+                    contribution: null,
+                    exp: null,
+                    latitude: null,
+                    longitude: null,
+                    name: null,
+                    profileImageUrl: null,
                     role: null,
-                    expiration: null,
                     isLoggedIn: false,
                 }),
+
+            // 인증 상태를 체크하는 함수
+            checkAuthStatus: async () => {
+                const accessToken =
+                    getCookie('accessToken');
+
+                if (accessToken) {
+                    const isAuthenticated =
+                        await verifyAccessToken(
+                            accessToken,
+                        );
+
+                    if (!isAuthenticated) {
+                        // Access Token이 만료된 경우 Refresh Token을 사용해 갱신
+                        await useAuthStore
+                            .getState()
+                            .refreshToken();
+                    }
+                } else {
+                    // Access Token이 없을 경우 Refresh Token 사용
+                    await useAuthStore
+                        .getState()
+                        .refreshToken();
+                }
+            },
+
+            // 토큰 갱신을 위한 함수
+            refreshToken: async () => {
+                console.log('zustand-refreshToken');
+                const refreshToken =
+                    getCookie('refreshToken');
+
+                if (refreshToken) {
+                    try {
+                        const newAccessToken =
+                            await checkAuth(refreshToken);
+                        if (newAccessToken) {
+                            setAccessToken(newAccessToken);
+                        } else {
+                            // 새 Access Token이 없다면 로그아웃 처리
+                            await useAuthStore
+                                .getState()
+                                .clearAuth();
+                        }
+                    } catch (error) {
+                        console.error(
+                            '토큰 갱신 오류:',
+                            error,
+                        );
+                        await useAuthStore
+                            .getState()
+                            .clearAuth(); // 오류 시 로그아웃
+                    }
+                } else {
+                    // Refresh Token이 없는 경우 로그아웃
+                    await useAuthStore
+                        .getState()
+                        .clearAuth();
+                }
+            },
         }),
         {
             name: 'auth-storage',
