@@ -38,27 +38,6 @@ export async function questionNew({
     }
 }
 
-//질문이야기 게시판 조회 로직
-export async function questionShow() {
-    try {
-        const response = await fetch(
-            '/danum-backend/board/question/show',
-            {
-                method: 'GET',
-            },
-        );
-
-        if (!response.ok) {
-            throw new Error(`Error: ${response.status}`);
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error('Error fetching data', error);
-        return [];
-    }
-}
-
 // 질문이야기 게시판 삭제 로직
 export async function questionDelete(id) {
     const token = getAccessToken();
