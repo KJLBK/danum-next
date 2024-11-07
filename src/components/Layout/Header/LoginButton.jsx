@@ -6,7 +6,7 @@ import Button from '../../common/Button';
 export default function LoginButton() {
     const router = useRouter();
     const handleLoginClick = () => {
-        router.push('/login');
+        router.push('/login', { scroll: false });
     };
     return (
         <>
