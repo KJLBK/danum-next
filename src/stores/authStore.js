@@ -84,6 +84,10 @@ export const useAuthStore = create(
                             .refreshToken();
                     }
                 } else {
+                    console.log(
+                        'accessToken 없음',
+                        accessToken,
+                    );
                     // Access Token이 없을 경우 Refresh Token 사용
                     await useAuthStore
                         .getState()
@@ -93,18 +97,29 @@ export const useAuthStore = create(
 
             // 토큰 갱신을 위한 함수
             refreshToken: async () => {
-                console.log('zustand-refreshToken');
                 const refreshToken =
                     getCookie('refreshToken');
+                console.log(
+                    'zustand-refreshToken',
+                    refreshToken,
+                );
 
                 if (refreshToken) {
                     try {
                         const newAccessToken =
                             await checkAuth(refreshToken);
+                        console.log(
+                            '토큰 발급',
+                            newAccessToken,
+                        );
                         if (newAccessToken) {
                             setAccessToken(newAccessToken);
+                            console.log('토큰 갱신');
                         } else {
                             // 새 Access Token이 없다면 로그아웃 처리
+                            console.log(
+                                '토큰 갱신 실패 : 로그아웃',
+                            );
                             await useAuthStore
                                 .getState()
                                 .clearAuth();

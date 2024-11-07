@@ -25,7 +25,7 @@ export default function InfiniteScroll({
         error,
     } = useInfiniteQuery({
         queryKey,
-        queryFn: ({ pageParam = 1 }) => {
+        queryFn: ({ pageParam = 0 }) => {
             console.log(`Fetching page: ${pageParam}`);
             return serviceLogic(pageParam);
         },
