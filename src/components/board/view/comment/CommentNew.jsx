@@ -27,6 +27,7 @@ export default function CommentNew({
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
+            console.log(formData, email);
             await onSubmitComment(formData);
             setFormData({
                 [type === 'question'
@@ -36,7 +37,7 @@ export default function CommentNew({
                 content: '',
             });
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     };
 

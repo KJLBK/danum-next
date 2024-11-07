@@ -1,26 +1,26 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Modal from '../../common/Modal';
 import { formatTimeAgo } from '../../../utils/timeFormat';
 import style from './PostInfoPanel.module.css';
 import { useAuthStore } from '../../../stores/authStore';
 import AuthorChatButton from '../../chat/AuthorChatButton';
 import LikeButton from '../buttons/LikeButton';
+import QuillViewer from './QuillViewer';
+import Spinner from '../../common/Spinner';
 
 export default function PostInfoPanel({
+    board,
+    postId,
     data,
-    board, // 'questions' | 'villages'
-    onDelete, // 삭제 함수를 props로 받음
+    isDeleting,
+    deletePost,
 }) {
     const [isModalOpen, setModalOpen] = useState(false);
-    const params = useParams();
     const router = useRouter();
-    const { user } = useAuthStore();
-
-    // id 값 통합 처리
-    const postId = params.questionId || params.villageId;
+    const { email: user } = useAuthStore();
 
     // 수정 페이지로 이동하는 함수
     const goToEditPage = () => {
@@ -33,9 +33,13 @@ export default function PostInfoPanel({
 
     // 게시글 삭제 함수
     const handleDelete = async () => {
-        await onDelete(postId);
+        deletePost();
         router.push(`/${board}`);
     };
+
+    if (!data) {
+        return <Spinner />;
+    }
 
     return (
         <>
@@ -58,8 +62,13 @@ export default function PostInfoPanel({
                         <button onClick={goToEditPage}>
                             수정
                         </button>
-                        <button onClick={openModal}>
-                            삭제
+                        <button
+                            onClick={openModal}
+                            disabled={isDeleting}
+                        >
+                            {isDeleting
+                                ? '삭제 중...'
+                                : '삭제'}
                         </button>
                     </div>
                 ) : (
@@ -72,6 +81,7 @@ export default function PostInfoPanel({
                     </div>
                 )}
             </div>
+            <QuillViewer content={data.content} />
 
             <Modal
                 isOpen={isModalOpen}

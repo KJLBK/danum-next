@@ -1,68 +1,63 @@
-// components/common/CommentItem.jsx
-import { useState } from 'react';
-import style from './CommentItem.module.css';
-import { formatTimeAgo } from '../../../utils/timeFormat';
-import { useAuthStore } from '../../../stores/authStore';
+// components/board/view/comment/UserComment.jsx
+import { useEffect, useState } from 'react';
+import style from './UserComment.module.css';
+import { formatTimeAgo } from '../../../../utils/timeFormat';
+import { useAuthStore } from '../../../../stores/authStore';
+import { useComments } from '../../../../hooks/village/useComments';
 
-export default function CommentItem({
+export default function UserComment({
     content,
-    email,
     created_at,
     comment_id,
     accepted,
-    onSelect,
-    onDelete,
-    onUpdate,
     author,
-    type, // 'question' or 'village'
+    postId,
+    type,
+    PostAuthorId,
 }) {
     const [isEditing, setIsEditing] = useState(false);
     const [updatedContent, setUpdatedContent] =
         useState(content);
-    const { user } = useAuthStore();
+    const { email } = useAuthStore();
 
-    const handleDelete = () => {
-        onDelete(comment_id);
-    };
+    const {
+        deleteComment,
+        updateComment,
+        acceptComment,
+        unacceptComment,
+    } = useComments(postId, type);
 
+    useEffect(() => {
+        console.log();
+    });
+
+    const handleDelete = () =>
+        deleteComment.mutate(comment_id);
     const handleUpdate = async () => {
-        try {
-            await onUpdate(comment_id, updatedContent);
-            setIsEditing(false);
-        } catch (error) {
-            console.error('Error updating comment:', error);
-        }
+        await updateComment.mutate({
+            id: comment_id,
+            content: updatedContent,
+        });
+        setIsEditing(false);
     };
-
     const handleSelect = () => {
-        if (onSelect) {
-            onSelect(comment_id);
+        if (accepted) {
+            unacceptComment.mutate(comment_id);
+        } else {
+            acceptComment.mutate(comment_id);
         }
     };
 
     return (
         <div className={style.comment}>
             <div className={style.email}>
-                <span>{email}</span>
+                <span>{author}</span>
                 <span className={style.time}>
                     {formatTimeAgo(created_at)}
                 </span>
             </div>
-
             {isEditing ? (
                 <>
-                    <div className={style.buttons}>
-                        <button onClick={handleUpdate}>
-                            저장
-                        </button>
-                        <button
-                            onClick={() =>
-                                setIsEditing(false)
-                            }
-                        >
-                            취소
-                        </button>
-                    </div>
                     <textarea
                         className={style.textarea}
                         value={updatedContent}
@@ -72,11 +67,19 @@ export default function CommentItem({
                             )
                         }
                     />
+                    <button onClick={handleUpdate}>
+                        저장
+                    </button>
+                    <button
+                        onClick={() => setIsEditing(false)}
+                    >
+                        취소
+                    </button>
                 </>
             ) : (
                 <>
-                    {email === user && (
-                        <div className={style.buttons}>
+                    {author === email && (
+                        <>
                             <button
                                 onClick={() =>
                                     setIsEditing(true)
@@ -87,12 +90,12 @@ export default function CommentItem({
                             <button onClick={handleDelete}>
                                 삭제
                             </button>
-                        </div>
+                        </>
                     )}
                     <div className={style.content}>
                         {content}
                     </div>
-                    {author === user && (
+                    {PostAuthorId === email && (
                         <button onClick={handleSelect}>
                             {accepted
                                 ? '채택해제'
