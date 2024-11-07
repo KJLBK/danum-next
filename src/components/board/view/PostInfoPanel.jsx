@@ -17,7 +17,7 @@ export default function PostInfoPanel({
     const [isModalOpen, setModalOpen] = useState(false);
     const params = useParams();
     const router = useRouter();
-    const { user } = useAuthStore();
+    const { email } = useAuthStore();
 
     // id 값 통합 처리
     const postId = params.questionId || params.villageId;
@@ -53,7 +53,7 @@ export default function PostInfoPanel({
                     {formatTimeAgo(data.created_at)} • 읽음{' '}
                     {data.view_count}
                 </span>
-                {user === data.author?.userId ? (
+                {email === data.author?.userId ? (
                     <div className={style.button}>
                         <button onClick={goToEditPage}>
                             수정

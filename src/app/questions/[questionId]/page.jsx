@@ -25,7 +25,7 @@ export default function QuestionsViewPage() {
     const [selectedCommentId, setSelectedCommentId] =
         useState(null);
     const params = useParams();
-    const { isLoggedIn, user } = useAuthStore();
+    const { isLoggedIn, email } = useAuthStore();
     const [author, setAuthor] = useState('');
     const [message, setMessage] = useState('');
     const [originalContent, setOriginalContent] =
@@ -173,7 +173,7 @@ export default function QuestionsViewPage() {
                     ),
                 )}
 
-                {user === author && (
+                {email === author && (
                     <div className={styles.questionForm}>
                         <h3>AI에게 추가 질문하기</h3>
                         <div className={styles.inputGroup}>
@@ -200,7 +200,7 @@ export default function QuestionsViewPage() {
                 {isLoggedIn ? (
                     <CommentNew
                         postId={params.questionId}
-                        email={user}
+                        email={email}
                         onSubmitComment={questionCommentNew}
                         type="question"
                     />

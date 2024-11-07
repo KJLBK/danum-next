@@ -24,7 +24,7 @@ export default function VillageViewPage() {
         useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const params = useParams();
-    const { isLoggedIn, user } = useAuthStore();
+    const { isLoggedIn, email } = useAuthStore();
     const [author, setAuthor] = useState('');
 
     const fetchData = async () => {
@@ -90,7 +90,7 @@ export default function VillageViewPage() {
             {isLoggedIn ? (
                 <CommentNew
                     postId={params.villageId}
-                    email={user}
+                    email={email}
                     onSubmitComment={villageCommentNew}
                     type="village"
                 />
