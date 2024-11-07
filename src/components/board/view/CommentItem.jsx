@@ -6,7 +6,7 @@ import { useAuthStore } from '../../../stores/authStore';
 
 export default function CommentItem({
     content,
-    email,
+    email: commentEmail,
     created_at,
     comment_id,
     accepted,
@@ -19,7 +19,7 @@ export default function CommentItem({
     const [isEditing, setIsEditing] = useState(false);
     const [updatedContent, setUpdatedContent] =
         useState(content);
-    const { user } = useAuthStore();
+    const { email } = useAuthStore();
 
     const handleDelete = () => {
         onDelete(comment_id);
@@ -43,7 +43,7 @@ export default function CommentItem({
     return (
         <div className={style.comment}>
             <div className={style.email}>
-                <span>{email}</span>
+                <span>{commentEmail}</span>
                 <span className={style.time}>
                     {formatTimeAgo(created_at)}
                 </span>
@@ -75,7 +75,7 @@ export default function CommentItem({
                 </>
             ) : (
                 <>
-                    {email === user && (
+                    {commentEmail === email && (
                         <div className={style.buttons}>
                             <button
                                 onClick={() =>
@@ -92,7 +92,7 @@ export default function CommentItem({
                     <div className={style.content}>
                         {content}
                     </div>
-                    {author === user && (
+                    {author === email && (
                         <button onClick={handleSelect}>
                             {accepted
                                 ? '채택해제'

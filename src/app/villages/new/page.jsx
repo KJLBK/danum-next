@@ -5,7 +5,7 @@ import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { villageNew } from '../../../services/villageService';
 export default function VillagePostingPage() {
-    const { user } = useAuthStore();
+    const { email } = useAuthStore();
     const editorRef = useRef();
     const router = useRouter();
 
@@ -32,7 +32,7 @@ export default function VillagePostingPage() {
                     editorRef.current.getContent();
                 const updatedFormData = {
                     ...formData,
-                    email: user,
+                    email: email,
                     content: editorContent,
                 };
 
