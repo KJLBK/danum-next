@@ -1,17 +1,16 @@
 'use client';
 
-import { useParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import {
-    enterChatRoom,
-    getChatRoomInfo,
-} from '../../../services/chatService';
-import ChatMessageList from '../../../components/chat/ChatMessageList';
-import { useAuthStore } from '../../../stores/authStore';
+import { useParams } from 'next/navigation';
 import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
-import ChatInput from '../../../components/chat/ChatInput';
+import { useAuthStore } from '../../../stores/authStore';
+import { useEnterChatRoom } from '../../../hooks/useChatQueries';
+import { getChatRoomInfo } from '../../../services/chatService';
 import { getAccessToken } from '../../../services/tokenService';
+import ChatMessageList from '../../../components/chat/ChatMessageList';
+import ChatInput from '../../../components/chat/ChatInput';
+import Spinner from '../../../components/common/Spinner';
 
 export default function ChatRoomPage() {
     const { roomId } = useParams();
@@ -25,14 +24,22 @@ export default function ChatRoomPage() {
             ? getAccessToken()
             : null;
 
+    // useEnterChatRoom 훅을 컴포넌트 본문에서 호출
+    const { data: enterChatData } =
+        useEnterChatRoom(roomId);
+
+    useEffect(() => {
+        if (enterChatData) {
+            setMessages(enterChatData.messages);
+        }
+    }, [enterChatData]);
+
     useEffect(() => {
         loadRoomInfo();
 
-        // 500 -> token error
         const socket = new SockJS(
             `/danum-backend/ws-stomp`,
         );
-
         stompClient.current = new Client({
             webSocketFactory: () => socket,
             connectHeaders: {
@@ -50,14 +57,38 @@ export default function ChatRoomPage() {
                         const receivedMessage = JSON.parse(
                             message.body,
                         );
-                        setMessages((prevMessages) => [
-                            ...prevMessages,
-                            receivedMessage,
-                        ]);
+
+                        // 메시지 유형에 따른 처리 (입장/퇴장 알림 및 일반 메시지)
+                        if (
+                            receivedMessage.type === 'ENTER'
+                        ) {
+                            setMessages((prevMessages) => [
+                                ...prevMessages,
+                                {
+                                    sender: receivedMessage.sender,
+                                    content: `${receivedMessage.sender} 님이 입장했습니다.`,
+                                },
+                            ]);
+                        } else if (
+                            receivedMessage.type === 'LEAVE'
+                        ) {
+                            setMessages((prevMessages) => [
+                                ...prevMessages,
+                                {
+                                    sender: receivedMessage.sender,
+                                    content: `${receivedMessage.sender} 님이 퇴장했습니다.`,
+                                },
+                            ]);
+                        } else {
+                            setMessages((prevMessages) => [
+                                ...prevMessages,
+                                receivedMessage,
+                            ]);
+                        }
                     },
                 );
 
-                // Send ENTER message
+                // 입장 메시지 전송
                 stompClient.current.publish({
                     destination: '/app/chat/message',
                     body: JSON.stringify({
@@ -73,6 +104,20 @@ export default function ChatRoomPage() {
         stompClient.current.activate();
 
         return () => {
+            if (
+                stompClient.current &&
+                stompClient.current.connected
+            ) {
+                stompClient.current.publish({
+                    destination: '/app/chat/message',
+                    body: JSON.stringify({
+                        type: 'LEAVE',
+                        roomId: roomId,
+                        sender: user,
+                        message: '',
+                    }),
+                });
+            }
             stompClient.current.deactivate();
         };
     }, [roomId]);
@@ -80,20 +125,14 @@ export default function ChatRoomPage() {
     const loadRoomInfo = async () => {
         try {
             const info = await getChatRoomInfo(roomId);
-            console.log('[roomid]-page.jsx 68', info);
             setRoomInfo(info);
-            console.log('[roomid]-page.jsx 79', roomInfo);
         } catch (error) {
-            console.error(
-                'ERR(/app/chat/[roomId]/page.jsx:loadRoomInfo):' +
-                    error,
-            );
+            console.error('ERR(loadRoomInfo):' + error);
         }
     };
 
     const handleSendMessage = (content) => {
         if (!content.trim()) return;
-        console.log(content);
 
         if (stompClient.current) {
             stompClient.current.publish({
@@ -105,12 +144,20 @@ export default function ChatRoomPage() {
                     message: content,
                 }),
             });
-            console.log(stompClient);
         }
     };
 
+    // 자동 스크롤: 새로운 메시지가 추가될 때마다 스크롤을 맨 아래로 이동
+    useEffect(() => {
+        if (messageEndRef.current) {
+            messageEndRef.current.scrollIntoView({
+                behavior: 'smooth',
+            });
+        }
+    }, [messages]);
+
     if (!roomInfo) {
-        return <div>Loading...</div>;
+        return <Spinner />;
     }
 
     return (

@@ -1,30 +1,26 @@
 'use client';
-
-import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import {
-    questionDetail,
-    questionDelete,
-    questionCommentShow,
-    questionCommentNew,
-    questionCommentDelete,
-    questionCommentUpdate,
-} from '../../../services/questionService';
-import { handleCommentSelection } from '../../../hooks/commentSelect';
-import CommentItem from '../../../components/board/view/CommentItem';
-import CommentNew from '../../../components/board/new/CommentNew';
-import QuillViewer from '../../../components/board/view/QuillViewer';
 import PostInfoPanel from '../../../components/board/view/PostInfoPanel';
-import { useAuthStore } from '../../../stores/authStore';
-import { aiChat } from '../../../services/chatGPTService';
-import styles from './page.module.css';
+import CommentList from '../../../components/board/view/comment/CommentLIst';
+import useQuestionDetail from '../../../hooks/village/useQuestionDetail';
+
+// // import { handleCommentSelection } from '../../../hooks/commentSelect';
+// // import CommentItem from '../../../components/board/view/CommentItem';
+// // import CommentNew from '../../../components/board/new/CommentNew';
+// // import QuillViewer from '../../../components/board/view/QuillViewer';
+
+// // import { aiChat } from '../../../services/chatGPTService';
+// import styles from './page.module.css';
 
 export default function QuestionsViewPage() {
-    const [data, setData] = useState({});
-    const [comments, setComments] = useState([]);
-    const [selectedCommentId, setSelectedCommentId] =
-        useState(null);
     const params = useParams();
+    const postId = params.questionId || params.villageId;
+
+    const { data, isLoading, deleteQuestion, isDeleting } =
+        useQuestionDetail(postId);
+
+    if (isLoading) return <div>Loading...</div>;
+    /*
     const { isLoggedIn, email } = useAuthStore();
     const [author, setAuthor] = useState('');
     const [message, setMessage] = useState('');
@@ -124,14 +120,22 @@ export default function QuestionsViewPage() {
             console.error('AI 채팅 오류:', error);
         }
     };
+*/
 
     return (
         <div>
             <PostInfoPanel
-                data={data}
                 board="questions"
-                onDelete={questionDelete}
+                postId={postId}
+                data={data}
+                isDeleting={isDeleting}
+                deletePost={deleteQuestion}
             />
+            <CommentList
+                type="question"
+                PostAuthorId={data.author?.userId}
+            />
+            {/*
             <div>
                 <div className={styles.originalContent}>
                     <QuillViewer
@@ -220,6 +224,7 @@ export default function QuestionsViewPage() {
                     />
                 ))}
             </div>
+  */}
         </div>
     );
 }

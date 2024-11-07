@@ -149,7 +149,6 @@ export async function getRecentMessages() {
     }
     return res.json();
 }
-// TODO: 미들웨어 처리 후 메인 페이지 구현시에 기능추가하기(10/1)
 
 /**
  * 채팅방 입장 및 이전 메시지 로드
@@ -183,7 +182,6 @@ export async function enterChatRoom(roomID) {
 
     return res.json();
 }
-// TODO: 경빈이가 게시판 구현 완료시에 기능 추가(10/1)
 
 /**
  * 채팅방 메시지 조회

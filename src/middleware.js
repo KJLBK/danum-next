@@ -42,7 +42,6 @@ export async function middleware(req) {
                 'Access Token 검증 중 오류 발생:',
                 error,
             );
-            // TODO: removeAccessToken();
             removeAccessTokenCookie(response);
             if (refreshToken) {
                 console.log(
@@ -60,7 +59,7 @@ export async function middleware(req) {
                         const accessToken = refreshResponse;
                         const response =
                             NextResponse.next();
-                        // TODO: setAccessToken(accessToken);
+
                         setAccessTokenCookie(
                             response,
                             accessToken,
