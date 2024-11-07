@@ -10,13 +10,14 @@ import {
     questionCommentDelete,
     questionCommentUpdate,
 } from '../../../services/questionService';
-import { handleCommentSelection } from '../../../hooks/commentSelect'; // 서비스 함수 import
+import { handleCommentSelection } from '../../../hooks/commentSelect';
 import CommentItem from '../../../components/board/view/CommentItem';
 import CommentNew from '../../../components/board/new/CommentNew';
 import QuillViewer from '../../../components/board/view/QuillViewer';
 import PostInfoPanel from '../../../components/board/view/PostInfoPanel';
 import { useAuthStore } from '../../../stores/authStore';
 import { aiChat } from '../../../services/chatGPTService';
+import styles from './page.module.css';
 
 export default function QuestionsViewPage() {
     const [data, setData] = useState({});
@@ -27,14 +28,45 @@ export default function QuestionsViewPage() {
     const { isLoggedIn, user } = useAuthStore();
     const [author, setAuthor] = useState('');
     const [message, setMessage] = useState('');
+    const [originalContent, setOriginalContent] =
+        useState('');
+    const [aiInteractions, setAiInteractions] = useState(
+        [],
+    );
 
-    // 질문과 댓글을 가져오는 함수
     const fetchData = async () => {
         try {
             const response = await questionDetail(
                 params.questionId,
             );
+
+            // 원본 내용과 AI 상호작용 분리
+            const contentSections =
+                response.content.split('[AI 답변]');
+            const originalText = contentSections[0].trim();
+
+            // AI 답변과 추가 질문 처리
+            const interactions = [];
+            if (contentSections.length > 1) {
+                for (
+                    let i = 1;
+                    i < contentSections.length;
+                    i++
+                ) {
+                    const parts =
+                        contentSections[i].split(
+                            '[추가 질문]',
+                        );
+                    interactions.push({
+                        answer: parts[0].trim(),
+                        question: parts[1]?.trim() || '',
+                    });
+                }
+            }
+
             setData(response);
+            setOriginalContent(originalText);
+            setAiInteractions(interactions);
             setAuthor(response.author.userId);
         } catch (err) {
             console.error(
@@ -56,7 +88,7 @@ export default function QuestionsViewPage() {
             if (selectedComment) {
                 setSelectedCommentId(
                     selectedComment.comment_id,
-                ); // 채택된 댓글 ID 추적
+                );
             }
         } catch (err) {
             console.error('댓글 가져오기 오류:', err);
@@ -66,9 +98,8 @@ export default function QuestionsViewPage() {
     useEffect(() => {
         fetchData();
         fetchComments();
-    }, [params.questionId]); // questionId가 변경될 때마다 다시 가져옴
+    }, [params.questionId]);
 
-    // 서비스 함수 호출로 댓글 선택/해제 처리
     const onSelectComment = async (commentId) => {
         await handleCommentSelection(
             params.questionId,
@@ -85,8 +116,13 @@ export default function QuestionsViewPage() {
     };
 
     const handleAiChat = async () => {
-        await aiChat(params.questionId, message);
-        location.reload();
+        if (!message.trim()) return;
+        try {
+            await aiChat(params.questionId, message);
+            location.reload();
+        } catch (error) {
+            console.error('AI 채팅 오류:', error);
+        }
     };
 
     return (
@@ -96,47 +132,94 @@ export default function QuestionsViewPage() {
                 board="questions"
                 onDelete={questionDelete}
             />
-            <QuillViewer content={data.content} />
-
-            {user === data.author?.userId ? (
-                <div>
-                    <input
-                        type="text"
-                        onChange={handleMessage}
-                        value={message}
+            <div>
+                <div className={styles.originalContent}>
+                    <QuillViewer
+                        content={originalContent}
                     />
-                    <button onClick={handleAiChat}>
-                        질문
-                    </button>
                 </div>
-            ) : (
-                <div></div>
-            )}
-            <hr />
-            <h2>댓글</h2>
+                <hr />
 
-            {isLoggedIn ? (
-                <CommentNew
-                    postId={params.questionId}
-                    email={user}
-                    onSubmitComment={questionCommentNew}
-                    type="question"
-                />
-            ) : (
-                <p>댓글을 작성하려면 로그인하세요.</p>
-            )}
+                {aiInteractions.map(
+                    (interaction, index) => (
+                        <div
+                            key={index}
+                            className={
+                                styles.interactionContainer
+                            }
+                        >
+                            <div
+                                className={styles.aiAnswer}
+                            >
+                                <h2>AI 답변 {index + 1}</h2>
+                                {interaction.answer}
+                            </div>
 
-            {comments.map((item) => (
-                <CommentItem
-                    key={item.comment_id}
-                    {...item}
-                    author={author}
-                    onSelect={onSelectComment}
-                    onDelete={questionCommentDelete}
-                    onUpdate={questionCommentUpdate}
-                    type="question"
-                />
-            ))}
+                            {interaction.question && (
+                                <div
+                                    className={
+                                        styles.additionalQuestion
+                                    }
+                                >
+                                    <h2>추가 질문</h2>
+                                    <p>
+                                        {
+                                            interaction.question
+                                        }
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+                    ),
+                )}
+
+                {user === author && (
+                    <div className={styles.questionForm}>
+                        <h3>AI에게 추가 질문하기</h3>
+                        <div className={styles.inputGroup}>
+                            <input
+                                type="text"
+                                value={message}
+                                onChange={handleMessage}
+                                placeholder="AI에게 질문하세요"
+                                className={styles.input}
+                            />
+                            <button
+                                onClick={handleAiChat}
+                                className={styles.button}
+                            >
+                                질문하기
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            <div className={styles.commentsSection}>
+                <h2>댓글</h2>
+                {isLoggedIn ? (
+                    <CommentNew
+                        postId={params.questionId}
+                        email={user}
+                        onSubmitComment={questionCommentNew}
+                        type="question"
+                    />
+                ) : (
+                    <p>댓글을 작성하려면 로그인하세요.</p>
+                )}
+
+                {comments.map((item) => (
+                    <CommentItem
+                        key={item.comment_id}
+                        {...item}
+                        author={author}
+                        onSelect={onSelectComment}
+                        onDelete={questionCommentDelete}
+                        onUpdate={questionCommentUpdate}
+                        type="question"
+                    />
+                ))}
+            </div>
         </div>
     );
 }

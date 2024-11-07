@@ -1,0 +1,63 @@
+.originalContent {
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+.interactionContainer {
+    margin: 20px 0;
+}
+
+.aiAnswer {
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 1px solid #4a9eff;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.additionalQuestion {
+    padding: 15px;
+    margin-left: 20px;
+    border: 1px solid #6c757d;
+    border-radius: 8px;
+    background-color: #f1f3f5;
+}
+
+.questionForm {
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+}
+
+.inputGroup {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.input {
+    flex: 1;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+}
+
+.button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: #4a9eff;
+    color: white;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #3a8eef;
+}
+
+.commentsSection {
+    margin-top: 40px;
+}
