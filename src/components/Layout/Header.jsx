@@ -9,7 +9,7 @@ import styles from '../../styles/Header.module.css';
 import SearchIcon from '../../../public/search.svg';
 import LoginButton from './Header/LoginButton';
 import GetProfile from '../auth/GetProfile';
-import NotificationIcon from './Header/NotificationIcon';
+import NotificationsIcon from './Header/NotificationsIcon';
 
 export default function Header() {
     const { user, isLoggedIn } = useAuthStore();
@@ -61,7 +61,7 @@ export default function Header() {
                     <Link href="/search">
                         <SearchIcon />
                     </Link>
-                    <NotificationIcon />
+                    <NotificationsIcon />
                     {/* hydration이 완료된 후에만 상태 확인 */}
                     {hydrated && !isLoggedIn ? (
                         <LoginButton />

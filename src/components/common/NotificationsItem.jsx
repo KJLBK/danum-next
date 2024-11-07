@@ -3,9 +3,9 @@
 import { useRouter } from 'next/navigation';
 import { formatTimeAgo } from '../../utils/timeFormat';
 import { notificationRead } from '../../services/notificationService';
-import styles from './NotificationItem.module.css';
+import styles from './NotificationsItem.module.css';
 
-export default function NotificationItem({
+export default function NotificationsItem({
     notification,
     onRead,
 }) {

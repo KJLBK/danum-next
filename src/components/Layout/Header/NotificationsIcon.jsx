@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import AlarmIcon from '../../../../public/bell.svg';
 import { notificationCount } from '../../../services/notificationService';
-import styles from './NotificationIcon.module.css';
+import styles from './NotificationsIcon.module.css';
 
 export default function NotificationIcon() {
     const [unreadCount, setUnreadCount] = useState(0);
