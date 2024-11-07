@@ -7,6 +7,7 @@ import {
 } from '../../services/villageService';
 import BoardItem from '../../components/board/view/BoardItem';
 import style from './page.module.css';
+import Link from 'next/link';
 
 export default function Villages() {
     const [data, setData] = useState([]);
@@ -65,6 +66,9 @@ export default function Villages() {
                     </option>
                 </select>
             </div>
+            <Link href="/villages/new">
+                <button>글 쓰기</button>
+            </Link>
 
             <ul>
                 {data.map((item) => (

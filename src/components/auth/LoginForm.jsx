@@ -1,26 +1,26 @@
+// components/auth/LoginForm.jsx
 'use client';
-
 import { useState } from 'react';
 import Input from '../common/Input';
 import Button from '../common/Button';
 import { useLogin } from '../../hooks/useLogin';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
-import {
-    useRouter,
-    useSearchParams,
-} from 'next/navigation';
-
-export default function LoginForm() {
+export default function LoginForm({
+    onLoginSuccess,
+    onJoinClick,
+}) {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
     const [error, setError] = useState(null);
-    const router = useRouter();
-    const SearchParams = useSearchParams();
-    const redirectUrl = SearchParams.get('from') || '/';
+    const searchParams = useSearchParams();
+    const redirectUrl = searchParams.get('from') || '/';
 
     const { mutate, isLoading, isError } = useLogin();
+
     const handleSubmit = (e) => {
         e.preventDefault();
         mutate(
@@ -30,7 +30,7 @@ export default function LoginForm() {
             },
             {
                 onSuccess: () => {
-                    router.push(redirectUrl);
+                    onLoginSuccess?.(redirectUrl);
                     console.log(
                         `로그인 성공 ${redirectUrl}`,
                     );
@@ -71,6 +71,10 @@ export default function LoginForm() {
                 />
                 <Button type="submit" disabled={isLoading}>
                     {isLoading ? '로그인 중...' : '로그인'}
+                </Button>
+                <br />
+                <Button type="button" onClick={onJoinClick}>
+                    회원가입
                 </Button>
             </form>
             {isError && (

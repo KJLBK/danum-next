@@ -6,10 +6,10 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import styles from '../../styles/Header.module.css';
 
-import AlarmIcon from '../../../public/bell.svg';
 import SearchIcon from '../../../public/search.svg';
 import LoginButton from './Header/LoginButton';
 import GetProfile from '../auth/GetProfile';
+import NotificationsIcon from './Header/NotificationsIcon';
 
 export default function Header() {
     const { user, isLoggedIn } = useAuthStore();
@@ -58,8 +58,12 @@ export default function Header() {
                     </li>
                 </ul>
                 <ul className={styles['header-ul']}>
-                    <SearchIcon />
-                    <AlarmIcon />
+                    <Link href="/search">
+                        <SearchIcon />
+                    </Link>
+                    <NotificationsIcon
+                        isLoggedIn={isLoggedIn}
+                    />
                     {/* hydration이 완료된 후에만 상태 확인 */}
                     {hydrated && !isLoggedIn ? (
                         <LoginButton />

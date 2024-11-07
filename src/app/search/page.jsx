@@ -1,8 +1,12 @@
-export default function searchPage() {
+'use client';
+
+import { Suspense } from 'react';
+import SearchContent from '../../components/common/SearchContent';
+
+export default function SearchPage() {
     return (
-        <>
-            <p>검색 페이지</p>
-            <input type="text" />
-        </>
+        <Suspense fallback={<div>검색 중...</div>}>
+            <SearchContent />
+        </Suspense>
     );
 }
