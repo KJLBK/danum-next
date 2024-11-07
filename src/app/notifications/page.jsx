@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { notificationShow } from '../../services/notificationService';
-import NotificationItem from '../../components/common/notificationItem';
+import NotificationsItem from '../../components/common/NotificationsItem';
 
 export default function NotificationPage() {
     const [notifications, setNotifications] = useState([]);
@@ -54,7 +54,7 @@ export default function NotificationPage() {
                     <div>새로운 알림이 없습니다.</div>
                 ) : (
                     notifications.map((notification) => (
-                        <NotificationItem
+                        <NotificationsItem
                             key={notification.id}
                             notification={notification}
                             onRead={handleNotificationRead}
