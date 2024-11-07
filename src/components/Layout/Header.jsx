@@ -6,11 +6,10 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import styles from '../../styles/Header.module.css';
 
-import AlarmIcon from '../../../public/bell.svg';
 import SearchIcon from '../../../public/search.svg';
 import LoginButton from './Header/LoginButton';
 import GetProfile from '../auth/GetProfile';
-import NotificationIcon from './Header/notificationIcon';
+import NotificationIcon from './Header/NotificationIcon';
 
 export default function Header() {
     const { user, isLoggedIn } = useAuthStore();
