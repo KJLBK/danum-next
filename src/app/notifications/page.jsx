@@ -14,10 +14,19 @@ export default function NotificationPage() {
             try {
                 setIsLoading(true);
                 const data = await notificationShow();
-                // read가 false인 알림만 필터링
-                const unreadNotifications = data.filter(
-                    (notification) => !notification.read,
-                );
+                // read가 false인 알림만 필터링하고 link 수정
+                const unreadNotifications = data
+                    .filter(
+                        (notification) =>
+                            !notification.read,
+                    )
+                    .map((notification) => ({
+                        ...notification,
+                        link: notification.link.replace(
+                            '/room',
+                            '',
+                        ),
+                    }));
                 setNotifications(unreadNotifications);
             } catch (error) {
                 setError('알림을 불러오는데 실패했습니다.');
