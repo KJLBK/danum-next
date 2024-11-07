@@ -53,7 +53,6 @@ export async function logout(clearAuth) {
 
 // 회원가입 로직
 export async function join(formData) {
-    console.log(formData);
     const res = await fetch('/danum-backend/member/join', {
         method: 'POST',
         headers: {

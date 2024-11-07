@@ -1,0 +1,73 @@
+.linkWrapper {
+    display: block;
+    width: 100%;
+}
+
+.link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.notificationItem {
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+    background-color: #fff;
+    transition: background-color 0.2s;
+}
+
+.notificationItem:hover {
+    background-color: #f8f9fa;
+}
+
+.notificationContent {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.type {
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+}
+
+.infoWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.message {
+    font-size: 15px;
+    line-height: 1.5;
+    flex: 1;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.time {
+    font-size: 13px;
+    color: #999;
+    white-space: nowrap;
+    padding-top: 2px;
+}
+
+@media (max-width: 640px) {
+    .notificationItem {
+        padding: 14px;
+    }
+
+    .message {
+        font-size: 14px;
+    }
+
+    .time {
+        font-size: 12px;
+    }
+}
