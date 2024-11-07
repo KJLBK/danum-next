@@ -10,6 +10,7 @@ import AlarmIcon from '../../../public/bell.svg';
 import SearchIcon from '../../../public/search.svg';
 import LoginButton from './Header/LoginButton';
 import GetProfile from '../auth/GetProfile';
+import NotificationIcon from './Header/notificationIcon';
 
 export default function Header() {
     const { user, isLoggedIn } = useAuthStore();
@@ -61,9 +62,7 @@ export default function Header() {
                     <Link href="/search">
                         <SearchIcon />
                     </Link>
-                    <Link href="/notifications">
-                        <AlarmIcon />
-                    </Link>
+                    <NotificationIcon />
                     {/* hydration이 완료된 후에만 상태 확인 */}
                     {hydrated && !isLoggedIn ? (
                         <LoginButton />

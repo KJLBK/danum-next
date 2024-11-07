@@ -1,4 +1,3 @@
-// pages/notification/index.jsx
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -15,7 +14,11 @@ export default function NotificationPage() {
             try {
                 setIsLoading(true);
                 const data = await notificationShow();
-                setNotifications(data);
+                // read가 false인 알림만 필터링
+                const unreadNotifications = data.filter(
+                    (notification) => !notification.read,
+                );
+                setNotifications(unreadNotifications);
             } catch (error) {
                 setError('알림을 불러오는데 실패했습니다.');
                 console.error('알림 로드 에러:', error);
@@ -26,6 +29,14 @@ export default function NotificationPage() {
 
         fetchNotifications();
     }, []);
+
+    const handleNotificationRead = (id) => {
+        setNotifications((prev) =>
+            prev.filter(
+                (notification) => notification.id !== id,
+            ),
+        );
+    };
 
     if (isLoading) {
         return <div>로딩 중...</div>;
@@ -46,6 +57,7 @@ export default function NotificationPage() {
                         <NotificationItem
                             key={notification.id}
                             notification={notification}
+                            onRead={handleNotificationRead}
                         />
                     ))
                 )}
