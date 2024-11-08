@@ -133,5 +133,9 @@ function redirectToLogin(req) {
 }
 
 export const config = {
-    matcher: ['/chat/:path*', '/mypage/:path*'],
+    matcher: [
+        '/chat/:path*',
+        '/mypage/:path*',
+        '/new/:path*',
+    ],
 };
