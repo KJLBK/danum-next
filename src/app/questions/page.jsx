@@ -2,11 +2,10 @@
 import { questionShow } from '../../services/postService.server';
 import style from './page.module.css'; // CSS 모듈 임포트
 import InfiniteScroll from '../../components/common/InfiniteScroll';
-import { useRouter } from 'next/navigation';
+
 export default function QuestionPage() {
-    const router = useRouter();
     const handleNew = () => {
-        router.push('/questions/new');
+        window.location.href = '/questions/new';
     };
     return (
         <div className={style.container}>
