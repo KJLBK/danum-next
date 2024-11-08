@@ -1,49 +1,40 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import InfiniteScroll from '../../components/common/InfiniteScroll';
 import {
     villageShow,
     villageType,
     villageLocalShow,
 } from '../../services/villageService';
-import BoardItem from '../../components/board/view/BoardItem';
 import style from './page.module.css';
 import Link from 'next/link';
 import { useAuthStore } from '../../stores/authStore';
 import { useRouter } from 'next/navigation';
 
 export default function Villages() {
-    const [data, setData] = useState([]);
     const [postType, setPostType] = useState('');
     const { isLoggedIn } = useAuthStore();
     const router = useRouter();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                let response;
-                if (postType === 'DAILY') {
-                    response = await villageType(postType);
-                } else if (postType === 'QUESTION') {
-                    response = await villageType(postType);
-                } else if (postType === 'LOCAL') {
-                    response = await villageLocalShow();
-                } else {
-                    response = await villageShow();
-                }
-                const reverseContent = [
-                    ...response.content,
-                ].reverse();
-                setData(reverseContent);
-            } catch (err) {
-                console.error('Error:', err);
-            }
-        };
-        fetchData();
-    }, [postType]);
+    // postType에 따라 호출할 서비스 로직 설정
+    const getServiceLogic = () => {
+        switch (postType) {
+            case 'DAILY':
+            case 'QUESTION':
+                return (pageParam) =>
+                    villageType(postType, pageParam);
+            case 'LOCAL':
+                return (pageParam) =>
+                    villageLocalShow(pageParam);
+            default:
+                return (pageParam) =>
+                    villageShow(pageParam);
+        }
+    };
 
     const handleNew = () => {
         if (isLoggedIn) {
-            router.push('/villages/new');
+            router.push('/new/village');
         } else {
             router.push('/login');
         }
@@ -99,19 +90,15 @@ export default function Villages() {
                 >
                     글 쓰기
                 </button>
+
             </nav>
             <div className={style.mainContent}>
                 <h2 className={style.title}>동네 이야기</h2>
-                <ul className={style.boardList}>
-                    {data.map((item) => (
-                        <BoardItem
-                            key={item.village_id}
-                            village_id={item.village_id}
-                            board="villages"
-                            {...item}
-                        />
-                    ))}
-                </ul>
+                {/* InfiniteScroll 컴포넌트를 사용하여 무한 스크롤 적용 */}
+                <InfiniteScroll
+                    serviceLogic={getServiceLogic()}
+                    queryKey={['villageData', postType]}
+                />
             </div>
         </div>
     );
