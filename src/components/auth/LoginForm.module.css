@@ -1,0 +1,83 @@
+.container {
+    display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    align-items: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    align-items: center;
+    gap: 12px;
+}
+
+.input {
+    width: 320px;
+    height: 52px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 1px solid #ced0d1;
+    background: #fff;
+    color: #242424;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20.25px;
+    padding-left: 18px;
+    box-sizing: border-box; /* padding과 border를 width에 포함 */
+}
+
+.input:focus {
+    border: 2px solid #d75430;
+    outline: none; /* 기본 focus 테두리 제거 */
+}
+
+.button {
+    color: #f4f4f4;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20.25px;
+    letter-spacing: -0.32px;
+    width: 320px;
+    height: 48px;
+    background: #d75430;
+    border: 1px solid #ced0d1;
+}
+
+.h2 {
+    color: #d75430;
+    text-align: center;
+    font-family: Inter;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 18px;
+    margin-bottom: 30px;
+}
+
+.h4 {
+    margin-top: 0;
+    color: #787878;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 150% */
+}
+
+.p {
+    color: #7e7e7e;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20.25px;
+    letter-spacing: -0.32px;
+    cursor: pointer; /* 클릭 가능한 것처럼 보이게 함 */
+}
