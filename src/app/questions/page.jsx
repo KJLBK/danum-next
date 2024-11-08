@@ -1,13 +1,22 @@
 'use client';
 import { questionShow } from '../../services/postService.server';
-import style from './page.module.css'; // CSS 모듈 임포트
+import style from './page.module.css';
 import InfiniteScroll from '../../components/common/InfiniteScroll';
 import { useRouter } from 'next/navigation';
+import { useAuthStore } from '../../stores/authStore';
+
 export default function QuestionPage() {
+    const { isLoggedIn } = useAuthStore();
     const router = useRouter();
+
     const handleNew = () => {
-        router.push('/questions/new');
+        if (isLoggedIn) {
+            router.push('/questions/new');
+        } else {
+            router.push('/login');
+        }
     };
+
     return (
         <div className={style.container}>
             <h2>질문 이야기</h2>

@@ -8,10 +8,14 @@ import {
 import BoardItem from '../../components/board/view/BoardItem';
 import style from './page.module.css';
 import Link from 'next/link';
+import { useAuthStore } from '../../stores/authStore';
+import { useRouter } from 'next/navigation';
 
 export default function Villages() {
     const [data, setData] = useState([]);
     const [postType, setPostType] = useState('');
+    const { isLoggedIn } = useAuthStore();
+    const router = useRouter();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,6 +40,14 @@ export default function Villages() {
         };
         fetchData();
     }, [postType]);
+
+    const handleNew = () => {
+        if (isLoggedIn) {
+            router.push('/villages/new');
+        } else {
+            router.push('/login');
+        }
+    };
 
     const handleCategoryClick = (category) => {
         setPostType(category);
@@ -81,11 +93,12 @@ export default function Villages() {
                         내 지역
                     </li>
                 </ul>
-                <Link href="/villages/new">
-                    <button className={style.writeButton}>
-                        글 쓰기
-                    </button>
-                </Link>
+                <button
+                    className={style.writeButton}
+                    onClick={handleNew}
+                >
+                    글 쓰기
+                </button>
             </nav>
             <div className={style.mainContent}>
                 <h2 className={style.title}>동네 이야기</h2>
