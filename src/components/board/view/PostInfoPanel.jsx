@@ -24,7 +24,10 @@ export default function PostInfoPanel({
 
     // 수정 페이지로 이동하는 함수
     const goToEditPage = () => {
-        router.push(`/${board}/${postId}/edit`);
+        router.back(); // 먼저 모달 닫기
+        setTimeout(() => {
+            router.push(`/${board}/${postId}/edit`);
+        }, 100);
     };
 
     // 모달 열기/닫기 함수
@@ -34,7 +37,10 @@ export default function PostInfoPanel({
     // 게시글 삭제 함수
     const handleDelete = async () => {
         deletePost();
-        router.push(`/${board}`);
+        router.back(); // 상세 모달 닫기
+        setTimeout(() => {
+            router.push(`/${board}`);
+        }, 100);
     };
 
     if (!data) {
