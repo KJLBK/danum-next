@@ -33,7 +33,7 @@ export default function BoardItem({
 
     return (
         <div className={style.boardItem}>
-            <Link href={`/${board}/${id}`}>
+            <Link href={`/${board}/${id}`} scroll={false}>
                 <div className={style.preview}>
                     <div className={style.textContainer}>
                         <h2 className={style.title}>
