@@ -21,6 +21,7 @@ export default function EditQuestionPage() {
     const [data, setData] = useState({
         title: '',
         content: '',
+        aiContent: '', // AI 답변 내용을 별도로 저장
     });
     const [isLoading, setIsLoading] = useState(true);
     const params = useParams();
@@ -28,16 +29,39 @@ export default function EditQuestionPage() {
     const router = useRouter();
 
     useEffect(() => {
-        // 기존 데이터를 불러와서 초기값으로 설정
         const fetchQuestionData = async () => {
             try {
                 const response = await questionDetail(
                     params.questionId,
                 );
-                setData({
-                    title: response.title || '', // title이 없을 경우 빈 문자열로 설정
-                    content: response.content || '', // content가 없을 경우 빈 문자열로 설정
-                });
+                let visibleContent = response.content || '';
+
+                const aiAnswerIndex =
+                    visibleContent.indexOf('[AI 답변]');
+                if (aiAnswerIndex !== -1) {
+                    // AI 답변 부분을 분리하여 별도 상태로 저장
+                    const userContent =
+                        response.content.substring(
+                            0,
+                            aiAnswerIndex,
+                        );
+                    const aiContent =
+                        response.content.substring(
+                            aiAnswerIndex,
+                        );
+
+                    setData({
+                        title: response.title || '',
+                        content: userContent, // 사용자 내용만 에디터에 표시
+                        aiContent: aiContent, // AI 답변 내용 별도 저장
+                    });
+                } else {
+                    setData({
+                        title: response.title || '',
+                        content: response.content || '',
+                        aiContent: '',
+                    });
+                }
                 setIsLoading(false);
             } catch (err) {
                 console.error(
@@ -53,16 +77,27 @@ export default function EditQuestionPage() {
 
     const handleUpdate = async () => {
         try {
-            const content = editorRef.current.getContent(); // Quill 에디터의 내용을 가져옴
+            const editedContent =
+                editorRef.current.getContent();
+
+            // 수정된 내용과 AI 답변을 합쳐서 저장
+            const finalContent = data.aiContent
+                ? editedContent + data.aiContent
+                : editedContent;
+
             if (!data.title.trim()) {
-                alert('제목을 입력하세요.'); // 제목이 빈 문자열인지 확인
+                alert('제목을 입력하세요.');
                 return;
             }
-            const id = params.questionId;
-            const title = data.title;
 
-            await questionUpdate(id, title, content);
-            router.push(`/questions/${params.questionId}`); // 수정 후 해당 질문 페이지로 이동
+            await questionUpdate(
+                params.questionId,
+                data.title,
+                finalContent,
+            );
+            router.replace(
+                `/questions/${params.questionId}`,
+            );
         } catch (error) {
             console.error(
                 'Error updating question:',
