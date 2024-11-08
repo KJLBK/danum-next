@@ -37,49 +37,69 @@ export default function Villages() {
         fetchData();
     }, [postType]);
 
-    // 태그 필터링 기능
-    const handleChange = (e) => {
-        setPostType(e.target.value);
+    const handleCategoryClick = (category) => {
+        setPostType(category);
     };
 
     return (
-        <div className={style.container}>
-            <div className={style.top}>
-                <h2 className={style.title}>동네 이야기</h2>
-                <select
-                    id="tagType"
-                    name="tagType"
-                    onChange={handleChange}
-                    className={style.category}
-                >
-                    <option name="tagType" value="">
-                        전체
-                    </option>
-                    <option name="tagType" value="DAILY">
-                        일상
-                    </option>
-                    <option name="tagType" value="QUESTION">
-                        질문
-                    </option>
-                    <option name="tagType" value="LOCAL">
+        <div className={style.pageContainer}>
+            <nav className={style.sidebar}>
+                <h2 className={style.sidebarTitle}>
+                    카테고리
+                </h2>
+                <ul className={style.menuList}>
+                    <li
+                        className={`${style.menuItem} ${postType === '' ? style.active : ''}`}
+                        onClick={() =>
+                            handleCategoryClick('')
+                        }
+                    >
+                        전체보기
+                    </li>
+                    <li
+                        className={`${style.menuItem} ${postType === 'DAILY' ? style.active : ''}`}
+                        onClick={() =>
+                            handleCategoryClick('DAILY')
+                        }
+                    >
+                        일상보기
+                    </li>
+                    <li
+                        className={`${style.menuItem} ${postType === 'QUESTION' ? style.active : ''}`}
+                        onClick={() =>
+                            handleCategoryClick('QUESTION')
+                        }
+                    >
+                        질문보기
+                    </li>
+                    <li
+                        className={`${style.menuItem} ${postType === 'LOCAL' ? style.active : ''}`}
+                        onClick={() =>
+                            handleCategoryClick('LOCAL')
+                        }
+                    >
                         내 지역
-                    </option>
-                </select>
+                    </li>
+                </ul>
+                <Link href="/villages/new">
+                    <button className={style.writeButton}>
+                        글 쓰기
+                    </button>
+                </Link>
+            </nav>
+            <div className={style.mainContent}>
+                <h2 className={style.title}>동네 이야기</h2>
+                <ul className={style.boardList}>
+                    {data.map((item) => (
+                        <BoardItem
+                            key={item.village_id}
+                            village_id={item.village_id}
+                            board="villages"
+                            {...item}
+                        />
+                    ))}
+                </ul>
             </div>
-            <Link href="/villages/new">
-                <button>글 쓰기</button>
-            </Link>
-
-            <ul>
-                {data.map((item) => (
-                    <BoardItem
-                        key={item.village_id}
-                        village_id={item.village_id}
-                        board="villages"
-                        {...item}
-                    />
-                ))}
-            </ul>
         </div>
     );
 }
