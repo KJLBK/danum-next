@@ -9,7 +9,11 @@ export const metadata = {
     ogImage: '/public/danum-logo.png',
 };
 
-export default function RootLayout({ children, auth }) {
+export default function RootLayout({
+    children,
+    auth,
+    board,
+}) {
     return (
         <html lang="kr">
             <head>
@@ -26,6 +30,7 @@ export default function RootLayout({ children, auth }) {
                         <Header />
                         {children}
                         {auth}
+                        {board}
                     </QueryProvider>
                 </>
             </body>
