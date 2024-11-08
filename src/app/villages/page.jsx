@@ -8,9 +8,13 @@ import {
 } from '../../services/villageService';
 import style from './page.module.css';
 import Link from 'next/link';
+import { useAuthStore } from '../../stores/authStore';
+import { useRouter } from 'next/navigation';
 
 export default function Villages() {
     const [postType, setPostType] = useState('');
+    const { isLoggedIn } = useAuthStore();
+    const router = useRouter();
 
     // postType에 따라 호출할 서비스 로직 설정
     const getServiceLogic = () => {
@@ -25,6 +29,14 @@ export default function Villages() {
             default:
                 return (pageParam) =>
                     villageShow(pageParam);
+        }
+    };
+
+    const handleNew = () => {
+        if (isLoggedIn) {
+            router.push('/new/village');
+        } else {
+            router.push('/login');
         }
     };
 
@@ -72,11 +84,13 @@ export default function Villages() {
                         내 지역
                     </li>
                 </ul>
-                <Link href="/new/village">
-                    <button className={style.writeButton}>
-                        글 쓰기
-                    </button>
-                </Link>
+                <button
+                    className={style.writeButton}
+                    onClick={handleNew}
+                >
+                    글 쓰기
+                </button>
+
             </nav>
             <div className={style.mainContent}>
                 <h2 className={style.title}>동네 이야기</h2>

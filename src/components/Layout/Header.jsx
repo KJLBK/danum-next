@@ -50,12 +50,6 @@ export default function Header() {
                             질문이야기
                         </Link>
                     </li>
-                    <li className={isActive('/chat')}>
-                        <Link href="/chat">채팅</Link>
-                    </li>
-                    <li className={isActive('/test')}>
-                        <Link href="/test">테스트</Link>
-                    </li>
                 </ul>
                 <ul className={styles['header-ul']}>
                     <Link href="/search">

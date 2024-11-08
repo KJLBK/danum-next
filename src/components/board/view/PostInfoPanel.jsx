@@ -20,7 +20,7 @@ export default function PostInfoPanel({
 }) {
     const [isModalOpen, setModalOpen] = useState(false);
     const router = useRouter();
-    const { email: user } = useAuthStore();
+    const { email: user, isLoggedIn } = useAuthStore();
 
     // 수정 페이지로 이동하는 함수
     const goToEditPage = () => {
@@ -53,10 +53,15 @@ export default function PostInfoPanel({
             <div className={style.info}>
                 <span className={style.profile}></span>
                 <span className={style.email}>
-                    <AuthorChatButton
-                        userId={data.author?.userId}
-                        userName={data.author?.userName}
-                    />
+                    {isLoggedIn &&
+                    user !== data.author?.userId ? (
+                        <AuthorChatButton
+                            userId={data.author?.userId}
+                            userName={data.author?.userName}
+                        />
+                    ) : (
+                        <span>{data.author?.userName}</span>
+                    )}
                 </span>
                 &nbsp;&nbsp;
                 <span className={style.metaInfo}>
