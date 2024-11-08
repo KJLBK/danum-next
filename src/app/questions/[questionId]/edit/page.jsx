@@ -95,9 +95,7 @@ export default function EditQuestionPage() {
                 data.title,
                 finalContent,
             );
-            router.replace(
-                `/questions/${params.questionId}`,
-            );
+            window.location.href = `/questions/${params.questionId}`;
         } catch (error) {
             console.error(
                 'Error updating question:',
