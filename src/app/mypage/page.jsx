@@ -6,11 +6,13 @@ import {
 } from '../../services/mypageService';
 import BoardItem from '../../components/board/view/BoardItem';
 import { useAuthStore } from '../../stores/authStore';
+import { useRouter } from 'next/navigation';
 
 export default function MypagePage() {
     const { email } = useAuthStore();
     const [questions, setQuestions] = useState([]);
     const [villages, setVillages] = useState([]);
+    const router = useRouter();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,8 +29,15 @@ export default function MypagePage() {
         fetchData();
     }, [email]);
 
+    const handleEdit = () => {
+        router.push('/mypage/edit');
+    };
+
     return (
         <div className="mypage-container">
+            <button onClick={handleEdit}>
+                프로필 편집
+            </button>
             <h2>내가 작성한 질문 글</h2>
             <div>
                 {questions.map((question) => (
