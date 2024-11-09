@@ -25,11 +25,11 @@ export default function MyProfile() {
     }, [checkAuthStatus]);
 
     const handleNewQuestion = () => {
-        router.push('/questions/new');
+        router.push('/new/question');
     };
 
     const handleNewVillage = () => {
-        router.push('/villages/new');
+        router.push('/new/village');
     };
 
     return (
