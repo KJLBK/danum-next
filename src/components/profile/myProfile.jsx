@@ -36,7 +36,6 @@ export default function MyProfile() {
         <>
             {isLoggedIn ? (
                 <div className="main-profile">
-                    <p>내 프로필</p>
                     <Image
                         src={
                             profileUrl || defaultProfileUrl
