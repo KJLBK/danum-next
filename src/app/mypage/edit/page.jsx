@@ -19,6 +19,7 @@ export default function ProfileEdit() {
         latitude: '',
         longitude: '',
         address: '',
+        password: '',
         profileImageUrl: '',
     });
     const [isLoading, setIsLoading] = useState(true);
@@ -37,6 +38,7 @@ export default function ProfileEdit() {
                     latitude: data.latitude,
                     longitude: data.longitude,
                     address: data.address,
+                    password: data.password,
                     profileImageUrl: data.profileImageUrl,
                 });
                 console.log(data);
@@ -116,6 +118,14 @@ export default function ProfileEdit() {
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder="닉네임"
+                    required
+                />
+                <input
+                    type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    placeholder="비밀번호"
                     required
                 />
                 <KakaoMap
