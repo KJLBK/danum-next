@@ -90,7 +90,6 @@ export default function Villages() {
                 >
                     글 쓰기
                 </button>
-
             </nav>
             <div className={style.mainContent}>
                 <h2 className={style.title}>동네 이야기</h2>

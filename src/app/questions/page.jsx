@@ -11,11 +11,10 @@ export default function QuestionPage() {
 
     const handleNew = () => {
         if (isLoggedIn) {
-            window.location.href = '/questions/new';
+            router.push('/new/question');
         } else {
             router.push('/login');
         }
-
     };
 
     return (

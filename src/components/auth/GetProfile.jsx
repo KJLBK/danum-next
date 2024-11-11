@@ -12,6 +12,7 @@ import {
     useMutation,
     useQuery,
 } from '@tanstack/react-query';
+import MyProfile from '../profile/myProfile';
 
 export default function GetProfile() {
     const [isDropdownOpen, setIsDropdownOpen] =
@@ -55,25 +56,23 @@ export default function GetProfile() {
     // 드롭다운 외부 클릭 감지
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (
-                dropdownRef.current &&
-                !dropdownRef.current.contains(event.target)
-            ) {
+            // 프로필 이미지를 제외한 모든 클릭에 대해 드롭다운을 닫음
+            if (isDropdownOpen) {
                 setIsDropdownOpen(false);
             }
         };
 
         document.addEventListener(
-            'mousedown',
+            'click',
             handleClickOutside,
         );
         return () => {
             document.removeEventListener(
-                'mousedown',
+                'click',
                 handleClickOutside,
             );
         };
-    }, []);
+    }, [isDropdownOpen]);
 
     const handleLogout = () => {
         mutation.mutate();
@@ -84,12 +83,18 @@ export default function GetProfile() {
     };
 
     const toggleDropdown = (event) => {
+        event.stopPropagation();
+
+        // 드롭다운이 닫혀있을 때만 위치를 계산하고 열기
+        if (!isDropdownOpen) {
+            const rect =
+                event.target.getBoundingClientRect();
+            setDropdownPosition({
+                top: rect.bottom,
+                left: rect.left,
+            });
+        }
         setIsDropdownOpen(!isDropdownOpen);
-        const rect = event.target.getBoundingClientRect();
-        setDropdownPosition({
-            top: rect.bottom,
-            left: rect.left,
-        });
     };
 
     if (error) {
@@ -126,14 +131,7 @@ export default function GetProfile() {
                         }}
                         ref={dropdownRef} // 드롭다운 참조 추가
                     >
-                        <button
-                            className={styles.closeButton}
-                            onClick={() =>
-                                setIsDropdownOpen(false)
-                            } // X 버튼 클릭 시 드롭다운 닫기
-                        >
-                            X
-                        </button>
+                        <MyProfile />
                         <button
                             className={styles.dropdownItem}
                             onClick={handleMyPage}
