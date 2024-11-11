@@ -135,7 +135,7 @@ export async function createPrivateChat(targetUserId) {
 export async function getRecentMessages() {
     const accessToken = getAccessToken();
     const res = await fetch(
-        '/danum-backend/chat/recent-messages',
+        '/danum-backend/main/recent-chats',
         {
             method: 'GET',
             headers: {

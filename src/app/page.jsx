@@ -1,4 +1,5 @@
-import PopularPosts from '../components/home/\bPopularPosts/PopularPosts';
+import RecentMessagesList from '../components/chat/RecentMessagesList';
+import PopularPosts from '../components/home/ PopularPosts/PopularPosts';
 import RecentPosts from '../components/home/RecentPosts';
 import MyProfile from '../components/profile/myProfile';
 import styles from './page.module.css';
@@ -8,9 +9,9 @@ export default function Home() {
         <>
             <main className={styles.mainAside}>
                 <aside className={styles.left}>
-                    {/* 로그인 전 */}
-                    {/* 로그인 후 */}
                     <MyProfile />
+                    {/* 채팅 */}
+                    <RecentMessagesList />
                 </aside>
                 <div className={styles.middle}>
                     {/* 질문(무한스크롤) */}

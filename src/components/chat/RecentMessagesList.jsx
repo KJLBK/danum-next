@@ -1,25 +1,74 @@
-// RecentMessagesList 기능 테스트 완료
-// 메인페이지용 컴포넌트
-// 예외처리 : 비회원 상황일시 안보여야함. / 0개의 리스트일시 채팅이 없습니다 같은 상태 메시지 처리가 되어야함.
-
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
+import { getRecentMessages } from '../../services/chatService';
+import { useAuthStore } from '../../stores/authStore';
+import { formatTimeAgo } from '../../utils/timeFormat';
 import { useEffect } from 'react';
-import { getRecentMessages } from '../../service/chatService';
+import Link from 'next/link';
 
 export default function RecentMessagesList() {
-    useEffect(() => {
-        fetchRecentMessages();
-    }, []);
+    const { isLoggedIn } = useAuthStore();
 
-    const fetchRecentMessages = async () => {
-        const fetchMessages = await getRecentMessages();
-        console.log('RecentMessagesList', fetchMessages);
-    };
+    const {
+        data: recentMessages,
+        isLoading,
+        isError,
+    } = useQuery({
+        queryKey: ['recentMessages'],
+        queryFn: getRecentMessages,
+        enabled: isLoggedIn,
+    });
+
+    useEffect(() => {
+        console.log(recentMessages);
+    }, [recentMessages]); // Added dependency array to avoid running every render
+
+    if (isLoading) return <div>Loading...</div>;
+
+    if (isError)
+        return <div>Error fetching recent messages</div>;
+
+    if (!isLoggedIn) return null;
 
     return (
-        <>
-            <div>Component(RecentMessagesList)</div>
-        </>
+        <div>
+            {recentMessages?.length > 0 ? (
+                recentMessages.map((message) => (
+                    <Link
+                        key={message.roomId} // Ensure key is on Link or the outermost element
+                        href={`/chat/${encodeURIComponent(message.roomId)}`} // Encode email if needed
+                    >
+                        <div
+                            style={{
+                                borderBottom:
+                                    '1px solid #ddd',
+                                padding: '10px',
+                            }}
+                        >
+                            <div>
+                                <strong>
+                                    {message.chatPartnerName ||
+                                        message.roomName}
+                                </strong>
+                            </div>
+                            <div>{message.lastMessage}</div>
+                            <div
+                                style={{
+                                    fontSize: '12px',
+                                    color: 'gray',
+                                }}
+                            >
+                                {formatTimeAgo(
+                                    message.lastMessageTime,
+                                )}
+                            </div>
+                        </div>
+                    </Link>
+                ))
+            ) : (
+                <div>채팅이 없습니다</div>
+            )}
+        </div>
     );
 }
