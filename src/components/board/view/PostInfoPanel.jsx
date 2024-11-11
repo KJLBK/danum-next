@@ -30,6 +30,11 @@ export default function PostInfoPanel({
         }, 100);
     };
 
+    // 채팅 시작하면 모달 닫기
+    const onClose = () => {
+        router.back(); // 먼저 모달 닫기
+    };
+
     // 모달 열기/닫기 함수
     const openModal = () => setModalOpen(true);
     const closeModal = () => setModalOpen(false);
@@ -58,6 +63,7 @@ export default function PostInfoPanel({
                         <AuthorChatButton
                             userId={data.author?.userId}
                             userName={data.author?.userName}
+                            onChatStart={onClose}
                         />
                     ) : (
                         <span>{data.author?.userName}</span>

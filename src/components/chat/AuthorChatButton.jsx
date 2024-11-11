@@ -10,16 +10,15 @@ import { useCreatePrivateChat } from '../../hooks/useChatMutations';
 export default function AuthorChatButton({
     userId,
     userName,
+    onChatStart, // 새로운 prop 추가
 }) {
     const [isModalOpen, setModalOpen] = useState(false);
     const router = useRouter();
-    // 모달 열기,닫기 함수
     const openModal = () => setModalOpen(true);
     const closeModal = () => setModalOpen(false);
     const { mutate: createChat } = useCreatePrivateChat();
 
     const startChat = () => {
-        // username을 보내고 성공시, url로 이동 <createPrivateChat(targetUserId) body targetUserId: >
         createChat(
             { targetUserId: userId },
             {
@@ -29,7 +28,10 @@ export default function AuthorChatButton({
                         data,
                     );
                     closeModal();
-                    router.push(`/chat/${data.roomId}`);
+                    onChatStart(); // 부모 컴포넌트의 모달을 닫는 함수 호출
+                    setTimeout(() => {
+                        router.push(`/chat/${data.roomId}`);
+                    }, 100);
                 },
                 onError: (error) => {
                     alert(
