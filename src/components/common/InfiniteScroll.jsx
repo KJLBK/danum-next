@@ -113,6 +113,9 @@ export default function InfiniteScroll({
                                 author={post.author}
                                 created_at={post.created_at}
                                 view_count={post.view_count}
+                                hasAcceptedComment={
+                                    post.hasAcceptedComment
+                                }
                                 board={board}
                             />
                         );

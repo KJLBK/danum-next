@@ -12,6 +12,7 @@ export default function BoardItem({
     created_at,
     view_count,
     board, // 어떤 게시판인지 확인하는 값
+    hasAcceptedComment,
 }) {
     // content에서 <img> 태그를 추출하는 함수
     const extractImages = (htmlString) => {
@@ -36,6 +37,17 @@ export default function BoardItem({
             <Link href={`/${board}/${id}`} scroll={false}>
                 <div className={style.preview}>
                     <div className={style.textContainer}>
+                        <p>
+                            {/* TODO: STYLE */}
+                            {board === 'questions'
+                                ? '동네이야기'
+                                : '질문이야기'}
+
+                            {hasAcceptedComment
+                                ? '이웃답변채택완료'
+                                : 'GPT답변완료'}
+                            {}
+                        </p>
                         <h2 className={style.title}>
                             {title}
                         </h2>
