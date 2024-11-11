@@ -201,7 +201,7 @@ export async function fetchUserData() {
 }
 
 // 프로필 변경하는 로직
-export async function userUpdate(
+export async function userUpdate({
     email,
     password,
     phone,
@@ -210,7 +210,7 @@ export async function userUpdate(
     longitude,
     address,
     profileImageUrl,
-) {
+}) {
     const token = getAccessToken();
 
     try {

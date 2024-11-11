@@ -15,7 +15,6 @@ export default function QuestionPage() {
         } else {
             router.push('/login');
         }
-
     };
 
     return (
