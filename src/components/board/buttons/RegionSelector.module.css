@@ -1,0 +1,91 @@
+.container {
+    padding: 20px;
+}
+
+.cityList {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+.cityGroup {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 16px;
+}
+
+.cityLabel,
+.districtLabel {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.cityLabel:hover,
+.districtLabel:hover {
+    background-color: #f5f5f5;
+}
+
+.hiddenCheckbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.customCheckbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #007bff;
+    border-radius: 4px;
+    margin-right: 8px;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.customCheckbox::after {
+    content: '';
+    position: absolute;
+    display: none;
+    left: 5px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.hiddenCheckbox:checked + .customCheckbox {
+    background-color: #007bff;
+}
+
+.hiddenCheckbox:checked + .customCheckbox::after {
+    display: block;
+}
+
+.cityName {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.districtName {
+    font-size: 14px;
+}
+
+.districtList {
+    display: none;
+    margin-left: 24px;
+    margin-top: 8px;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.districtList.show {
+    display: flex;
+}
+
+.districtLabel {
+    padding: 6px 8px;
+}
