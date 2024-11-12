@@ -40,8 +40,8 @@ export default function BoardItem({
                         <p>
                             {/* TODO: STYLE */}
                             {board === 'questions'
-                                ? '동네이야기'
-                                : '질문이야기'}
+                                ? '질문이야기'
+                                : '동네이야기'}
 
                             {hasAcceptedComment
                                 ? '이웃답변채택완료'
