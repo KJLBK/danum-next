@@ -37,17 +37,13 @@ export default function BoardItem({
             <Link href={`/${board}/${id}`} scroll={false}>
                 <div className={style.preview}>
                     <div className={style.textContainer}>
-                        <p>
+                        <div>
                             {/* TODO: STYLE */}
-                            {board === 'questions'
-                                ? '질문이야기'
-                                : '동네이야기'}
-
-                            {hasAcceptedComment
-                                ? '이웃답변채택완료'
-                                : 'GPT답변완료'}
-                            {}
-                        </p>
+                            {board === 'questions' &&
+                                (hasAcceptedComment
+                                    ? '이웃답변채택완료'
+                                    : 'GPT답변완료')}
+                        </div>
                         <h2 className={style.title}>
                             {title}
                         </h2>
