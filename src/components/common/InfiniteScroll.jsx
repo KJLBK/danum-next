@@ -45,7 +45,6 @@ export default function InfiniteScroll({
     const handleObserver = useCallback(
         (entries) => {
             const [entry] = entries;
-            console.log('Observer entry:', entry);
             if (entry.isIntersecting && hasNextPage) {
                 console.log('Fetching next page...');
                 fetchNextPage();
