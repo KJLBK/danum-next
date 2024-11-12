@@ -316,12 +316,21 @@ export async function questionLike(questionId) {
 }
 
 // 지역별 글 조회 로직
-export async function regionShow(city, district) {
+export async function regionShow(
+    city,
+    district,
+    pageParmas = 0,
+) {
+    const token = getAccessToken();
     try {
         const response = await fetch(
-            `/danum-backend/board/question/region?city=${city}district=${district}`,
+            `/danum-backend/board/question/region?city=${city}&district=${district}&page=${pageParmas}`,
             {
                 method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
             },
         );
 
