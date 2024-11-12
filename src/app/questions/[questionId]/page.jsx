@@ -3,7 +3,7 @@ import { useParams } from 'next/navigation';
 import PostInfoPanel from '../../../components/board/view/PostInfoPanel';
 import CommentList from '../../../components/board/view/comment/CommentLIst';
 import useQuestionDetail from '../../../hooks/village/useQuestionDetail';
-import AICommentItem from '../../../components/board/view/aiComment/AiCommentItem';
+import AICommentItem from '../../../components/board/view/aiComment/AICommentItem';
 
 export default function QuestionsViewPage() {
     const params = useParams();
