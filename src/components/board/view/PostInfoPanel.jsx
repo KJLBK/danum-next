@@ -21,6 +21,7 @@ export default function PostInfoPanel({
     const [isModalOpen, setModalOpen] = useState(false);
     const router = useRouter();
     const { email: user, isLoggedIn } = useAuthStore();
+    const content = data.content.split('[AI 답변]');
 
     // 수정 페이지로 이동하는 함수
     const goToEditPage = () => {
@@ -98,7 +99,7 @@ export default function PostInfoPanel({
                     </div>
                 )}
             </div>
-            <QuillViewer content={data.content} />
+            <QuillViewer content={content[0]} />
 
             <Modal
                 isOpen={isModalOpen}
