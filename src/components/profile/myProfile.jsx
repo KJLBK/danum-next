@@ -2,9 +2,11 @@
 
 import Image from 'next/image';
 import { useAuthStore } from '../../stores/authStore';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './myProfile.css';
 import { useRouter } from 'next/navigation';
+import ExpBar from '../../components/auth/ExpBar';
+import { fetchUserData } from '../../services/authService';
 
 export default function MyProfile() {
     const {
@@ -18,11 +20,29 @@ export default function MyProfile() {
     const defaultProfileUrl =
         '/logo-assets/android-chrome-512x512.png';
     const router = useRouter();
+    const [userExp, setUserExp] = useState(0);
 
     useEffect(() => {
-        // 컴포넌트가 로드될 때마다 로그인 상태를 검증
+        // 로그인 상태 검증
         checkAuthStatus();
-    }, [checkAuthStatus]);
+
+        // 유저 경험치 데이터 가져오기
+        const getUserExp = async () => {
+            try {
+                const userData = await fetchUserData();
+                setUserExp(userData.exp);
+            } catch (error) {
+                console.error(
+                    'Failed to fetch user exp:',
+                    error,
+                );
+            }
+        };
+
+        if (isLoggedIn) {
+            getUserExp();
+        }
+    }, [checkAuthStatus, isLoggedIn]);
 
     const handleNewQuestion = () => {
         router.push('/new/question');
@@ -39,15 +59,16 @@ export default function MyProfile() {
                     <Image
                         src={
                             profileUrl || defaultProfileUrl
-                        } // profileUrl이 없으면 기본 이미지 사용
+                        }
                         alt="프로필 이미지"
-                        width={100} // 원하는 너비
-                        height={100} // 원하는 높이
+                        width={100}
+                        height={100}
                     />
                     <span>
                         {name}({email})
                     </span>
                     <span>{role}</span>
+                    <ExpBar exp={userExp} />
                     <button onClick={handleNewVillage}>
                         새 동네이야기
                     </button>
