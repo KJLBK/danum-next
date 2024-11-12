@@ -40,10 +40,10 @@ export default function Villages() {
     };
 
     const handleCategoryClick = (category) => {
-        if (isLoggedIn) {
-            setPostType(category);
-        } else {
+        if (!isLoggedIn && category === 'LOCAL') {
             router.push('/login');
+        } else {
+            setPostType(category);
         }
     };
 
