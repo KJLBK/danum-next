@@ -4,7 +4,7 @@ import PostInfoPanel from '../../../../components/board/view/PostInfoPanel';
 import CommentList from '../../../../components/board/view/comment/CommentLIst';
 import useQuestionDetail from '../../../../hooks/village/useQuestionDetail';
 import { useEffect } from 'react';
-import AICommentItem from '../../../../components/board/view/aiComment/AiCommentItem';
+import AICommentItem from '../../../../components/board/view/aiComment/AICommentItem';
 import styles from './page.module.css';
 
 export default function QuestionsViewPage() {
