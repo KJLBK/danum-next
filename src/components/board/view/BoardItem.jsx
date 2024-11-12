@@ -57,9 +57,14 @@ export default function BoardItem({
                     </div>
                     <div className={style.images}>
                         {images.map((src, index) => (
-                            <img
+                            <Image
                                 key={index}
-                                src={src}
+                                src={
+                                    src ||
+                                    '/logo-assets/android-chrome-512x512.png'
+                                }
+                                width={100} // Replace with actual width if known
+                                height={100}
                                 alt={`image-${index}`}
                                 className={
                                     style.imagePreview

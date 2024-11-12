@@ -30,10 +30,11 @@ export async function fetchRecentPosts(page) {
 }
 
 //질문이야기 게시판 조회 로직
-export async function questionShow() {
+export async function questionShow(page) {
     try {
+        console.log(page, 'log');
         const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/board/question/show`,
+            `${process.env.NEXT_PUBLIC_BASE_URL}/board/question/show?page=${page}`,
             {
                 method: 'GET',
             },
@@ -44,7 +45,6 @@ export async function questionShow() {
         }
 
         const data = await response.json();
-        console.log(data);
         return data;
     } catch (error) {
         console.error('Error fetching data', error);
