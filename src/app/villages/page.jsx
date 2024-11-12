@@ -41,7 +41,11 @@ export default function Villages() {
     };
 
     const handleCategoryClick = (category) => {
-        setPostType(category);
+        if (isLoggedIn) {
+            setPostType(category);
+        } else {
+            router.push('/login');
+        }
     };
 
     return (
