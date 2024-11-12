@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import Button from '../../common/Button';
+import styles from './LoginButton.module.css';
 
 export default function LoginButton() {
     const router = useRouter();
@@ -10,12 +10,13 @@ export default function LoginButton() {
     };
     return (
         <>
-            <Button
+            <button
                 type="button"
                 onClick={handleLoginClick}
+                className={styles.loginButton}
             >
                 로그인
-            </Button>
+            </button>
         </>
     );
 }
