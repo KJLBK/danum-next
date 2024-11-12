@@ -37,10 +37,11 @@ export async function villageNew({
 }
 
 // 동네이야기 게시판 조회 로직
-export async function villageShow() {
+export async function villageShow(pageParam) {
+    console.log('villageShow', pageParam);
     try {
         const response = await fetch(
-            `/danum-backend/board/village/show`,
+            `/danum-backend/board/village/show?page=${pageParam}`,
             {
                 method: 'GET',
             },
@@ -135,10 +136,11 @@ export async function villageDelete(id) {
 }
 
 // 동네게시판 태그 필터링 로직
-export async function villageType(postType) {
+export async function villageType(postType, pageParam) {
+    console.log('villageType', pageParam);
     try {
         const response = await fetch(
-            `/danum-backend/board/village/by-type/${postType}`,
+            `/danum-backend/board/village/by-type/${postType}?page=${pageParam}`,
             {
                 method: 'GET',
             },
@@ -155,11 +157,12 @@ export async function villageType(postType) {
 }
 
 // 동네게시판 지역 게시글 필터링 로직
-export async function villageLocalShow() {
+export async function villageLocalShow(pageParam) {
+    console.log('villageLocalShow', pageParam);
     const token = getAccessToken();
     try {
         const response = await fetch(
-            `/danum-backend/board/village/local`,
+            `/danum-backend/board/village/local?page=${pageParam}`,
             {
                 method: 'GET',
                 headers: {

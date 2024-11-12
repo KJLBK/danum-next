@@ -7,7 +7,6 @@ import {
     villageLocalShow,
 } from '../../services/villageService';
 import style from './page.module.css';
-import Link from 'next/link';
 import { useAuthStore } from '../../stores/authStore';
 import { useRouter } from 'next/navigation';
 
