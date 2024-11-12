@@ -43,9 +43,9 @@ export default function QuestionPage() {
         <div className={style.container}>
             <h2>질문 이야기</h2>
             <button onClick={handleNew}>글쓰기</button>
-            <RegionSelector
+            {/* <RegionSelector
                 onRegionSelect={handleRegionSelect}
-            />
+            /> */}
             <InfiniteScroll
                 serviceLogic={questionShow}
                 queryKey={['questionPosts']}
