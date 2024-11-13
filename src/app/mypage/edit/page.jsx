@@ -9,6 +9,7 @@ import Profile from '../../../components/auth/Profile';
 import KakaoMap from '../../map/page';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import styles from './page.module.css';
 
 export default function ProfileEdit() {
     const router = useRouter();
@@ -90,59 +91,49 @@ export default function ProfileEdit() {
     if (error) return <div>{error}</div>;
 
     return (
-        <div>
-            <h2>프로필 수정</h2>
+        <div className={styles.container}>
             <form onSubmit={handleSubmit}>
-                <Profile
-                    profileImageUrl={
-                        formData.profileImageUrl
-                    }
-                    onImageChange={(imageUrl) =>
-                        setFormData({
-                            ...formData,
-                            profileImageUrl: imageUrl,
-                        })
-                    }
-                />
-                <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="이메일"
-                    disabled // 이메일은 수정 불가
-                />
-                <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    placeholder="닉네임"
-                    required
-                />
-                <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    placeholder="비밀번호"
-                    required
-                />
-                <KakaoMap
-                    initialLocation={{
-                        latitude: formData.latitude,
-                        longitude: formData.longitude,
-                        address: formData.address,
-                    }}
-                    onLocationChange={(location) =>
-                        setFormData({
-                            ...formData,
-                            latitude: location.latitude,
-                            longitude: location.longitude,
-                            address: location.address,
-                        })
-                    }
-                />
+                <h2>계정 관리</h2>
+                <div>
+                    <Profile
+                        profileImageUrl={
+                            formData.profileImageUrl
+                        }
+                        onImageChange={(imageUrl) =>
+                            setFormData({
+                                ...formData,
+                                profileImageUrl: imageUrl,
+                            })
+                        }
+                    />
+                    <KakaoMap
+                        initialLocation={{
+                            latitude: formData.latitude,
+                            longitude: formData.longitude,
+                            address: formData.address,
+                        }}
+                        onLocationChange={(location) =>
+                            setFormData({
+                                ...formData,
+                                latitude: location.latitude,
+                                longitude:
+                                    location.longitude,
+                                address: location.address,
+                            })
+                        }
+                    />
+                </div>
+                <div>
+                    <label>닉네임</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        placeholder="닉네임"
+                        required
+                    />
+                </div>
 
                 <button
                     type="submit"

@@ -1,11 +1,8 @@
-/* KakaoMap.module.css */
-
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    padding: 20px;
 }
 
 .location {
@@ -103,6 +100,7 @@
 .locationInput {
     flex: 4;
     width: 100%; /* input 필드를 container에 맞춰 확장 */
+    min-width: 250px;
     height: 50px; /* 기존 스타일 유지 */
     background-color: #05060f0a;
     border-radius: 0.5rem;
