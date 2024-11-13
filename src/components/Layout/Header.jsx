@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import { useAuthStore } from '../../stores/authStore';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import styles from '../../styles/Header.module.css';
+import styles from './Header.module.css';
 
 import SearchIcon from '../../../public/search.svg';
 import LoginButton from './Header/LoginButton';
@@ -34,7 +34,7 @@ export default function Header() {
         <header>
             <div className={styles['header-div']}>
                 <ul className={styles['header-ul']}>
-                    <li>
+                    <li className={styles['home']}>
                         <a href="/">danum</a>
                     </li>
                     <li className={isActive('/')}>

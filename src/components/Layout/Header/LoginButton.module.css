@@ -4,10 +4,11 @@
     align-items: center;
     padding: 10px 20px;
     font-size: 15px;
-    background-color: #fd7e14; /* 주황색 */
-    color: white;
-    border: none;
-    border-radius: 5px;
+
+    color: #ff6b00;
+    border: 1.5px solid #ff6b00;
+    background-color: #00000000;
+    border-radius: 40px;
     cursor: pointer;
     transition: background-color 0.3s;
     max-width: 436px;
@@ -16,5 +17,5 @@
 }
 
 .loginButton:hover {
-    background-color: #e06712; /* 진한 주황 */
+    background-color: #cbcbcb30; /* 진한 주황 */
 }

@@ -39,7 +39,7 @@ export default function NotificationIcon({ isLoggedIn }) {
     }, [isLoggedIn]); // user가 변경될 때마다 useEffect 재실행
 
     return (
-        <div className={styles.container}>
+        <>
             <Link href="/notifications">
                 <div className={styles.iconWrapper}>
                     <AlarmIcon />
@@ -52,6 +52,6 @@ export default function NotificationIcon({ isLoggedIn }) {
                     )}
                 </div>
             </Link>
-        </div>
+        </>
     );
 }

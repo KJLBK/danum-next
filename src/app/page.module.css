@@ -11,11 +11,20 @@
 }
 
 .middle {
-    max-width: 648px;
+    width: 648px;
 }
 
 .right {
     display: flex;
     justify-content: center;
     width: 238px;
+}
+
+@media (max-width: 1200px) {
+    .right {
+        display: none;
+    }
+    .left {
+        display: none;
+    }
 }

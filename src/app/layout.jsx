@@ -28,9 +28,11 @@ export default function RootLayout({
                 <>
                     <QueryProvider>
                         <Header />
-                        {children}
-                        {auth}
-                        {board}
+                        <div className="header-margin">
+                            {children}
+                            {auth}
+                            {board}
+                        </div>
                     </QueryProvider>
                 </>
             </body>
