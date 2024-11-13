@@ -13,6 +13,7 @@ import {
     useQuery,
 } from '@tanstack/react-query';
 import MyProfile from '../profile/myProfile';
+import Spinner from '../common/Spinner';
 
 export default function GetProfile() {
     const [isDropdownOpen, setIsDropdownOpen] =
@@ -103,7 +104,7 @@ export default function GetProfile() {
     }
 
     if (isLoading) {
-        return <div>Loading...</div>; // 로딩 중일 때 표시
+        return <Spinner />; // 로딩 중일 때 표시
     }
 
     const profileImageSrc =
@@ -115,8 +116,8 @@ export default function GetProfile() {
             <Image
                 src={profileImageSrc} // 기본 이미지 또는 프로필 이미지
                 alt="Profile"
-                width={30}
-                height={30}
+                width={35}
+                height={35}
                 onClick={toggleDropdown}
                 className={styles.profileImage}
             />

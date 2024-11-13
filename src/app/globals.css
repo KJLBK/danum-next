@@ -1,3 +1,7 @@
+:root {
+    --main-color: #ff6b00;
+}
+
 li {
     display: list-item;
     /* text-align: -webkit-match-parent; */
@@ -13,12 +17,20 @@ ul {
 }
 
 header {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
     display: flex;
     color: #000000c2;
     height: 56px;
-    padding: 0px 14px;
-    overflow: hidden; /* ::before 요소가 넘치지 않도록 */
-    border-bottom: 1.1px solid #0000005b;
+    justify-content: center;
+    padding-top: 10px;
+    /* min-width: 700px; */
+}
+
+.header-margin {
+    margin: 70px 0;
 }
 
 header::before {
@@ -42,6 +54,10 @@ body {
         sans-serif;
 }
 
+main {
+    margin-top: 56px;
+}
+
 a {
     color: inherit;
     text-decoration: inherit;
@@ -60,6 +76,7 @@ a {
     header,
     footer {
         font-size: 1.2em;
+        padding: auto;
     }
 
     .content {
@@ -72,6 +89,7 @@ a {
     header,
     footer {
         font-size: 0.8rem;
+        margin: 0;
     }
 
     body {
