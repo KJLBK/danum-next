@@ -11,11 +11,10 @@ import styles from './page.module.css';
 import Image from 'next/image';
 
 export default function MypagePage() {
-    const { email, exp, profileImageUrl, name } =
-        useAuthStore();
+    const { email, profileImageUrl, name } = useAuthStore();
     const [questions, setQuestions] = useState([]);
     const [villages, setVillages] = useState([]);
-    const [activeTab, setActiveTab] = useState('question');
+    const [activeTab, setActiveTab] = useState('village');
     const router = useRouter();
 
     useEffect(() => {
@@ -69,13 +68,16 @@ export default function MypagePage() {
                             height={75}
                             priority={true}
                         />
-                        <p>새로운 아티클이 없어요</p>
+                        <p className={styles.p}>
+                            새로운 질문 글이 없어요
+                        </p>
                         <button
                             onClick={() =>
                                 router.push('/new/question')
                             }
+                            className={styles.button}
                         >
-                            새 아티클 쓰기
+                            새 질문 글 쓰기
                         </button>
                     </div>
                 );
@@ -110,13 +112,16 @@ export default function MypagePage() {
                             height={75}
                             priority={true}
                         />
-                        <p>새로운 마을 글이 없어요</p>
+                        <p className={styles.p}>
+                            새로운 동네 글이 없어요
+                        </p>
                         <button
                             onClick={() =>
                                 router.push('/new/village')
                             }
+                            className={styles.button}
                         >
-                            새 글 쓰기
+                            새 동네 글 쓰기
                         </button>
                     </div>
                 );
@@ -137,23 +142,30 @@ export default function MypagePage() {
                     height={64}
                     alt={`image`}
                 />
-                <button onClick={handleEdit}>
-                    프로필 편집
-                </button>
             </div>
             <h2 className={styles.name}>{name}</h2>
             <p className={styles.email}>{email}</p>
 
             <div className={styles.boardCategory}>
                 <button
+                    className={
+                        activeTab === 'village'
+                            ? styles.active
+                            : ''
+                    }
+                    onClick={() => setActiveTab('village')}
+                >
+                    동네
+                </button>
+                <button
+                    className={
+                        activeTab === 'question'
+                            ? styles.active
+                            : ''
+                    }
                     onClick={() => setActiveTab('question')}
                 >
                     질문
-                </button>
-                <button
-                    onClick={() => setActiveTab('village')}
-                >
-                    마을
                 </button>
             </div>
             <div className={styles.boardContent}>
