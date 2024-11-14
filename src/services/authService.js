@@ -256,18 +256,20 @@ export async function passwordUpdate({ password }) {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    password,
-                }),
+                body: JSON.stringify(password),
             },
         );
 
         if (!response.ok) {
-            throw new Error(`Error: ${response.status}`);
+            const errorData = await response.json();
+            throw new Error(
+                errorData.message ||
+                    `Error: ${response.status}`,
+            );
         }
-        return response;
+        return await response.json();
     } catch (error) {
-        console.error('Error fetching data', error);
-        return [];
+        console.error('Error updating password:', error);
+        throw error;
     }
 }
