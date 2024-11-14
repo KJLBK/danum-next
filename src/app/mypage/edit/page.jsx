@@ -123,9 +123,9 @@ export default function ProfileEdit() {
                         }
                     />
                 </div>
-                <div>
-                    <label>닉네임</label>
+                <div className={styles.locationContainer}>
                     <input
+                        className={styles.locationInput}
                         type="text"
                         name="name"
                         value={formData.name}
@@ -133,6 +133,11 @@ export default function ProfileEdit() {
                         placeholder="닉네임"
                         required
                     />
+                    <button
+                        className={styles.locationButton}
+                    >
+                        저장
+                    </button>
                 </div>
 
                 <button
