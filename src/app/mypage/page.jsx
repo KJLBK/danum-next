@@ -142,6 +142,12 @@ export default function MypagePage() {
                     height={64}
                     alt={`image`}
                 />
+                <button
+                    onClick={handleEdit}
+                    className={styles.editButton}
+                >
+                    프로필 편집
+                </button>
             </div>
             <h2 className={styles.name}>{name}</h2>
             <p className={styles.email}>{email}</p>

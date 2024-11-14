@@ -93,7 +93,7 @@ export default function ProfileEdit() {
     return (
         <div className={styles.container}>
             <form onSubmit={handleSubmit}>
-                <h2>계정 관리</h2>
+                <h2>프로필 관리</h2>
                 <div>
                     <Profile
                         profileImageUrl={

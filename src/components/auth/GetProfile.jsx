@@ -84,7 +84,7 @@ export default function GetProfile() {
     };
 
     const handleAccount = () => {
-        router.push('/mypage/edit');
+        router.push('/mypage/account');
     };
     const toggleDropdown = (event) => {
         event.stopPropagation();
