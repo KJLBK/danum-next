@@ -67,7 +67,7 @@
 .openButton {
     flex: 1;
     padding: 10px 10px;
-    background-color: #fd7e14; /* 주황색 */
+    background-color: var(--main-color); /* 주황색 */
     color: white;
     border: none;
     border-radius: 5px;
@@ -109,8 +109,6 @@
     font-size: 1.2rem;
 }
 
-.locationInput:hover,
 .locationInput:focus {
     outline: none;
-    border-color: #05060f;
 }
