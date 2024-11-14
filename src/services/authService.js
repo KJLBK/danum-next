@@ -246,6 +246,7 @@ export async function userUpdate({
 // 비밀번호 변경하는 로직
 export async function passwordUpdate({ password }) {
     const token = getAccessToken();
+    console.log(password);
 
     try {
         const response = await fetch(
@@ -256,7 +257,9 @@ export async function passwordUpdate({ password }) {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(password),
+                body: JSON.stringify({
+                    password: password,
+                }),
             },
         );
 
