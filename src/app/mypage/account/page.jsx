@@ -71,17 +71,28 @@ export default function PasswordChangePage() {
 
     return (
         <div>
-            <h2>계정</h2>
-            <div>
-                <p>이메일 계정</p>
-                <p>{formData.email}</p>
-            </div>
-            <div>
-                <button
-                    onClick={() => setIsModalOpen(true)}
-                >
-                    비밀번호 변경
-                </button>
+            <div className={styles.container}>
+                <div className={styles.content}>
+                    <h2 className={styles.h2}>계정</h2>
+                    <div className={styles.info}>
+                        <p className={styles.emailInfo}>
+                            이메일 계정
+                        </p>
+                        <p className={styles.email}>
+                            {formData.email}
+                        </p>
+                        <div className={styles.buttonDiv}>
+                            <button
+                                className={styles.button}
+                                onClick={() =>
+                                    setIsModalOpen(true)
+                                }
+                            >
+                                비밀번호 변경
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <Modal
