@@ -16,7 +16,7 @@ const Modal = ({
         <div className={style.modal}>
             <div className={style.modalContent}>
                 <h2>{title}</h2>
-                <p>{content}</p>
+                <div>{content}</div>
                 <button onClick={onConfirm}>확인</button>
                 <button onClick={onCancel}>취소</button>
             </div>

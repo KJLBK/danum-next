@@ -83,6 +83,9 @@ export default function GetProfile() {
         router.push('/mypage');
     };
 
+    const handleAccount = () => {
+        router.push('/mypage/account');
+    };
     const toggleDropdown = (event) => {
         event.stopPropagation();
 
@@ -137,7 +140,13 @@ export default function GetProfile() {
                             className={styles.dropdownItem}
                             onClick={handleMyPage}
                         >
-                            My Page
+                            내 프로필
+                        </button>
+                        <button
+                            className={styles.dropdownItem}
+                            onClick={handleAccount}
+                        >
+                            계정
                         </button>
                         <button
                             className={styles.dropdownItem}

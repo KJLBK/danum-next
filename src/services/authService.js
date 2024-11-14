@@ -203,7 +203,6 @@ export async function fetchUserData() {
 // 프로필 변경하는 로직
 export async function userUpdate({
     email,
-    password,
     phone,
     name,
     latitude,
@@ -224,7 +223,6 @@ export async function userUpdate({
                 },
                 body: JSON.stringify({
                     email,
-                    password,
                     phone,
                     name,
                     latitude,
@@ -242,5 +240,38 @@ export async function userUpdate({
     } catch (error) {
         console.error('Error fetching data', error);
         return [];
+    }
+}
+
+// 비밀번호 변경하는 로직
+export async function passwordUpdate({ password }) {
+    const token = getAccessToken();
+
+    try {
+        const response = await fetch(
+            `/danum-backend/member/update`,
+            {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    password: password,
+                }),
+            },
+        );
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+                errorData.message ||
+                    `Error: ${response.status}`,
+            );
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error updating password:', error);
+        throw error;
     }
 }

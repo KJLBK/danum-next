@@ -44,7 +44,7 @@
 
 .saveButton {
     padding: 10px 20px;
-    background-color: #fd7e14; /* 주황색 */
+    background-color: var(--main-color); /* 주황색 */
     color: white;
     border: none;
     border-radius: 5px;

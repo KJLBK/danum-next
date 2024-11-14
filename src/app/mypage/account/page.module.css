@@ -1,0 +1,59 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    margin: 0 auto;
+    padding: 24px 0px;
+    width: 648px;
+}
+
+.h2 {
+    margin: 0px 0px 24px 0px;
+    padding: 0px 16px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 16px;
+}
+
+.emailInfo {
+    margin: 24px 0px 0px;
+    color: #77797b;
+    font-weight: 700;
+    font-size: 0.75rem;
+    line-height: 1.5;
+}
+
+.email {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0px;
+}
+
+.buttonDiv {
+    margin-top: 12px;
+}
+
+.button {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 0;
+    margin-right: 16px;
+    font-size: 14px;
+    font-weight: normal;
+    color: #4b5563;
+    text-decoration: underline;
+    white-space: nowrap;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}

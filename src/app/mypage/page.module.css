@@ -82,7 +82,18 @@
 .button {
     background-color: var(--main-color);
     border: none;
+    font-weight: bold;
     color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px 20px;
+}
+
+.editButton {
+    background-color: #fae5c7;
+    border: none;
+    font-weight: bold;
+    color: var(--main-color);
     border-radius: 5px;
     cursor: pointer;
     padding: 10px 20px;
