@@ -1,6 +1,6 @@
 import RecentMessagesList from '../components/chat/RecentMessagesList';
 import PopularPosts from '../components/home/PopularPosts/PopularPosts';
-import RecentPosts from '../components/home/RecentPosts';
+import RecentPosts from '../components/home/RecentChat/RecentPosts';
 import MyProfile from '../components/profile/myProfile';
 import styles from './page.module.css';
 import Image from 'next/image';

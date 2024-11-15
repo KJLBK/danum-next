@@ -14,17 +14,18 @@
     width: 216px;
     padding-top: 28px;
     max-width: 216px;
-    gap: 1rem;
+    gap: 2rem;
 }
 
 .middle {
     width: 648px;
+    margin: 0 37px;
+    padding: 28px 36px 0;
 }
 
 .right {
-    display: flex;
-    justify-content: center;
     width: 238px;
+    padding-top: 28px;
 }
 
 @media (max-width: 1200px) {
