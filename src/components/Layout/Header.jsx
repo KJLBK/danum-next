@@ -37,19 +37,29 @@ export default function Header() {
                     <li className={styles['home']}>
                         <a href="/">danum</a>
                     </li>
-                    <li className={isActive('/')}>
-                        <Link href="/">홈</Link>
-                    </li>
-                    <li className={isActive('/villages')}>
-                        <Link href="/villages">
-                            동네이야기
-                        </Link>
-                    </li>
-                    <li className={isActive('/questions')}>
-                        <Link href="/questions">
-                            질문이야기
-                        </Link>
-                    </li>
+                    <div className={styles['header-li']}>
+                        <li className={isActive('/')}>
+                            <Link href="/">홈</Link>
+                        </li>
+                        <li
+                            className={isActive(
+                                '/villages',
+                            )}
+                        >
+                            <Link href="/villages">
+                                동네이야기
+                            </Link>
+                        </li>
+                        <li
+                            className={isActive(
+                                '/questions',
+                            )}
+                        >
+                            <Link href="/questions">
+                                질문이야기
+                            </Link>
+                        </li>
+                    </div>
                 </ul>
                 <ul className={styles['header-ul']}>
                     <Link href="/search">

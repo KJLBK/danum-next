@@ -1,17 +1,21 @@
 .expBarContainer {
-    width: 90%;
-    padding: 10px;
+    /* width: 90%; */
+    padding: 16px;
     background-color: #f5f5f5;
-    border-radius: 12px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .levelInfo {
-    margin-bottom: 5px;
 }
 
 .levelText {
-    font-weight: bold;
+    /* font-weight: bold; */
+    font-weight: 700;
+    font-size: 0.8rem;
+    line-height: 1.285;
 }
 
 .progressContainer {
@@ -19,7 +23,7 @@
     width: 100%;
     background-color: #e0e0de;
     border-radius: 10px;
-    margin: 10px 0;
+    margin: 5px 0;
 }
 
 .progressFiller {
