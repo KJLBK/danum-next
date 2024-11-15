@@ -41,7 +41,6 @@
     font-weight: 700;
     font-size: 1rem;
     line-height: 1.5;
-    --tw-text-opacity: 1;
     color: rgba(119, 121, 123, 1);
     margin: 0;
 }
@@ -103,6 +102,14 @@
     border: 0;
     gap: 0.25rem;
     width: 104px;
+}
+
+.myprofile-write-btn-question:hover {
+    background-color: #ff6f0025;
+}
+
+.myprofile-write-btn-dongnae:hover {
+    background-color: #9d4400a5;
 }
 
 .myprofile-write-btn-dongnae {

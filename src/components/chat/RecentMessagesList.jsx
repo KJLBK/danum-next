@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 import Spinner from '../common/Spinner';
 import styles from './RecentMessagesList.module.css';
+import Image from 'next/image';
 
 export default function RecentMessagesList() {
     const { isLoggedIn } = useAuthStore();
@@ -16,6 +17,7 @@ export default function RecentMessagesList() {
         data: recentMessages,
         isLoading,
         isError,
+        error,
     } = useQuery({
         queryKey: ['recentMessages'],
         queryFn: getRecentMessages,
@@ -23,13 +25,23 @@ export default function RecentMessagesList() {
     });
 
     useEffect(() => {
+        console.log('Is Logged In:', isLoggedIn);
         console.log(recentMessages);
-    }, [recentMessages]); // Added dependency array to avoid running every render
+    });
 
-    if (isLoading) return <Spinner />;
+    if (isLoading)
+        return (
+            <div className={styles.spinner}>
+                <Spinner />
+            </div>
+        );
 
     if (isError)
-        return <div>Error fetching recent messages</div>;
+        return (
+            <div>
+                {error}, Error fetching recent messages
+            </div>
+        );
 
     if (!isLoggedIn) return null;
 
@@ -37,51 +49,76 @@ export default function RecentMessagesList() {
         <>
             {isLoggedIn ? (
                 <div className={styles.recentMessageList}>
-                    <p className="myprofile-p">최근 채팅</p>
+                    <p className={styles.header}>
+                        최근 채팅 💬
+                    </p>
                     <div>
                         {recentMessages?.length > 0 ? (
                             recentMessages.map(
                                 (message) => (
                                     <Link
-                                        key={message.roomId} // Ensure key is on Link or the outermost element
-                                        href={`/chat/${encodeURIComponent(message.roomId)}`} // Encode email if needed
+                                        key={message.roomId}
+                                        href={`/chat/${encodeURIComponent(message.roomId)}`}
                                     >
                                         <div
-                                            style={{
-                                                borderBottom:
-                                                    '1px solid #ddd',
-                                                padding:
-                                                    '10px',
-                                            }}
+                                            className={
+                                                styles.messageItem
+                                            }
                                         >
-                                            <div>
-                                                <strong>
-                                                    {message.chatPartnerName ||
-                                                        message.roomName}
-                                                </strong>
-                                            </div>
-                                            <div>
-                                                {
-                                                    message.lastMessage
-                                                }
-                                            </div>
                                             <div
-                                                style={{
-                                                    fontSize:
-                                                        '12px',
-                                                    color: 'gray',
-                                                }}
+                                                className={
+                                                    styles.messageProfileImage
+                                                }
                                             >
-                                                {formatTimeAgo(
-                                                    message.lastMessageTime,
-                                                )}
+                                                <Image
+                                                    src={
+                                                        message.chatPartnerImage ||
+                                                        '/logo-assets/android-chrome-512x512.png'
+                                                    }
+                                                    alt="profile-image"
+                                                    width={
+                                                        30
+                                                    }
+                                                    height={
+                                                        30
+                                                    }
+                                                />
+                                            </div>
+                                            <div>
+                                                <div
+                                                    className={
+                                                        styles.messageItemHeader
+                                                    }
+                                                >
+                                                    <strong>
+                                                        {message.chatPartnerName ||
+                                                            message.roomName}
+                                                    </strong>
+
+                                                    <div
+                                                        className={
+                                                            styles.messageTime
+                                                        }
+                                                    >
+                                                        {formatTimeAgo(
+                                                            message.lastMessageTime,
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    {
+                                                        message.lastMessage
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
                                     </Link>
                                 ),
                             )
                         ) : (
-                            <div>채팅이 없습니다</div>
+                            <div className={styles.noChat}>
+                                채팅 내역이 없어요 👀
+                            </div>
                         )}
                     </div>
                 </div>

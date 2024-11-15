@@ -8,6 +8,17 @@ li {
     unicode-bidi: isolate;
 }
 
+button {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    transition-timing-function: cubic-bezier(
+        0.4,
+        0,
+        0.2,
+        1
+    );
+}
+
 menu,
 ol,
 ul {
@@ -92,4 +103,9 @@ a {
         margin: 0;
         padding: 0.5em;
     }
+}
+
+.spinner {
+    display: flex;
+    justify-content: center;
 }

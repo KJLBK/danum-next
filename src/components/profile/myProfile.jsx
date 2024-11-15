@@ -61,7 +61,9 @@ export default function MyProfile() {
         <>
             {isLoggedIn ? (
                 <div className="myprofile">
-                    <p className="myprofile-p">내 프로필</p>
+                    <p className="myprofile-p">
+                        내 프로필 😊
+                    </p>
                     <Link href="/mypage">
                         <div className="myprofile-header">
                             <Image
