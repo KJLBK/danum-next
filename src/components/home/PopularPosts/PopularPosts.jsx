@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import PopularPostlist from './List';
 import Spinner from '../../common/Spinner';
 import usePopularPosts from '../../../hooks/usePopularPosts';
+import styles from './PopularPosts.module.css';
 
 export default function PopularPosts() {
     const { data, error, isLoading, isError } =
@@ -25,16 +26,16 @@ export default function PopularPosts() {
     }
 
     return (
-        <div>
+        <div className={styles.popularPostsItem}>
             <div>
                 <PopularPostlist
-                    header="인기 질문"
+                    header="지금 인기있는 질문 이야기 🔥"
                     data={data?.popularQuestions || []}
                 />
             </div>
             <div>
                 <PopularPostlist
-                    header="인기 동네 게시글"
+                    header="지금 인기있는 동네 이야기 🔥"
                     data={data?.popularVillages || []}
                 />
             </div>
