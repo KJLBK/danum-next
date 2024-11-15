@@ -62,7 +62,7 @@ a {
 /* 데스크탑 우선 */
 @media (min-width: 1024px) {
     body {
-        max-width: 960px;
+        max-width: 1200px;
         margin: 0 auto;
     }
 }

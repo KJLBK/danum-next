@@ -9,7 +9,7 @@ export default function Home() {
     return (
         <>
             <></>
-            <div>
+            <div className={styles.banner}>
                 <Image
                     src="/banner.png"
                     alt="banner"
