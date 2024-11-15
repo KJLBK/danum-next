@@ -7,6 +7,7 @@ import {
 } from 'next/navigation';
 import BoardItem from '../../components/board/view/BoardItem';
 import styles from './SearchContent.module.css';
+import Spinner from '../../components/common/Spinner';
 
 export default function SearchContent() {
     const router = useRouter();
@@ -105,8 +106,6 @@ export default function SearchContent() {
 
     return (
         <div className={styles.searchContainer}>
-            <h1>검색 페이지</h1>
-
             <form
                 onSubmit={handleSubmit}
                 className={styles.searchForm}
@@ -118,17 +117,30 @@ export default function SearchContent() {
                     placeholder="검색어를 입력하세요"
                     className={styles.searchInput}
                 />
-                <button
-                    type="submit"
-                    className={styles.searchButton}
-                >
-                    검색
+                <button className={styles.searchButton}>
+                    <svg
+                        className={styles.searchIcon}
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    >
+                        <circle cx="11" cy="11" r="8" />
+                        <line
+                            x1="21"
+                            y1="21"
+                            x2="16.65"
+                            y2="16.65"
+                        />
+                    </svg>
                 </button>
             </form>
 
-            {isLoading && <div>검색 중...</div>}
-
             <div className={styles.resultsContainer}>
+                {isLoading && <Spinner />}
                 {searchResults.content.length > 0
                     ? searchResults.content.map(
                           (result, index) => (
