@@ -6,6 +6,8 @@ import { useAuthStore } from '../../stores/authStore';
 import { formatTimeAgo } from '../../utils/timeFormat';
 import { useEffect } from 'react';
 import Link from 'next/link';
+import Spinner from '../common/Spinner';
+import styles from './RecentMessagesList.module.css';
 
 export default function RecentMessagesList() {
     const { isLoggedIn } = useAuthStore();
@@ -24,7 +26,7 @@ export default function RecentMessagesList() {
         console.log(recentMessages);
     }, [recentMessages]); // Added dependency array to avoid running every render
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <Spinner />;
 
     if (isError)
         return <div>Error fetching recent messages</div>;
@@ -34,48 +36,54 @@ export default function RecentMessagesList() {
     return (
         <>
             {isLoggedIn ? (
-                <div>
-                    {recentMessages?.length > 0 ? (
-                        recentMessages.map((message) => (
-                            <Link
-                                key={message.roomId} // Ensure key is on Link or the outermost element
-                                href={`/chat/${encodeURIComponent(message.roomId)}`} // Encode email if needed
-                            >
-                                <div
-                                    style={{
-                                        borderBottom:
-                                            '1px solid #ddd',
-                                        padding: '10px',
-                                    }}
-                                >
-                                    <div>
-                                        <strong>
-                                            {message.chatPartnerName ||
-                                                message.roomName}
-                                        </strong>
-                                    </div>
-                                    <div>
-                                        {
-                                            message.lastMessage
-                                        }
-                                    </div>
-                                    <div
-                                        style={{
-                                            fontSize:
-                                                '12px',
-                                            color: 'gray',
-                                        }}
+                <div className={styles.recentMessageList}>
+                    <p className="myprofile-p">최근 채팅</p>
+                    <div>
+                        {recentMessages?.length > 0 ? (
+                            recentMessages.map(
+                                (message) => (
+                                    <Link
+                                        key={message.roomId} // Ensure key is on Link or the outermost element
+                                        href={`/chat/${encodeURIComponent(message.roomId)}`} // Encode email if needed
                                     >
-                                        {formatTimeAgo(
-                                            message.lastMessageTime,
-                                        )}
-                                    </div>
-                                </div>
-                            </Link>
-                        ))
-                    ) : (
-                        <div>채팅이 없습니다</div>
-                    )}
+                                        <div
+                                            style={{
+                                                borderBottom:
+                                                    '1px solid #ddd',
+                                                padding:
+                                                    '10px',
+                                            }}
+                                        >
+                                            <div>
+                                                <strong>
+                                                    {message.chatPartnerName ||
+                                                        message.roomName}
+                                                </strong>
+                                            </div>
+                                            <div>
+                                                {
+                                                    message.lastMessage
+                                                }
+                                            </div>
+                                            <div
+                                                style={{
+                                                    fontSize:
+                                                        '12px',
+                                                    color: 'gray',
+                                                }}
+                                            >
+                                                {formatTimeAgo(
+                                                    message.lastMessageTime,
+                                                )}
+                                            </div>
+                                        </div>
+                                    </Link>
+                                ),
+                            )
+                        ) : (
+                            <div>채팅이 없습니다</div>
+                        )}
+                    </div>
                 </div>
             ) : (
                 <div></div>

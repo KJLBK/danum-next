@@ -17,7 +17,7 @@ export default function ExpBar({ exp }) {
         <div className={styles.expBarContainer}>
             <div className={styles.levelInfo}>
                 <span className={styles.levelText}>
-                    신뢰도👍
+                    신뢰도를 열심히 쌓아가고 있어요 🔥
                 </span>
             </div>
             <div className={styles.progressContainer}>
@@ -31,7 +31,7 @@ export default function ExpBar({ exp }) {
                 </div>
             </div>
             <div className={styles.expInfo}>
-                {exp}/{nextLevelExp} EXP
+                {exp}/{nextLevelExp}
             </div>
         </div>
     );

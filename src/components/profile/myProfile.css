@@ -1,4 +1,116 @@
 .main-profile {
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+
+.main-logout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-logout p {
+    margin: 8px 0 16px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.loginButton {
+    font-weight: 700;
+    font-size: 0.875rem;
+    line-height: 1.285;
+    color: rgb(255, 255, 255);
+
+    background-color: rgb(255 107 0);
+    border-radius: 0.5rem;
+    gap: 0.25rem;
+    height: 2.25rem;
+    border: 0;
+    padding: 0 12px;
+
+    cursor: pointer;
+}
+
+.main-logout img {
+    margin: 15px;
+}
+
+.myprofile-p {
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.5;
+    --tw-text-opacity: 1;
+    color: rgba(119, 121, 123, 1);
+    margin: 0;
+}
+
+.myprofile {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+.myprofile-header img {
+    border-radius: 9999px;
+    border: 0.1px solid rgba(119, 121, 123, 1);
+}
+
+.myprofile-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-direction: row;
+}
+
+.myprofile-header-id {
+    display: flex;
+    flex-direction: column;
+}
+
+.myprofile-header-id strong {
+    color: rgb(17, 18, 19);
+    font-weight: 700;
+    font-size: 0.875rem;
+    line-height: 1.285;
+}
+
+.myprofile-header-id span {
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: rgba(119, 121, 123, 1);
+}
+
+.myprofile-write-btn {
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex: 1 1 0%;
+}
+
+.myprofile-write-btn button {
+    font-family: 'Pretendard';
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.875rem;
+    line-height: 1.285;
+    padding: 0 0.75rem 0;
+    border-radius: 0.5rem;
+    white-space: nowrap;
+    justify-content: center;
+    height: 2.25rem;
+    border: 0;
+    gap: 0.25rem;
+    width: 104px;
+}
+
+.myprofile-write-btn-dongnae {
+    background-color: var(--main-color);
+    color: white;
+}
+
+.myprofile-write-btn-question {
+    background-color: #fae5c7;
+    color: var(--main-color);
 }
