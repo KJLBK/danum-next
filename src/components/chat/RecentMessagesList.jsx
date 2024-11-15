@@ -32,43 +32,54 @@ export default function RecentMessagesList() {
     if (!isLoggedIn) return null;
 
     return (
-        <div>
-            {recentMessages?.length > 0 ? (
-                recentMessages.map((message) => (
-                    <Link
-                        key={message.roomId} // Ensure key is on Link or the outermost element
-                        href={`/chat/${encodeURIComponent(message.roomId)}`} // Encode email if needed
-                    >
-                        <div
-                            style={{
-                                borderBottom:
-                                    '1px solid #ddd',
-                                padding: '10px',
-                            }}
-                        >
-                            <div>
-                                <strong>
-                                    {message.chatPartnerName ||
-                                        message.roomName}
-                                </strong>
-                            </div>
-                            <div>{message.lastMessage}</div>
-                            <div
-                                style={{
-                                    fontSize: '12px',
-                                    color: 'gray',
-                                }}
+        <>
+            {isLoggedIn ? (
+                <div>
+                    {recentMessages?.length > 0 ? (
+                        recentMessages.map((message) => (
+                            <Link
+                                key={message.roomId} // Ensure key is on Link or the outermost element
+                                href={`/chat/${encodeURIComponent(message.roomId)}`} // Encode email if needed
                             >
-                                {formatTimeAgo(
-                                    message.lastMessageTime,
-                                )}
-                            </div>
-                        </div>
-                    </Link>
-                ))
+                                <div
+                                    style={{
+                                        borderBottom:
+                                            '1px solid #ddd',
+                                        padding: '10px',
+                                    }}
+                                >
+                                    <div>
+                                        <strong>
+                                            {message.chatPartnerName ||
+                                                message.roomName}
+                                        </strong>
+                                    </div>
+                                    <div>
+                                        {
+                                            message.lastMessage
+                                        }
+                                    </div>
+                                    <div
+                                        style={{
+                                            fontSize:
+                                                '12px',
+                                            color: 'gray',
+                                        }}
+                                    >
+                                        {formatTimeAgo(
+                                            message.lastMessageTime,
+                                        )}
+                                    </div>
+                                </div>
+                            </Link>
+                        ))
+                    ) : (
+                        <div>채팅이 없습니다</div>
+                    )}
+                </div>
             ) : (
-                <div>채팅이 없습니다</div>
+                <div></div>
             )}
-        </div>
+        </>
     );
 }

@@ -41,7 +41,7 @@ header::before {
     z-index: -1;
 }
 body {
-    margin: 0;
+    margin: auto;
     font-size: 15px;
     font-family:
         'Pretendard',
@@ -52,10 +52,6 @@ body {
         'Helvetica Neue',
         Arial,
         sans-serif;
-}
-
-main {
-    margin-top: 56px;
 }
 
 a {
@@ -88,7 +84,7 @@ a {
 @media (max-width: 768px) {
     header,
     footer {
-        font-size: 0.8rem;
+        font-size: 0.5rem;
         margin: 0;
     }
 
