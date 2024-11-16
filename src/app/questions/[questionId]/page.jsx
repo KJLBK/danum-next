@@ -1,7 +1,7 @@
 'use client';
 import { useParams } from 'next/navigation';
 import PostInfoPanel from '../../../components/board/view/PostInfoPanel';
-import CommentList from '../../../components/board/view/comment/CommentLIst';
+import CommentList from '../../../components/board/view/comment/CommentList';
 import useQuestionDetail from '../../../hooks/village/useQuestionDetail';
 import AICommentItem from '../../../components/board/view/aiComment/AICommentItem';
 
