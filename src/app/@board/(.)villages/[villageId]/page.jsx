@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import PostInfoPanel from '../../../../components/board/view/PostInfoPanel';
-import CommentList from '../../../../components/board/view/comment/CommentList';
+import CommentsList from '../../../../components/board/view/comment/CommentsList';
 import useVillageDetail from '../../../../hooks/village/useVillageDetail';
 import { useEffect } from 'react';
 import styles from './page.module.css';
@@ -86,7 +86,7 @@ export default function VillageViewPage() {
                         />
                     </div>
                     <div className={styles.modalBody}>
-                        <CommentList
+                        <CommentsList
                             type="village"
                             PostAuthorId={
                                 data.author?.userId

@@ -1,7 +1,7 @@
 'use client';
 import { useParams, useRouter } from 'next/navigation';
 import PostInfoPanel from '../../../../components/board/view/PostInfoPanel';
-import CommentList from '../../../../components/board/view/comment/CommentLIst';
+import CommentsList from '../../../../components/board/view/comment/CommentsList';
 import useQuestionDetail from '../../../../hooks/village/useQuestionDetail';
 import { useEffect } from 'react';
 import AICommentItem from '../../../../components/board/view/aiComment/AICommentItem';
@@ -82,7 +82,7 @@ export default function QuestionsViewPage() {
                     />
                 </div>
                 <div className={styles.modalBody}>
-                    <CommentList
+                    <CommentsList
                         type="question"
                         PostAuthorId={data.author?.userId}
                     />

@@ -7,7 +7,7 @@ import UserComment from './UserComment';
 import { useAuthStore } from '../../../../stores/authStore';
 import Spinner from '../../../common/Spinner';
 
-export default function CommentList({
+export default function CommentsList({
     type,
     PostAuthorId,
 }) {

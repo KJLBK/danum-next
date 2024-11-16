@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import PostInfoPanel from '../../../components/board/view/PostInfoPanel';
-import CommentList from '../../../components/board/view/comment/CommentLIst';
+import CommentsList from '../../../components/board/view/comment/CommentsList';
 import useVillageDetail from '../../../hooks/village/useVillageDetail';
 
 export default function VillageViewPage() {
@@ -27,7 +27,7 @@ export default function VillageViewPage() {
                 isDeleting={isDeleting}
                 deletePost={deleteVillagePost}
             />
-            <CommentList
+            <CommentsList
                 type="village"
                 PostAuthorId={data.author?.userId}
             />
