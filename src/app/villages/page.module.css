@@ -17,8 +17,7 @@
     width: 200px;
     padding: 20px;
     border-right: 1px solid #e9ecef;
-    position: sticky;
-    top: 0;
+
     height: 100vh;
 }
 
@@ -80,4 +79,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.rightContent {
+    display: flex;
 }

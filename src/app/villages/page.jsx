@@ -102,6 +102,7 @@ export default function Villages() {
                     queryKey={['villageData', postType]}
                 />
             </div>
+            <div className={style.rightContent}></div>
         </div>
     );
 }

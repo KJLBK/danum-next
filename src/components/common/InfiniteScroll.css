@@ -1,11 +1,15 @@
-.infinite-scroll {
-    padding: 20px;
+.infinite-scroll-gap {
+    /* padding: 20px; */
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    /* max-width: 574px; */
 }
 
 .post {
     margin-bottom: 20px;
     padding: 15px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 0.1px solid #ccc;
 }
 
 .observer {
