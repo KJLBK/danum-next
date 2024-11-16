@@ -89,7 +89,10 @@ export default function InfiniteScroll({
     return (
         <div className="infinite-scroll">
             {data?.pages.map((page, pageIndex) => (
-                <div key={`page-${pageIndex}`}>
+                <div
+                    className="infinite-scroll-gap"
+                    key={`page-${pageIndex}`}
+                >
                     {page.content.map((post) => {
                         const isQuestion =
                             post.question_id !== undefined;
