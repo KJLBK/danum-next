@@ -83,6 +83,10 @@ export default function GetProfile() {
         router.push('/mypage');
     };
 
+    const handleChatList = () => {
+        router.push('/chat/roomlist');
+    };
+
     const handleAccount = () => {
         router.push('/mypage/account');
     };
@@ -141,6 +145,12 @@ export default function GetProfile() {
                             onClick={handleMyPage}
                         >
                             내 프로필
+                        </button>
+                        <button
+                            className={styles.dropdownItem}
+                            onClick={handleChatList}
+                        >
+                            채팅 목록
                         </button>
                         <button
                             className={styles.dropdownItem}
