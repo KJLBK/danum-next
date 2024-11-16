@@ -116,6 +116,7 @@ export default function InfiniteScroll({
                                     post.hasAcceptedComment
                                 }
                                 board={board}
+                                postType={post.postType}
                             />
                         );
                     })}
