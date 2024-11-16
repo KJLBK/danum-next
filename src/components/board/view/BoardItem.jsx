@@ -13,6 +13,7 @@ export default function BoardItem({
     view_count,
     board, // 어떤 게시판인지 확인하는 값
     hasAcceptedComment,
+    postType,
 }) {
     // content에서 <img> 태그를 추출하는 함수
     const extractImages = (htmlString) => {
@@ -37,13 +38,58 @@ export default function BoardItem({
             <Link href={`/${board}/${id}`} scroll={false}>
                 <div className={style.preview}>
                     <div className={style.textContainer}>
-                        <div>
-                            {/* TODO: STYLE */}
-                            {board === 'questions' &&
-                                (hasAcceptedComment
-                                    ? '이웃답변채택완료'
-                                    : 'GPT답변완료')}
-                        </div>
+                        {board === 'questions' ? (
+                            <div
+                                className={
+                                    style.tagContainer
+                                }
+                            >
+                                <span className={style.tag}>
+                                    질문이야기
+                                </span>
+                                {hasAcceptedComment ? (
+                                    <span
+                                        className={
+                                            style.tag
+                                        }
+                                    >
+                                        이웃답변채택완료
+                                    </span>
+                                ) : (
+                                    <span
+                                        className={
+                                            style.tag
+                                        }
+                                    >
+                                        GPT답변완료
+                                    </span>
+                                )}
+                            </div>
+                        ) : (
+                            <div
+                                className={
+                                    style.tagContainer
+                                }
+                            >
+                                <span className={style.tag}>
+                                    동네이야기
+                                </span>
+                                {postType && (
+                                    <span
+                                        className={
+                                            style.tag
+                                        }
+                                    >
+                                        {postType ===
+                                            'DAILY' &&
+                                            '일상'}
+                                        {postType ===
+                                            'QUESTION' &&
+                                            '질문'}
+                                    </span>
+                                )}
+                            </div>
+                        )}
                         <h2 className={style.title}>
                             {title}
                         </h2>

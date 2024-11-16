@@ -1,6 +1,6 @@
 .boardItem {
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
+    border: none;
+    border-bottom: 2px solid #e0e0e0;
     padding: 16px;
     background-color: #ffffff;
     margin-bottom: 16px;
@@ -28,6 +28,20 @@
     gap: 16px; /* 텍스트와 이미지 사이 간격 */
 }
 
+.tag {
+    display: inline-block;
+    background-color: #f1f1f1;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: #3c4043;
+    margin-bottom: 8px;
+    width: fit-content;
+    margin-right: 10px;
+}
+
 .textContainer {
     display: flex;
     flex-direction: column; /* 제목과 내용이 세로로 배치되도록 설정 */
@@ -36,7 +50,7 @@
 
 .textContent {
     font-size: 14px;
-    color: #333;
+    color: #77797b;
     overflow: hidden; /* 넘치는 텍스트 숨김 */
     text-overflow: ellipsis; /* 넘치는 부분을 줄임표(...)로 표시 */
     display: block; /* 블록 요소로 설정 */
@@ -53,10 +67,10 @@
 }
 
 .imagePreview {
-    width: 100px; /* 이미지 너비 */
-    height: 100px; /* 이미지 높이 */
+    width: 140px; /* 이미지 너비 */
+    height: 130px; /* 이미지 높이 */
     object-fit: cover; /* 이미지 비율 유지하면서 자르기 */
-    border-radius: 4px;
+    border-radius: 10px;
     border: 1px solid #ccc;
 }
 
