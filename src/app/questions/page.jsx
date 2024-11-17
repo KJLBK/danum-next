@@ -42,7 +42,6 @@ export default function QuestionPage() {
     return (
         <div className={style.container}>
             <h2>질문 이야기</h2>
-            <button onClick={handleNew}>글쓰기</button>
             {/* <RegionSelector
                 onRegionSelect={handleRegionSelect}
             /> */}
@@ -50,6 +49,12 @@ export default function QuestionPage() {
                 serviceLogic={questionShow}
                 queryKey={['questionPosts']}
             />
+            <button
+                className={style.writeButton}
+                onClick={handleNew}
+            >
+                글쓰기
+            </button>
         </div>
     );
 }

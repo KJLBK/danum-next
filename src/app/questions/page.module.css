@@ -1,7 +1,41 @@
 .container {
-    display: flex; /* Flexbox 사용 */
-    flex-direction: column; /* 세로 방향으로 배치 */
-    align-items: center; /* 가로 가운데 정렬 */
-    justify-content: center; /* 세로 가운데 정렬 */
-    min-height: 100vh; /* 전체 화면 높이 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding-bottom: 80px; /* 글쓰기 버튼 높이만큼 여백 추가 */
+    position: relative;
+}
+
+.writeButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    border-radius: 25px;
+    background-color: #ff6b00;
+    color: white;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.writeButton::before {
+    content: '+';
+    font-size: 20px;
+    font-weight: 400;
+}
+
+@media (hover: hover) {
+    .writeButton:hover {
+        background-color: #e65000;
+        transition: background-color 0.2s ease;
+    }
 }
