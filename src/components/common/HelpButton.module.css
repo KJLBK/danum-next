@@ -1,0 +1,81 @@
+.helpContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.helpButton {
+    margin-left: 10px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #f4f4f4;
+    border: none;
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: help;
+    transition: all 0.2s ease;
+}
+
+.helpModal {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform: translateY(8px);
+    min-width: 210px;
+    padding: 16px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 1000;
+}
+
+.helpModal::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 16px;
+    transform: rotate(45deg);
+    width: 8px;
+    height: 8px;
+    background: #fff;
+}
+
+.helpModal h3 {
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.helpModal p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #666;
+}
+
+/* 호버 효과 */
+.helpContainer:hover .helpButton {
+    background: #eee;
+}
+
+.helpContainer:hover .helpModal {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(8px);
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .helpModal {
+        min-width: 160px;
+        padding: 12px;
+    }
+}
