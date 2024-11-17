@@ -10,6 +10,7 @@ import AuthorChatButton from '../../chat/AuthorChatButton';
 import LikeButton from '../buttons/LikeButton';
 import QuillViewer from './QuillViewer';
 import Spinner from '../../common/Spinner';
+import HelpButton from '../../common/HelpButton';
 
 export default function PostInfoPanel({
     board,
@@ -61,11 +62,16 @@ export default function PostInfoPanel({
                 <span className={style.email}>
                     {isLoggedIn &&
                     user !== data.author?.userId ? (
-                        <AuthorChatButton
-                            userId={data.author?.userId}
-                            userName={data.author?.userName}
-                            onChatStart={onClose}
-                        />
+                        <div>
+                            <AuthorChatButton
+                                userId={data.author?.userId}
+                                userName={
+                                    data.author?.userName
+                                }
+                                onChatStart={onClose}
+                            />
+                            <HelpButton />
+                        </div>
                     ) : (
                         <span>{data.author?.userName}</span>
                     )}
