@@ -13,9 +13,10 @@ export default function Home() {
                 <Image
                     src="/banner.png"
                     alt="banner"
-                    layout="responsive"
-                    height={3000}
-                    width={450}
+                    className={styles.responsiveImage}
+                    width={3000}
+                    height={450}
+                    priority
                 />
             </div>
             <main className={styles.mainAside}>
