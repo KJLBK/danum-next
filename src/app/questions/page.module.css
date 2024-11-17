@@ -5,7 +5,6 @@
     justify-content: flex-start;
     min-height: 100vh;
     padding-bottom: 80px; /* 글쓰기 버튼 높이만큼 여백 추가 */
-    position: relative;
 }
 
 .writeButton {
