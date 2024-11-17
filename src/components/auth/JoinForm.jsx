@@ -2,12 +2,12 @@
 
 import { useState } from 'react';
 import Input from '../common/Input';
-import Button from '../common/Button';
 import { join } from '../../services/authService';
 import KakaoMap from '../../app/map/page'; // KakaoMap 컴포넌트를 가져옴
 import Profile from './Profile';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import styles from './JoinForm.module.css';
 
 export default function JoinForm() {
     const router = useRouter();
@@ -134,16 +134,18 @@ export default function JoinForm() {
 
                 {/* KakaoMap에서 위도/경도 받기 */}
                 {/* Profile 컴포넌트에 기본 이미지 및 변경 함수 전달 */}
-
-                <Button
-                    type="submit"
-                    disabled={
-                        !formData.latitude ||
-                        !formData.longitude
-                    }
-                >
-                    회원가입
-                </Button>
+                <div className={styles.joinButtonDiv}>
+                    <button
+                        className={styles.button}
+                        type="submit"
+                        disabled={
+                            !formData.latitude ||
+                            !formData.longitude
+                        }
+                    >
+                        회원가입
+                    </button>
+                </div>
                 {/* TODO: 회원가입 성공 후 이동하는 코드가 없음 */}
                 <p style={{ color: 'red' }}>{error}</p>
             </form>

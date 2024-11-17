@@ -1,0 +1,19 @@
+.joinButtonDiv {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.button {
+    padding: 13px 30px;
+    background-color: var(--main-color); /* 주황색 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 15px;
+}
+
+.button:hover {
+    background-color: #e06712; /* 진한 주황 */
+}
