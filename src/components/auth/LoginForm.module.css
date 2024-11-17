@@ -48,6 +48,10 @@
     border: 1px solid #ced0d1;
 }
 
+.button:hover {
+    background: #e85f38;
+}
+
 .h2 {
     color: #d75430;
     text-align: center;
