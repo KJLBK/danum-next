@@ -4,10 +4,8 @@
     width: 100%;
 
     padding: 0 10px;
-    border-radius: 30px;
-    backdrop-filter: saturate(180%) blur(20px);
-    box-shadow: 0 0 2px 0px rgba(0, 0, 0);
-    max-width: 1178px;
+
+    max-width: 1200px;
 }
 
 .header-ul {
@@ -20,6 +18,8 @@
 
 .header-li {
     display: flex;
+    font-weight: 500;
+    color: #00000050;
 }
 
 .home {

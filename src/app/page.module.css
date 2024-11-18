@@ -1,11 +1,20 @@
 .banner {
     padding: 20px 0;
+    display: flex;
+    width: 100%;
 }
 
 .mainAside {
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+
+.responsiveImage {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
 }
 
 .left {

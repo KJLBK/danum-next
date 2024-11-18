@@ -63,11 +63,19 @@ export default function GetProfile() {
             }
         };
 
+        // 스크롤 락 추가/제거
+        if (isDropdownOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+
         document.addEventListener(
             'click',
             handleClickOutside,
         );
         return () => {
+            document.body.style.overflow = ''; // cleanup
             document.removeEventListener(
                 'click',
                 handleClickOutside,
@@ -130,40 +138,52 @@ export default function GetProfile() {
             />
             {isDropdownOpen &&
                 createPortal(
-                    <div
-                        className={styles.dropdownMenu}
-                        style={{
-                            position: 'fixed',
-                            top: `${dropdownPosition.top}px`,
-                            left: `${dropdownPosition.left}px`,
-                        }}
-                        ref={dropdownRef} // 드롭다운 참조 추가
-                    >
-                        <MyProfile />
-                        <button
-                            className={styles.dropdownItem}
-                            onClick={handleMyPage}
+                    <div className={styles.createPotalMenu}>
+                        <div
+                            className={styles.dropdownMenu}
+                            style={{}}
+                            ref={dropdownRef} // 드롭다운 참조 추가
                         >
-                            내 프로필
-                        </button>
-                        <button
-                            className={styles.dropdownItem}
-                            onClick={handleChatList}
-                        >
-                            채팅 목록
-                        </button>
-                        <button
-                            className={styles.dropdownItem}
-                            onClick={handleAccount}
-                        >
-                            계정
-                        </button>
-                        <button
-                            className={styles.dropdownItem}
-                            onClick={handleLogout}
-                        >
-                            Logout
-                        </button>
+                            <MyProfile />
+                            <div
+                                className={
+                                    styles.getProfile_btn_item
+                                }
+                            >
+                                <button
+                                    className={
+                                        styles.dropdownItem
+                                    }
+                                    onClick={handleMyPage}
+                                >
+                                    내 프로필 🧑🏻‍💻
+                                </button>
+                                <button
+                                    className={
+                                        styles.dropdownItem
+                                    }
+                                    onClick={handleChatList}
+                                >
+                                    채팅 목록 💬
+                                </button>
+                                <button
+                                    className={
+                                        styles.dropdownItem
+                                    }
+                                    onClick={handleAccount}
+                                >
+                                    계정 📝
+                                </button>
+                                <button
+                                    className={
+                                        styles.dropdownItem
+                                    }
+                                    onClick={handleLogout}
+                                >
+                                    로그아웃 🚪
+                                </button>
+                            </div>
+                        </div>
                     </div>,
                     document.body,
                 )}
