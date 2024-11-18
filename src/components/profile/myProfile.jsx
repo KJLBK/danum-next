@@ -76,9 +76,7 @@ export default function MyProfile() {
                                 height={60}
                             />
                             <div className="myprofile-header-id">
-                                <strong>
-                                    {name}({email})
-                                </strong>
+                                <strong>{name}</strong>
 
                                 <span>{role}</span>
                             </div>
