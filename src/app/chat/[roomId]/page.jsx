@@ -11,12 +11,13 @@ import { getAccessToken } from '../../../services/tokenService';
 import ChatMessageList from '../../../components/chat/ChatMessageList';
 import ChatInput from '../../../components/chat/ChatInput';
 import Spinner from '../../../components/common/Spinner';
+import styles from './page.module.css';
 
 export default function ChatRoomPage() {
     const { roomId } = useParams();
     const [roomInfo, setRoomInfo] = useState(null);
     const [messages, setMessages] = useState([]);
-    const { user } = useAuthStore();
+    const { email } = useAuthStore();
     const messageEndRef = useRef(null);
     const stompClient = useRef(null);
     const accessToken =
@@ -94,7 +95,7 @@ export default function ChatRoomPage() {
                     body: JSON.stringify({
                         type: 'ENTER',
                         roomId: roomId,
-                        sender: user,
+                        sender: email,
                         message: '',
                     }),
                 });
@@ -113,7 +114,7 @@ export default function ChatRoomPage() {
                     body: JSON.stringify({
                         type: 'LEAVE',
                         roomId: roomId,
-                        sender: user,
+                        sender: email,
                         message: '',
                     }),
                 });
@@ -140,7 +141,7 @@ export default function ChatRoomPage() {
                 body: JSON.stringify({
                     type: 'TALK',
                     roomId: roomId,
-                    sender: user,
+                    sender: email,
                     message: content,
                 }),
             });
@@ -161,14 +162,46 @@ export default function ChatRoomPage() {
     }
 
     return (
-        <div>
-            <p>{roomInfo.name}</p>
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <h1 className={styles.roomTitle}>
+                    {roomInfo.name}
+                </h1>
+            </div>
+
             <ChatMessageList
                 messages={messages}
-                currentUser={user}
+                currentUser={email}
             />
             <div ref={messageEndRef} />
-            <ChatInput onSendMessage={handleSendMessage} />
+
+            <div className={styles.inputContainer}>
+                <form
+                    className={styles.inputForm}
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        const input =
+                            e.target.elements.message;
+                        if (input.value.trim()) {
+                            handleSendMessage(input.value);
+                            input.value = '';
+                        }
+                    }}
+                >
+                    <input
+                        type="text"
+                        name="message"
+                        className={styles.messageInput}
+                        placeholder="메시지를 입력하세요"
+                    />
+                    <button
+                        type="submit"
+                        className={styles.sendButton}
+                    >
+                        전송
+                    </button>
+                </form>
+            </div>
         </div>
     );
 }

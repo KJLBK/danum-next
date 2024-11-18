@@ -1,0 +1,85 @@
+.chatContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    height: calc(100vh - 180px);
+    overflow-y: auto;
+    background-color: #f8f9fa;
+}
+
+.messageRow {
+    display: flex;
+    margin-bottom: 8px;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.myMessage {
+    justify-content: flex-end;
+    padding-left: 20%;
+}
+
+.otherMessage {
+    justify-content: flex-start;
+    padding-right: 20%;
+}
+
+.messageContent {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+}
+
+.senderName {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 4px;
+    margin-left: 4px;
+}
+
+.messageBubble {
+    padding: 8px 12px;
+    font-size: 14px;
+    max-width: 100%;
+    word-break: break-word;
+    line-height: 1.4;
+}
+
+.myMessageBubble {
+    background-color: #ff6b00;
+    color: white;
+    border-radius: 15px 15px 0 15px;
+    align-self: flex-end;
+}
+
+.otherMessageBubble {
+    background-color: white;
+    color: #333;
+    border-radius: 15px 15px 15px 0;
+    border: 1px solid #e0e0e0;
+}
+
+.systemMessage {
+    display: flex;
+    justify-content: center;
+    margin: 8px 0;
+}
+
+.systemMessageContent {
+    background-color: rgba(255, 107, 0, 0.1);
+    color: #666;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
