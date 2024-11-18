@@ -5,17 +5,14 @@ import {
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
-const Bucket = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME; // S3 버킷 이름
-const CloudFrontDomain =
-    process.env.NEXT_PUBLIC_CLOUDFRONT_DOMAIN; // CloudFront 도메인
+const Bucket = process.env.AWS_BUCKET_NAME; // S3 버킷 이름
+const CloudFrontDomain = process.env.CLOUDFRONT_DOMAIN; // CloudFront 도메인
 
 const s3 = new S3Client({
-    region: process.env.NEXT_PUBLIC_AWS_REGION,
+    region: process.env.AWS_REGION,
     credentials: {
-        accessKeyId:
-            process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
-        secretAccessKey:
-            process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     },
 });
 
@@ -36,7 +33,7 @@ export async function POST(req, res) {
                 Key: key,
                 Body,
                 ContentType: file.type,
-            })
+            }),
         );
 
         // CloudFront URL 생성
@@ -48,13 +45,13 @@ export async function POST(req, res) {
                 url: cloudFrontUrl, // CloudFront URL 반환
                 key,
             }),
-            { status: 200 }
+            { status: 200 },
         );
     } catch (error) {
         console.error('Error uploading image:', error);
         return new Response(
             JSON.stringify({ message: 'Error' }),
-            { status: 500 }
+            { status: 500 },
         );
     }
 }
