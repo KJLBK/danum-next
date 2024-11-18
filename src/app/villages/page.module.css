@@ -13,6 +13,22 @@
     margin-right: 20px;
 }
 
+.aside {
+    display: flex;
+    flex-direction: row;
+}
+
+.InfiniteScroll {
+    width: 100%;
+    max-width: 962px;
+    margin: 0 20px;
+}
+
+.postList {
+    width: 100%;
+    max-width: 238px;
+}
+
 .sidebar {
     width: 200px;
     padding: 20px;
@@ -83,4 +99,13 @@
 
 .rightContent {
     display: flex;
+}
+
+@media (max-width: 1200px) {
+    .postList {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
 }
