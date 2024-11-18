@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { notificationShow } from '../../services/notificationService';
 import NotificationsItem from '../../components/common/NotificationsItem';
+import style from './page.module.css';
 
 export default function NotificationPage() {
     const [notifications, setNotifications] = useState([]);
@@ -57,7 +58,7 @@ export default function NotificationPage() {
 
     return (
         <div>
-            <h1 style={{ textAlign: 'center' }}>알림</h1>
+            <h1 className={style.title}>알림</h1>
             <div>
                 {notifications.length === 0 ? (
                     <div>새로운 알림이 없습니다.</div>
