@@ -54,7 +54,7 @@ export default function QuestionPage() {
 
     return (
         <div className={style.container}>
-            <h2>질문 이야기</h2>
+            <h2 className={style.title}>질문 이야기</h2>
             {/* <RegionSelector
                 onRegionSelect={handleRegionSelect}
                 /> */}

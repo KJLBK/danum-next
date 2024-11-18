@@ -62,10 +62,8 @@ export default function Villages() {
 
     return (
         <div className={style.pageContainer}>
+            <h2 className={style.title}>동네 이야기</h2>
             <nav className={style.sidebar}>
-                <h2 className={style.sidebarTitle}>
-                    카테고리
-                </h2>
                 <ul className={style.menuList}>
                     <li
                         className={`${style.menuItem} ${postType === '' ? style.active : ''}`}
@@ -101,31 +99,22 @@ export default function Villages() {
                     </li>
                 </ul>
             </nav>
-            <div className={style.mainContent}>
-                <h2 className={style.title}>동네 이야기</h2>
-                {/* InfiniteScroll 컴포넌트를 사용하여 무한 스크롤 적용 */}
-                <div className={style.aside}>
-                    <div className={style.InfiniteScroll}>
-                        <InfiniteScroll
-                            serviceLogic={getServiceLogic()}
-                            queryKey={[
-                                'villageData',
-                                postType,
-                            ]}
-                        />
-                    </div>
-                    <div className={style.postList}>
-                        <PopularPostlist
-                            header="지금 인기있는 동네 이야기 🔥"
-                            data={
-                                data?.popularVillages || []
-                            }
-                        />
-                    </div>
+            {/* InfiniteScroll 컴포넌트를 사용하여 무한 스크롤 적용 */}
+            <div className={style.aside}>
+                <div className={style.InfiniteScroll}>
+                    <InfiniteScroll
+                        serviceLogic={getServiceLogic()}
+                        queryKey={['villageData', postType]}
+                    />
+                </div>
+                <div className={style.postList}>
+                    <PopularPostlist
+                        header="지금 인기있는 동네 이야기 🔥"
+                        data={data?.popularVillages || []}
+                    />
                 </div>
             </div>
             <NewButton type="village" />
-            <div className={style.rightContent}></div>
         </div>
     );
 }
