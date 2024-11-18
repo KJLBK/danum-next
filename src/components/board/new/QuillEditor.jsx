@@ -7,9 +7,11 @@ import React, {
     useImperativeHandle,
 } from 'react';
 import dynamic from 'next/dynamic';
+import styles from './QuillEditor.module.css';
+
 import 'quill/dist/quill.snow.css';
 
-const Quill = dynamic(() => import('quill'), {
+const Quill = dynamic(() => import('react-quill'), {
     ssr: false,
 });
 
@@ -35,6 +37,17 @@ const QuillEditor = forwardRef((props, ref) => {
                     editorRef.current,
                     {
                         theme: 'snow',
+                        placeholder: `궁금한 점을 자유롭게 물어보세요!
+
+• 일상적인 궁금증부터 전문적인 질문까지 무엇이든 환영합니다
+• AI와 동네 이웃들이 함께 답변해드려요
+• 구체적으로 설명해주시면 더 정확한 답변을 받으실 수 있어요
+• 사진이나 자료를 첨부하시면 이해하는데 도움이 됩니다
+
+예시: 
+- 이 동네에서 맛있는 돈까스 맛집 추천해주세요!
+- 강아지 산책시키기 좋은 장소 어디인가요?
+- 이 지역 미용실 추천해주세요.`,
                         modules: {
                             toolbar: {
                                 container: [

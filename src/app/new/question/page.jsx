@@ -58,8 +58,7 @@ export default function QuestionNewPage() {
     };
 
     return (
-        <div>
-            <h2>글쓰기 페이지</h2>
+        <div className={style.container}>
             <form onSubmit={onSubmit}>
                 <div className={style.formRow}>
                     <input
@@ -68,18 +67,24 @@ export default function QuestionNewPage() {
                         name="title"
                         value={formData.title}
                         onChange={onChangeData}
+                        placeholder="제목을 입력하세요."
                         required
                         className={style.input}
                     />
+                </div>
+                <div className={style.editor}>
+                    <QuillEditor
+                        ref={editorRef}
+                        placeholder="질문 내용을 입력해주세요..."
+                    />
+                </div>
+                <div className={style.buttonContainer}>
                     <button
                         type="submit"
                         className={style.button}
                     >
                         작성
                     </button>
-                </div>
-                <div>
-                    <QuillEditor ref={editorRef} />
                 </div>
             </form>
         </div>

@@ -6,7 +6,6 @@
 
 .input {
     flex-grow: 1; /* 인풋 필드가 나머지 공간을 채우도록 설정 */
-    margin-right: 10px; /* 버튼과 인풋 필드 사이에 간격 추가 */
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -19,4 +18,61 @@
     font-size: 16px;
     cursor: pointer;
     white-space: nowrap; /* 버튼 텍스트 줄바꿈 방지 */
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.button {
+    background-color: var(--main-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: var(--main-color);
+    opacity: 0.8;
+}
+
+.editor :global(.quill) {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.editor :global(.ql-toolbar) {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ccc;
+}
+
+.editor :global(.ql-container) {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    min-height: 300px;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.editor :global(.ql-container.ql-snow) {
+    border: none;
+}
+
+.editor :global(.ql-toolbar.ql-snow) {
+    border: none;
+}
+
+.editor :global(.ql-editor.ql-blank::before) {
+    color: #666;
+    font-style: normal; /* 기본값은 italic입니다 */
+    /* 필요한 다른 스타일 속성들을 추가할 수 있습니다 */
 }

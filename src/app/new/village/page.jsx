@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuthStore } from '../../../stores/authStore';
 import QuillEditor from '../../../components/board/new/QuillEditor';
 import { villageNew } from '../../../services/villageService';
+import style from './page.module.css';
 
 export default function VillagePostingPage() {
     const { email } = useAuthStore();
@@ -15,7 +16,7 @@ export default function VillagePostingPage() {
         email: '',
         title: '',
         content: '',
-        postType: 'DAILY',
+        postType: '',
     });
 
     const onChangeData = (e) => {
@@ -45,60 +46,65 @@ export default function VillagePostingPage() {
             console.error('Submission error:', err);
         }
     };
+
     return (
-        <div>
-            <h2>동네 글쓰기 페이지</h2>
-            <form onSubmit={onSubmit}>
-                <div>
+        <form onSubmit={onSubmit}>
+            <div className={style.v_posting_page}>
+                {/* 드롭다운 추가 */}
+                <div className={style.dropdown_area}>
+                    <select
+                        id="postType"
+                        name="postType"
+                        value={formData.postType}
+                        onChange={onChangeData}
+                        required
+                    >
+                        <option value="" disabled>
+                            게시글 유형 선택
+                        </option>
+                        <option value="DAILY">
+                            일상 게시글
+                        </option>
+                        <option value="QUESTION">
+                            질문 게시글
+                        </option>
+                    </select>
+                </div>
+
+                <div className={style.search_area}>
                     <input
                         type="text"
                         id="title"
                         name="title"
                         value={formData.title}
                         onChange={onChangeData}
+                        placeholder="제목을 입력하세요."
                         required
                     />
-                    <button type="submit">작성</button>
                 </div>
-                <fieldset>
-                    <legend>카테고리</legend>
-                    <div>
-                        <label>
-                            <input
-                                type="radio"
-                                id="DAILY"
-                                value="DAILY"
-                                name="postType"
-                                onChange={onChangeData}
-                                checked={
-                                    formData.postType ===
-                                    'DAILY'
-                                }
-                            />
-                            일상 게시글
-                        </label>
-                    </div>
-                    <div>
-                        <label>
-                            <input
-                                type="radio"
-                                id="QUESTION"
-                                value="QUESTION"
-                                name="postType"
-                                onChange={onChangeData}
-                                checked={
-                                    formData.postType ===
-                                    'QUESTION'
-                                }
-                            />
-                            질문 게시글
-                        </label>
-                    </div>
-                </fieldset>
+
                 <div>
                     <QuillEditor ref={editorRef} />
                 </div>
-            </form>
-        </div>
+
+                <div
+                    className={style.v_posting_submit_back}
+                >
+                    <div
+                        className={
+                            style.v_posting_submit_footer
+                        }
+                    >
+                        {/* 버튼 비활성화 로직 추가 */}
+                        <button
+                            type="submit"
+                            disabled={!formData.postType}
+                        >
+                            작성
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
     );
 }

@@ -111,3 +111,12 @@ a {
     display: flex;
     justify-content: center;
 }
+
+.ql-toolbar {
+    border: none;
+    outline: none;
+}
+.ql-editor {
+    border: none;
+    outline: none;
+}
