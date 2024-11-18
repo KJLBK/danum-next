@@ -9,6 +9,7 @@ import {
 import style from './page.module.css';
 import { useAuthStore } from '../../stores/authStore';
 import { useRouter } from 'next/navigation';
+import NewButton from '../../components/board/new/NewButton';
 
 export default function Villages() {
     const [postType, setPostType] = useState('');
@@ -87,12 +88,6 @@ export default function Villages() {
                         내 지역
                     </li>
                 </ul>
-                <button
-                    className={style.writeButton}
-                    onClick={handleNew}
-                >
-                    글 쓰기
-                </button>
             </nav>
             <div className={style.mainContent}>
                 <h2 className={style.title}>동네 이야기</h2>
@@ -102,6 +97,7 @@ export default function Villages() {
                     queryKey={['villageData', postType]}
                 />
             </div>
+            <NewButton type="village" />
             <div className={style.rightContent}></div>
         </div>
     );

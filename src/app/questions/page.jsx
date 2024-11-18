@@ -7,6 +7,7 @@ import { useAuthStore } from '../../stores/authStore';
 import RegionSelector from '../../components/board/buttons/RegionSelector';
 import { regionShow } from '../../services/questionService';
 import { useState } from 'react';
+import NewButton from '../../components/board/new/NewButton';
 
 export default function QuestionPage() {
     const { isLoggedIn } = useAuthStore();
@@ -42,7 +43,6 @@ export default function QuestionPage() {
     return (
         <div className={style.container}>
             <h2>질문 이야기</h2>
-            <button onClick={handleNew}>글쓰기</button>
             {/* <RegionSelector
                 onRegionSelect={handleRegionSelect}
             /> */}
@@ -50,6 +50,7 @@ export default function QuestionPage() {
                 serviceLogic={questionShow}
                 queryKey={['questionPosts']}
             />
+            <NewButton type="question" />
         </div>
     );
 }
