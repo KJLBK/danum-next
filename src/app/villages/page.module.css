@@ -1,86 +1,86 @@
 .pageContainer {
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     min-height: 100vh;
+    padding-bottom: 80px; /* 글쓰기 버튼 높이만큼 여백 추가 */
+    padding: 0px 30px;
 }
 
 .title {
-    text-align: center;
-}
-
-.category {
-    position: absolute;
-    right: 0;
-    margin-right: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 3rem 0;
 }
 
 .sidebar {
-    width: 200px;
-    padding: 20px;
-    border-right: 1px solid #e9ecef;
-
-    height: 100vh;
-}
-
-.sidebarTitle {
-    font-size: 18px;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #e9ecef;
+    margin-bottom: 2.5rem;
 }
 
 .menuList {
+    display: flex;
     list-style: none;
     padding: 0;
     margin: 0;
+    border-bottom: 1px solid #e9ecef;
 }
 
 .menuItem {
-    padding: 12px 15px;
-    margin: 5px 0;
+    padding: 12px 20px;
     cursor: pointer;
-    border-radius: 6px;
+    color: #666;
+    border-bottom: 2px solid transparent;
     transition: all 0.2s ease;
-}
-
-.menuItem:hover {
-    background-color: #f8f9fa;
-    color: #333;
+    font-size: 15px;
 }
 
 .menuItem.active {
-    background-color: #e9ecef;
-    color: #333;
+    color: #ff6b00;
+    font-weight: bold;
+    border-bottom: 2px solid #ff6b00;
 }
 
-.mainContent {
-    flex: 1;
-    padding: 20px;
+.menuItem:hover {
+    color: #ff6b00;
 }
 
-.writeButton {
+.aside {
+    display: flex;
+    flex-direction: row;
     width: 100%;
-    padding: 12px;
-    background-color: #ffffff;
-    color: #333;
-    border: 1px solid #e9ecef;
-    border-radius: 6px;
-    margin-top: 20px;
-    cursor: pointer;
-    transition: background-color 0.2s;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.writeButton:hover {
-    background-color: #f8f9fa;
+.InfiniteScroll {
+    width: 100%;
+    max-width: 962px;
+    margin: 0 20px;
 }
 
-.boardList {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.postList {
+    width: 100%;
+    max-width: 238px;
 }
 
-.rightContent {
-    display: flex;
+@media (max-width: 1200px) {
+    .postList {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .menuList {
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .menuItem {
+        padding: 8px 12px;
+    }
+
+    .InfiniteScroll {
+        margin: 0 10px;
+    }
 }

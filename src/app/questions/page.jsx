@@ -6,21 +6,33 @@ import { useRouter } from 'next/navigation';
 import { useAuthStore } from '../../stores/authStore';
 import RegionSelector from '../../components/board/buttons/RegionSelector';
 import { regionShow } from '../../services/questionService';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import NewButton from '../../components/board/new/NewButton';
+import PopularPostlist from '../../components/home/PopularPosts/List';
+import usePopularPosts from '../../hooks/usePopularPosts';
+import Spinner from '../../components/common/Spinner';
 
 export default function QuestionPage() {
     const { isLoggedIn } = useAuthStore();
     const router = useRouter();
     const [regionData, setRegionData] = useState([]);
 
-    const handleNew = () => {
-        if (isLoggedIn) {
-            router.push('/new/question');
-        } else {
-            router.push('/login');
+    const { data, error, isLoading, isError } =
+        usePopularPosts();
+
+    useEffect(() => {
+        if (data) {
+            console.log('Fetced Popular posts data', data);
         }
-    };
+    });
+
+    if (isLoading) {
+        return <Spinner />;
+    }
+
+    if (isError) {
+        console.log(error.message);
+    }
 
     const handleRegionSelect = async ({
         city,
@@ -42,14 +54,25 @@ export default function QuestionPage() {
 
     return (
         <div className={style.container}>
-            <h2>질문 이야기</h2>
+            <h2 className={style.title}>질문 이야기</h2>
             {/* <RegionSelector
                 onRegionSelect={handleRegionSelect}
-            /> */}
-            <InfiniteScroll
-                serviceLogic={questionShow}
-                queryKey={['questionPosts']}
-            />
+                /> */}
+
+            <div className={style.aside}>
+                <div className={style.InfiniteScroll}>
+                    <InfiniteScroll
+                        serviceLogic={questionShow}
+                        queryKey={['questionPosts']}
+                    />
+                </div>
+                <div className={style.postList}>
+                    <PopularPostlist
+                        header="지금 인기있는 질문 이야기 🔥"
+                        data={data?.popularQuestions || []}
+                    />
+                </div>
+            </div>
             <NewButton type="question" />
         </div>
     );

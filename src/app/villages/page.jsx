@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import InfiniteScroll from '../../components/common/InfiniteScroll';
 import {
     villageShow,
@@ -10,6 +10,9 @@ import style from './page.module.css';
 import { useAuthStore } from '../../stores/authStore';
 import { useRouter } from 'next/navigation';
 import NewButton from '../../components/board/new/NewButton';
+import PopularPostlist from '../../components/home/PopularPosts/List';
+import usePopularPosts from '../../hooks/usePopularPosts';
+import Spinner from '../../components/common/Spinner';
 
 export default function Villages() {
     const [postType, setPostType] = useState('');
@@ -32,13 +35,22 @@ export default function Villages() {
         }
     };
 
-    const handleNew = () => {
-        if (isLoggedIn) {
-            router.push('/new/village');
-        } else {
-            router.push('/login');
+    const { data, error, isLoading, isError } =
+        usePopularPosts();
+
+    useEffect(() => {
+        if (data) {
+            console.log('Fetced Popular posts data', data);
         }
-    };
+    });
+
+    if (isLoading) {
+        return <Spinner />;
+    }
+
+    if (isError) {
+        console.log(error.message);
+    }
 
     const handleCategoryClick = (category) => {
         if (!isLoggedIn && category === 'LOCAL') {
@@ -50,10 +62,8 @@ export default function Villages() {
 
     return (
         <div className={style.pageContainer}>
+            <h2 className={style.title}>동네 이야기</h2>
             <nav className={style.sidebar}>
-                <h2 className={style.sidebarTitle}>
-                    카테고리
-                </h2>
                 <ul className={style.menuList}>
                     <li
                         className={`${style.menuItem} ${postType === '' ? style.active : ''}`}
@@ -89,16 +99,22 @@ export default function Villages() {
                     </li>
                 </ul>
             </nav>
-            <div className={style.mainContent}>
-                <h2 className={style.title}>동네 이야기</h2>
-                {/* InfiniteScroll 컴포넌트를 사용하여 무한 스크롤 적용 */}
-                <InfiniteScroll
-                    serviceLogic={getServiceLogic()}
-                    queryKey={['villageData', postType]}
-                />
+            {/* InfiniteScroll 컴포넌트를 사용하여 무한 스크롤 적용 */}
+            <div className={style.aside}>
+                <div className={style.InfiniteScroll}>
+                    <InfiniteScroll
+                        serviceLogic={getServiceLogic()}
+                        queryKey={['villageData', postType]}
+                    />
+                </div>
+                <div className={style.postList}>
+                    <PopularPostlist
+                        header="지금 인기있는 동네 이야기 🔥"
+                        data={data?.popularVillages || []}
+                    />
+                </div>
             </div>
             <NewButton type="village" />
-            <div className={style.rightContent}></div>
         </div>
     );
 }
