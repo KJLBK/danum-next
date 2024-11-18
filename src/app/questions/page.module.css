@@ -1,16 +1,17 @@
 .container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: flex-start;
     min-height: 100vh;
     padding-bottom: 80px; /* 글쓰기 버튼 높이만큼 여백 추가 */
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 .title {
     font-size: 24px;
     font-weight: bold;
-    margin: 20px 0;
+    margin: 2.5rem 0;
 }
 
 .aside {
