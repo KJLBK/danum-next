@@ -1,4 +1,5 @@
 'use client';
+import Fire from '../../../public/emoji-assets/fire';
 import styles from './ExpBar.module.css';
 
 export default function ExpBar({ exp }) {
@@ -17,7 +18,8 @@ export default function ExpBar({ exp }) {
         <div className={styles.expBarContainer}>
             <div className={styles.levelInfo}>
                 <span className={styles.levelText}>
-                    신뢰도를 열심히 쌓아가고 있어요 🔥
+                    신뢰도를 열심히 쌓아가고 있어요
+                    <Fire />
                 </span>
             </div>
             <div className={styles.progressContainer}>

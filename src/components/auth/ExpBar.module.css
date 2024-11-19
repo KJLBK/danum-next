@@ -16,6 +16,8 @@
     font-weight: 700;
     font-size: 0.8rem;
     line-height: 1.285;
+    display: flex;
+    gap: 5px;
 }
 
 .progressContainer {
