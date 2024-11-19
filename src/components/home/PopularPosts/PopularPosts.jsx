@@ -29,13 +29,13 @@ export default function PopularPosts() {
         <div className={styles.popularPostsItem}>
             <div>
                 <PopularPostlist
-                    header="지금 인기있는 질문 이야기 🔥"
+                    header="지금 인기있는 질문 이야기"
                     data={data?.popularQuestions || []}
                 />
             </div>
             <div>
                 <PopularPostlist
-                    header="지금 인기있는 동네 이야기 🔥"
+                    header="지금 인기있는 동네 이야기"
                     data={data?.popularVillages || []}
                 />
             </div>

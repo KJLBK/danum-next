@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import ExpBar from '../../components/auth/ExpBar';
 import { fetchUserData } from '../../services/authService';
 import Link from 'next/link';
+import Smile from '../../../public/emoji-assets/smile.js';
 
 export default function MyProfile() {
     const {
@@ -62,7 +63,7 @@ export default function MyProfile() {
             {isLoggedIn ? (
                 <div className="myprofile">
                     <p className="myprofile-p">
-                        내 프로필 😊
+                        내 프로필 <Smile />
                     </p>
                     <Link href="/mypage">
                         <div className="myprofile-header">
