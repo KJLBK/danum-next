@@ -1,13 +1,14 @@
 .RecentPostsHeader {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
+    margin: 0 0 1rem;
+    gap: 5px;
 }
 
 .RecentPostsHeader p {
-    margin: 0 0 1rem;
     font-size: 1.25rem;
     line-height: 1.4;
     font-weight: 700;
+    margin: 0px;
 }
