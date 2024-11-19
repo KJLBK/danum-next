@@ -10,6 +10,7 @@ import Spinner from '../common/Spinner';
 import styles from './RecentMessagesList.module.css';
 import Image from 'next/image';
 import SpeechBalloon from '../../../public/emoji-assets/speechballoon';
+import Eyes from '../../../public/emoji-assets/eyes';
 
 export default function RecentMessagesList() {
     const { isLoggedIn } = useAuthStore();
@@ -119,7 +120,7 @@ export default function RecentMessagesList() {
                             )
                         ) : (
                             <div className={styles.noChat}>
-                                채팅 내역이 없어요 👀
+                                채팅 내역이 없어요 <Eyes />
                             </div>
                         )}
                     </div>

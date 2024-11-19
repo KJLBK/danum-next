@@ -52,7 +52,7 @@
 }
 
 .dropdownItem {
-    display: block;
+    display: flex;
     padding: 10px;
     cursor: pointer;
     background-color: white;
@@ -61,6 +61,11 @@
     font-weight: 600;
     text-align: left;
     border-radius: 5px;
+    align-items: center;
+}
+
+.dropdownItem svg {
+    margin-left: 5px;
 }
 
 /* closeButton 아래에 마진 추가 */
@@ -74,4 +79,6 @@
 
 .getProfile_btn_item {
     margin: 1rem 0 0;
+    display: flex;
+    flex-direction: column;
 }
