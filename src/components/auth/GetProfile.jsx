@@ -14,6 +14,10 @@ import {
 } from '@tanstack/react-query';
 import MyProfile from '../profile/myProfile';
 import Spinner from '../common/Spinner';
+import Technologist from '../../../public/emoji-assets/technologist';
+import SpeechBalloon from '../../../public/emoji-assets/speechballoon';
+import Memo from '../../../public/emoji-assets/memo';
+import Door from '../../../public/emoji-assets/door';
 
 export default function GetProfile() {
     const [isDropdownOpen, setIsDropdownOpen] =
@@ -156,7 +160,8 @@ export default function GetProfile() {
                                     }
                                     onClick={handleMyPage}
                                 >
-                                    내 프로필 🧑🏻‍💻
+                                    내 프로필
+                                    <Technologist />
                                 </button>
                                 <button
                                     className={
@@ -164,7 +169,8 @@ export default function GetProfile() {
                                     }
                                     onClick={handleChatList}
                                 >
-                                    채팅 목록 💬
+                                    채팅 목록
+                                    <SpeechBalloon />
                                 </button>
                                 <button
                                     className={
@@ -172,7 +178,7 @@ export default function GetProfile() {
                                     }
                                     onClick={handleAccount}
                                 >
-                                    계정 📝
+                                    계정 <Memo />
                                 </button>
                                 <button
                                     className={
@@ -180,7 +186,7 @@ export default function GetProfile() {
                                     }
                                     onClick={handleLogout}
                                 >
-                                    로그아웃 🚪
+                                    로그아웃 <Door />
                                 </button>
                             </div>
                         </div>

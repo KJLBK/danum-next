@@ -22,6 +22,15 @@
     color: #00000050;
 }
 
+.logo {
+    display: flex;
+    padding: 0;
+}
+
+.logoItem {
+    padding: 0;
+}
+
 .home {
     margin: 0 10px;
 }

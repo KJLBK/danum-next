@@ -68,7 +68,7 @@ export default function QuestionPage() {
                 </div>
                 <div className={style.postList}>
                     <PopularPostlist
-                        header="지금 인기있는 질문 이야기 🔥"
+                        header="지금 인기있는 질문 이야기"
                         data={data?.popularQuestions || []}
                     />
                 </div>

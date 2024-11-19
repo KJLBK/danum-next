@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAuthStore } from '../../stores/authStore';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
@@ -10,6 +10,7 @@ import SearchIcon from '../../../public/search.svg';
 import LoginButton from './Header/LoginButton';
 import GetProfile from '../auth/GetProfile';
 import NotificationsIcon from './Header/NotificationsIcon';
+import DanumLogo from '../../../public/emoji-assets/\bdanumlogo';
 
 export default function Header() {
     const { user, isLoggedIn } = useAuthStore();
@@ -35,7 +36,13 @@ export default function Header() {
             <div className={styles['header-div']}>
                 <ul className={styles['header-ul']}>
                     <li className={styles['home']}>
-                        <a href="/">danum</a>
+                        <a
+                            href="/"
+                            className={styles.logo}
+                            style={{ padding: 0 }}
+                        >
+                            <DanumLogo />
+                        </a>
                     </li>
                     <div className={styles['header-li']}>
                         <li className={isActive('/')}>
