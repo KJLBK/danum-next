@@ -9,6 +9,7 @@ import Link from 'next/link';
 import Spinner from '../common/Spinner';
 import styles from './RecentMessagesList.module.css';
 import Image from 'next/image';
+import SpeechBalloon from '../../../public/emoji-assets/speechballoon';
 
 export default function RecentMessagesList() {
     const { isLoggedIn } = useAuthStore();
@@ -50,7 +51,8 @@ export default function RecentMessagesList() {
             {isLoggedIn ? (
                 <div className={styles.recentMessageList}>
                     <p className={styles.header}>
-                        최근 채팅 💬
+                        최근 채팅
+                        <SpeechBalloon />
                     </p>
                     <div>
                         {recentMessages?.length > 0 ? (
