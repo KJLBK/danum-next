@@ -70,3 +70,33 @@
     line-height: 1.5;
     color: #555;
 }
+
+.typewriterContainer {
+    display: inline-flex;
+    align-items: center;
+}
+
+.cursor {
+    display: inline-block;
+    width: 1ch;
+    height: 1em;
+    animation: flicker 0.5s infinite;
+    margin-bottom: 4px;
+}
+
+@keyframes flicker {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.loadingText {
+    color: #666;
+    font-style: italic;
+}
