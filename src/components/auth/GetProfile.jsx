@@ -21,7 +21,7 @@ export default function GetProfile() {
     const [dropdownPosition, setDropdownPosition] =
         useState({ top: 0, left: 0 });
     const router = useRouter();
-    const { clearAuth } = useAuthStore();
+    const { clearAuth, profileImageUrl } = useAuthStore();
     const [error, setError] = useState(null);
     const dropdownRef = useRef(null); // 드롭다운 참조
 
@@ -123,7 +123,7 @@ export default function GetProfile() {
     }
 
     const profileImageSrc =
-        profileImage ||
+        profileImageUrl ||
         '/logo-assets/android-chrome-512x512.png'; // 프로필 이미지가 없을 때 기본 이미지 사용
 
     return (
