@@ -8,6 +8,7 @@ import Image from 'next/image';
 export default function Home() {
     return (
         <>
+            <h1>test</h1>
             <div className={styles.banner}>
                 <Image
                     src="/banner.png"
